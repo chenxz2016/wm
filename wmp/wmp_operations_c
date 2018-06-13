@@ -1,0 +1,375 @@
+/* ************************************************************************
+ *       Filename:  wmp_operations.c
+ *    Description:  
+ *        Version:  1.0
+ *        Created:  2017年07月08日 10时13分30秒
+ *       Revision:  none
+ *       Compiler:  gcc
+ *         Author:  YOUR NAME (), 
+ *        Company:  
+ * ************************************************************************/
+
+#include"wmp_operations.h"
+#include<malloc.h>
+#include<arpa/inet.h>
+#include<string.h>
+
+#define WMP_CheckLen(index,delt,len) \
+	if((index+delt)>len)\
+		return NULL;
+
+#define WMP_AddOpCheckLen(index,delt,len,p_wmp_add_op) \
+	if((index+delt)>len)\
+	{\
+		deallocate_wmp_add_op(&p_wmp_add_op);\
+		return NULL;\
+	}	
+
+wmp_operations_t *allocate_wmp_operations()
+{
+	wmp_operations_t *p_wmp_op = (wmp_operations_t *)malloc(sizeof(wmp_operations_t));
+	memset(p_wmp_op,0,sizeof(wmp_operations_t));
+	return p_wmp_op;
+}
+
+void deallocate_wmp_operations(wmp_operations_t **p_wmp_op)
+{
+	if(*p_wmp_op && (*p_wmp_op)->operations)
+	{
+		free(((*p_wmp_op)->operations));
+		(*p_wmp_op)->operations=NULL;
+		free(*p_wmp_op);
+		*p_wmp_op = NULL;
+	}
+	
+	if(*p_wmp_op)
+	{
+		free(*p_wmp_op);
+		*p_wmp_op = NULL;
+	}
+}
+
+void set_wmp_add_operations_items(wmp_add_op_t *p_wmp_add_op, uint16_t num)
+{
+	if(p_wmp_add_op && p_wmp_add_op->friend_info.items_list)
+		free(p_wmp_add_op->friend_info.items_list);
+	
+	p_wmp_add_op->friend_info.info_num = num;
+	p_wmp_add_op->friend_info.items_list = (wmp_info_item_t *)malloc(sizeof(wmp_info_item_t)*num);
+	memset(p_wmp_add_op->friend_info.items_list,0,sizeof(wmp_info_item_t)*num);
+}
+
+static wmp_add_op_t *parser_wmp_add_op(const char *package,uint32_t pack_len)
+{
+	uint32_t index=0;
+	wmp_add_op_t *p_wmp_add_op = 0;
+	
+	WMP_CheckLen(index,10,pack_len);
+	
+	p_wmp_add_op = allocate_wmp_add_op();
+	p_wmp_add_op->src_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_add_op->src_id);
+	p_wmp_add_op->dst_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_add_op->dst_id);
+	p_wmp_add_op->friend_info.info_num = ntohs(*(uint16_t *)(package+index));
+	index+=sizeof(p_wmp_add_op->friend_info.info_num);
+	if(p_wmp_add_op->friend_info.info_num)
+		set_wmp_add_op_info_num(p_wmp_add_op,p_wmp_add_op->friend_info.info_num);
+	
+	for(int i=0;i<p_wmp_add_op->friend_info.info_num;i++)
+	{
+		WMP_AddOpCheckLen(index,4,pack_len,p_wmp_add_op);
+		
+		p_wmp_add_op->friend_info.items_list[i].index = ntohs(*(uint16_t *)(package+index));
+		index+=sizeof(p_wmp_add_op->friend_info.items_list[i].index);
+		p_wmp_add_op->friend_info.items_list[i].value_len = *(uint8_t *)(package+index);
+		index+=sizeof(p_wmp_add_op->friend_info.items_list[i].value_len);
+		p_wmp_add_op->friend_info.items_list[i].value_type = *(uint16_t *)(package+index);
+		index+=sizeof(p_wmp_add_op->friend_info.items_list[i].value_type);
+		
+		WMP_AddOpCheckLen(index,p_wmp_add_op->friend_info.items_list[i].value_len,pack_len,p_wmp_add_op);
+		
+		memcpy(p_wmp_add_op->friend_info.items_list[i].value,package+index,\
+			   p_wmp_add_op->friend_info.items_list[i].value_len);
+		
+		index+=sizeof(p_wmp_add_op->friend_info.items_list[i].value_len);
+	}
+	
+	return p_wmp_add_op;
+}
+
+static wmp_del_op_t *parser_wmp_del_op(const char *package,uint32_t pack_len)
+{
+	uint32_t index=0;
+	wmp_del_op_t *p_wmp_del_op = NULL;
+	
+	WMP_CheckLen(index,8,pack_len);
+	
+	p_wmp_del_op = allocate_wmp_del_op();
+	
+	p_wmp_del_op->src_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_del_op->src_id);
+	p_wmp_del_op->dst_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_del_op->dst_id);
+	
+	return p_wmp_del_op;
+}
+
+static wmp_mod_op_t *parser_wmp_mod_op(const char *package,uint32_t pack_len)
+{
+	uint32_t index=0;
+	wmp_mod_op_t *p_wmp_mod_op = NULL;
+	
+	WMP_CheckLen(index,8,pack_len);
+	
+	p_wmp_mod_op = allocate_wmp_del_op();
+	
+	p_wmp_mod_op->src_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_mod_op->src_id);
+	p_wmp_mod_op->dst_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_mod_op->dst_id);
+	
+	return p_wmp_mod_op;
+}
+
+static wmp_srh_op_t *parser_wmp_srh_op(const char *package,uint32_t pack_len)
+{
+	uint32_t index=0;
+	wmp_srh_op_t *p_wmp_srh_op = NULL;
+	
+	WMP_CheckLen(index,10,pack_len)
+	
+	p_wmp_srh_op = allocate_wmp_srh_op();
+	
+	p_wmp_srh_op->src_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_srh_op->src_id);
+	p_wmp_srh_op->dst_id = ntohl(*(uint32_t *)(package+index));
+	index+=sizeof(p_wmp_srh_op->dst_id);
+	p_wmp_srh_op->srh_op_info.info_num = ntohs(*(uint16_t *)(package+index));
+	index+=sizeof(p_wmp_srh_op->srh_op_info.info_num);
+	
+	for(uint16_t i=0;i<p_wmp_srh_op->srh_op_info.info_num;i++)
+	{
+		if((index+4)>pack_len)
+		{
+			deallocate_wmp_srh_op(&p_wmp_srh_op);
+			return NULL;
+		}
+		p_wmp_srh_op->srh_op_info.items_list[i].index = ntohs(*(uint16_t *)(package+index));
+		index+=2;
+		p_wmp_srh_op->srh_op_info.items_list[i].value_len = *(uint8_t *)(package+index);
+		index++;
+		p_wmp_srh_op->srh_op_info.items_list[i].value_type = *(uint8_t *)(package+index);
+		index++;
+		if((index+p_wmp_srh_op->srh_op_info.items_list[i].value_type)>pack_len)
+		{
+			deallocate_wmp_srh_op(&p_wmp_srh_op);
+			return NULL;			
+		}
+		memcpy(p_wmp_srh_op->srh_op_info.items_list[i].value,package+index,\
+			   p_wmp_srh_op->srh_op_info.items_list[i].value_len);
+		index+=p_wmp_srh_op->srh_op_info.items_list[i].value_len;
+	}
+	
+	return p_wmp_srh_op;
+}
+
+wmp_operations_t *parser_wmp_operations(const char *package,uint32_t pack_len)
+{
+	wmp_add_op_t * p_wmp_add_op=NULL;
+	wmp_del_op_t * p_wmp_del_op=NULL;
+	wmp_mod_op_t * p_wmp_mod_op=NULL;
+	wmp_srh_op_t * p_wmp_srh_op=NULL;
+	uint32_t index = 0;
+	
+	if(pack_len<WMP_MESSAGE_LENGTH)
+		return NULL;
+	
+	wmp_operations_t *p_wmp_op = deallocate_wmp_operations();
+	
+	p_wmp_op->attr = ntohs(*(uint16_t *)(package+index));
+	index+=sizeof(p_wmp_op->attr);
+	p_wmp_op->operations_id = ntohs(*(uint16_t *)(package+index));
+	index+=sizeof(p_wmp_op->operations_id);
+	
+	switch(p_wmp_op->operations_id)
+	{
+		case WMP_OP_ADD_ID:
+			p_wmp_add_op = parser_wmp_add_op(package+index,pack_len-index);
+			if(p_wmp_add_op)
+				p_wmp_op->operations = (uint8_t *)p_wmp_add_op;
+			
+			break;
+		case WMP_OP_DEL_ID:
+			p_wmp_del_op = parser_wmp_del_op(package+index,pack_len-index);
+			if(p_wmp_del_op)
+				p_wmp_op->operations = (uint8_t *)p_wmp_del_op;
+			break;
+		case WMP_OP_MOD_ID:
+			p_wmp_mod_op = parser_wmp_mod_op(package+index,pack_len-index);
+			if(p_wmp_mod_op)
+				p_wmp_op->operations = (uint8_t *)p_wmp_mod_op;
+			break;
+		case WMP_OP_SRH_ID:
+			p_wmp_srh_op = parser_wmp_srh_op(package+index,pack_len-index);
+			if(p_wmp_srh_op)
+				p_wmp_op->operations = (uint8_t *)p_wmp_srh_op;
+			
+			break;
+		default:
+			deallocate_wmp_operations();
+			return NULL;
+	}
+	
+	return p_wmp_op;
+}
+
+static uint32_t package_wmp_add_op(char *package,wmp_add_op_t * p_wmp_add_op)
+{
+	if(!package || !p_wmp_add_op)
+		return 0;
+	
+	uint32_t index=0;
+	
+	*(uint32_t *)(package+index) = htonl(p_wmp_add_op->src_id);
+	index+=sizeof(p_wmp_add_op->src_id);
+	*(uint32_t *)(package+index) = htonl(p_wmp_add_op->dst_id);
+	index+=sizeof(p_wmp_add_op->dst_id);
+	*(uint16_t *)(package+index) = htons(p_wmp_add_op->friend_info.info_num);
+	index+=sizeof(p_wmp_add_op->friend_info.info_num);
+	if(p_wmp_add_op->friend_info.info_num)
+		set_wmp_add_op_info_num(p_wmp_add_op,p_wmp_add_op->friend_info.info_num);
+	
+	for(int i=0;i<p_wmp_add_op->friend_info.info_num;i++)
+	{
+		*(uint16_t *)(package+index) = ntohs(p_wmp_add_op->friend_info.items_list[i].index);
+		index+=sizeof(p_wmp_add_op->friend_info.items_list[i].index);
+		*(uint8_t *)(package+index) = p_wmp_add_op->friend_info.items_list[i].value_len;
+		index+=sizeof(p_wmp_add_op->friend_info.items_list[i].value_len);
+		*(uint8_t *)(package+index) = p_wmp_add_op->friend_info.items_list[i].value_type;
+		index+=sizeof(p_wmp_add_op->friend_info.items_list[i].value_type);
+		
+		memcpy(p_wmp_add_op->friend_info.items_list[i].value,package+index,\
+			   p_wmp_add_op->friend_info.items_list[i].value_len);
+			   
+		index+=p_wmp_add_op->friend_info.items_list[i].value_len;
+	}
+	
+	return index;
+}
+
+static uint32_t package_wmp_del_op(char *package,wmp_del_op_t * p_wmp_del_op)
+{
+	uint32_t index=0;
+	
+	*(uint32_t *)(package+index) = htonl(p_wmp_del_op.src_id);
+	index+=sizeof(p_wmp_del_op.src_id);
+	*(uint32_t *)(package+index) = htonl(p_wmp_del_op.dst_id);
+	index+=sizeof(p_wmp_del_op.dst_id);
+	
+	return index;
+}
+
+static uint32_t package_wmp_mod_op(char *package,wmp_mod_op_t * p_wmp_mod_op)
+{
+	uint32_t index=0;
+	
+	*(uint32_t *)(package+index) = htonl(p_wmp_mod_op.src_id);
+	index+=sizeof(p_wmp_mod_op.src_id);
+	*(uint32_t *)(package+index) = htonl(p_wmp_mod_op.dst_id);
+	index+=sizeof(p_wmp_mod_op.dst_id);
+	
+	return index;
+}
+
+static uint32_t package_wmp_srh_op(char *package,wmp_srh_op_t * p_wmp_srh_op)
+{
+	uint32_t index=0;
+	
+	*(uint32_t *)(package+index) = htonl(p_wmp_srh_op.src_id);
+	index+=sizeof(p_wmp_srh_op.src_id);
+	*(uint32_t *)(package+index) = htonl(p_wmp_srh_op.dst_id);
+	index+=sizeof(p_wmp_srh_op.dst_id);
+	
+	*(uint16_t *)(package+index) = htons(p_wmp_srh_op->srh_op_info.info_num);
+	index+=sizeof(p_wmp_srh_op->srh_op_info.info_num);
+	
+	for(uint16_t i=0;i<p_wmp_srh_op->srh_op_info.info_num;i++)
+	{
+		*(uint16_t *)(package+index) = ntohs(p_wmp_srh_op->srh_op_info.items_list[i].index);
+		index+=sizeof(p_wmp_srh_op->srh_op_info.items_list[i].index);
+		*(uint8_t *)(package+index) = p_wmp_srh_op->srh_op_info.items_list[i].value_len;
+		index+=sizeof(p_wmp_srh_op->srh_op_info.items_list[i].value_len);
+		*(uint8_t *)(package+index) = p_wmp_srh_op->srh_op_info.items_list[i].value_type;
+		index+=sizeof(p_wmp_srh_op->srh_op_info.items_list[i].value_type);
+		
+		memcpy(p_wmp_srh_op->srh_op_info.items_list[i].value,package+index,\
+			   p_wmp_srh_op->srh_op_info.items_list[i].value_len);
+			   
+		index+=p_wmp_srh_op->srh_op_info.items_list[i].value_len;
+	}
+	
+	return index;
+}
+
+uint32_t package_wmp_operations(char *package,wmp_operations_t *p_wmp_op)
+{
+	uint32_t index = 0;
+	wmp_add_op_t * p_wmp_add_op=NULL;
+	wmp_del_op_t * p_wmp_del_op=NULL;
+	wmp_mod_op_t * p_wmp_mod_op=NULL;
+	wmp_srh_op_t * p_wmp_srh_op=NULL;
+	
+	*(uint16_t *)(package+index) = htons(p_wmp_op->attr);
+	index+=sizeof(p_wmp_op->attr);
+	*(uint32_t *)(package+index) = htonl(p_wmp_op->operations_id);
+	index+=sizeof(p_wmp_op->operations_id);
+	
+	
+	switch(p_wmp_op->operations_id)
+	{
+		case WMP_OP_ADD_ID:
+			p_wmp_add_op = (wmp_add_op_t *)(p_wmp_op->operations);
+			if(p_wmp_add_op)
+				index += package_wmp_add_op(package+index,p_wmp_add_op);
+			
+			break;
+		case WMP_OP_DEL_ID:
+			p_wmp_del_op = (wmp_add_op_t *)(p_wmp_op->operations);
+			if(p_wmp_del_op)
+				index += package_wmp_del_op(package+index,p_wmp_del_op);
+			
+			break;
+		case WMP_OP_MOD_ID:
+			p_wmp_mod_op = (wmp_mod_op_t *)(p_wmp_op->operations);
+			if(p_wmp_mod_op)
+				index += package_wmp_mod_op(package+index,p_wmp_mod_op);
+			
+			break;
+		case WMP_OP_SRH_ID:
+			p_wmp_srh_op = (wmp_srh_op_t *)(p_wmp_op->operations);
+			if(p_wmp_srh_op)
+				index += package_wmp_srh_op(package+index,p_wmp_srh_op);
+			
+			break;
+		case WMP_OP_CET_ID:
+			p_wmp_cet_op = (wmp_cet_op_t *)(p_wmp_op->operations);
+			if(p_wmp_cet_op)
+				index += package_wmp_cet_op(package+index,p_wmp_cet_op);
+			
+			break;
+		case WMP_OP_DSV_ID:
+			p_wmp_dsv_op = (wmp_dsv_op_t *)(p_wmp_op->operations);
+			if(p_wmp_dsv_op)
+				index += package_wmp_dsv_op(package+index,p_wmp_dsv_op);
+			
+			break;
+		default:
+			deallocate_wmp_operations();
+			return NULL;
+	}
+	
+	return index;
+}
+
+

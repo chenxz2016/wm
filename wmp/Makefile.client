@@ -1,0 +1,31 @@
+###########################################################
+#
+#
+#
+#
+#
+#
+###########################################################
+
+CC 		= 	gcc
+CXX		=	g++
+CFLAGS	=	-shared -fPIC -O0 -g -std=c99
+CXXFLAGS=	-shared -fPIC -O2 -g -Wall
+INCLUDE	=	-I ../../3ty/ltm-0.41/libtommath-0.41 -I../../3ty/libtomcrypt-1.17/src/headers
+LIBS	=	-L../../3ty/ltm-0.41/libtommath-0.41 -ltommath -L../../3ty/libtomcrypt-1.17 -ltomcrypt
+DEFINES	=	-DLTM_DESC -DUSE_LTM -DWMP_DEBUG -DLINUX_OS
+TARGET	= 	libClientProto.so
+SOURCE	=	${wildcard *.c}
+
+OBJS=${patsubst %c, %o, $(SOURCE)}
+
+all:$(TARGET)	
+%.o:%.c
+	$(CC) $(CFLAGS) $(INCLUDE) $(DEFINES) -c $<
+$(TARGET):$(OBJS)
+	$(CC) $(CFLAGS) $(DEFINES) -o $@ $^ $(LIBS)
+
+.PHONY	:	clean
+clean:
+	@rm -rf *.o $(TARGET)
+

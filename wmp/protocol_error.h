@@ -1,0 +1,63 @@
+/* ************************************************************************
+ *       Filename:  protocol_error.h
+ *    Description:  
+ *        Version:  1.0
+ *        Created:  11/01/2017 08:13:42 AM
+ *       Revision:  none
+ *       Compiler:  gcc
+ *         Author:  YOUR NAME (xz.chen), 
+ *        Company:  
+ * ************************************************************************/
+
+#ifndef PROTOCOL_ERROR_H_
+#define PROTOCOL_ERROR_H_
+
+typedef enum 
+{
+	PROTO_SUCCESS=0,
+#ifdef CCP
+	CCP_FAILED_LOAD_MORE_PARAM,
+	CCP_FAILED_LOAD_NO_PROGRAM,
+	CCP_FAILED_LOAD_NO_PARAM,
+	CCP_FAILED_RLOAD_MORE_PARAM,
+	CCP_FAILED_RLOAD_NO_PROGRAM,
+	CCP_FAILED_UNLOAD_MORE_PARAM,
+	CCP_FAILED_ULOAD_NO_PROGRAM,
+	CCP_FAILED_RUNLOAD_MORE_PARAM,
+	CCP_FAILED_RULOAD_NO_PROGRAM,
+	CCP_FAILED_CONTROL_MORE_PARAM,
+	CCP_FAILED_CONTROL_NO_CMD,
+	CCP_FAILED_RCONTROL_MORE_PARAM,
+	CCP_FAILED_RCONTROL_NO_CMD,
+	CCP_FAILED_START_TIME_MORE_PARAM,
+	CCP_FAILED_RSTART_TIME_MORE_PARAM,
+	CCP_FAILED_RSTART_TIME_ERR_TIME,
+	CCP_FAILED_CLIENT_MORE_PARAM,
+	CCP_FAILED_RCLIENT_MORE_PARAM,
+	CCP_FAILED_NO_CMD_ID,
+#endif
+#ifdef CTP
+	CTP_FAILED_INVALID_PTR,
+	CTP_FAILED_INVALID_KEY,
+	CTP_FAILED_INVALID_KEY_LENGTH,
+	CTP_FAILED_ENCRYPT_ERR,
+	CTP_FAILED_HEAD_TAIL_ERR,
+	CTP_FAILED_PARSER_HEAD_ERR,
+	CTP_FAILED_CRC_CHECK_ERR,
+	CTP_FAILED_DECRYPT_ERR,
+	CTP_FAILED_LENGTH_ERR,
+#endif
+#ifdef GATEP
+	GATEP_FAILED_INVALID_PTR,
+	GATEP_FAILED_HEAD_OR_TAIL,
+#endif
+
+	PROTO_UNKNOWN_ERROR
+
+}ProtoError;
+
+const char *protocol_error();
+
+#endif
+
+
