@@ -1,0 +1,1486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>338</width>
+    <height>634</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>8</number>
+   </property>
+   <property name="topMargin">
+    <number>8</number>
+   </property>
+   <property name="rightMargin">
+    <number>8</number>
+   </property>
+   <property name="bottomMargin">
+    <number>8</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>28</width>
+         <height>28</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>28</width>
+         <height>28</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../res.qrc">:/res/mainwindow/wm_icon_w.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="menu">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Change Outlook</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#menu
+{
+border-image: url(:/res/mainwindow/setting.png)
+}
+QPushButton#menu:hover
+{
+background-color: rgb(255,255,255,40);
+}
+QPushButton#menu:pressed
+{
+background-color: rgb(255,255,255,80);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="skin">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Change Outlook</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#skin
+{
+border-image: url(:/res/mainwindow/qao.png);
+}
+QPushButton#skin:hover
+{
+background-color: rgb(255,255,255,40);
+}
+QPushButton#skin:pressed
+{
+background-color: rgb(255,255,255,80);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="min">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Minimalize</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#min
+{
+border-image: url(:/res/mainwindow/mini.png);
+}
+QPushButton#min:hover
+{
+background-color: rgb(255,255,255,40);
+}
+QPushButton#min:pressed
+{
+background-color: rgb(255,255,255,80);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="close">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Close</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton#close
+{
+border-image: url(:/res/mainwindow/cls.png)
+}
+QPushButton#close:hover
+{
+background-color: rgb(179, 0, 2);
+}
+QPushButton#close:pressed
+{
+background-color: rgb(144, 0, 2)
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="info_bar" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>96</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>96</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget#wm_whetherWidget
+{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 0), stop:1 rgba(255, 255, 255, 80))
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="icon">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>60</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel#icon
+{
+border-radius:30px;
+}
+QLabel#icon:hover
+{
+border: 2px solid rgb(46, 130, 255)
+}
+</string>
+          </property>
+          <property name="margin">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>13</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <item>
+             <widget class="QLabel" name="name">
+              <property name="font">
+               <font>
+                <family>微软雅黑 Light</family>
+                <pointsize>9</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#name
+{
+color:blue
+}</string>
+              </property>
+              <property name="text">
+               <string>Name</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="status">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border:none;
+}
+QPushButton:hover
+{
+background-color: rgb(226, 226, 226);
+}
+QPushButton:pressed
+{
+background-color: rgb(197, 197, 197);
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../res.qrc">
+                <normaloff>:/res/mainwindow/evf.png</normaloff>:/res/mainwindow/evf.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="level">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>28</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>28</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton
+{
+border:none;
+background-color:rgba(255,255,255,0);
+}
+QPushButton:hover
+{
+background-color:rgba(255,255,255,80);
+}</string>
+              </property>
+              <property name="text">
+               <string>Level</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="sign">
+            <property name="styleSheet">
+             <string notr="true">QLineEdit#sign
+{
+border:1px solid transparent;
+background-color:rgba(255,255,255,0);
+}
+QLineEdit#sign:hover
+{
+border:1px solid gray;
+border-radius:1px;
+}
+QLineEdit#sign:focus
+{
+border:none;
+background-color:rgba(255,255,255,255);
+}</string>
+            </property>
+            <property name="placeholderText">
+             <string>Edit your signment</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>13</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="weather">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>60</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel#head
+{
+border-image:url(:/res/icon.jpg);
+border-radius:30px;
+}
+</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QToolBar" name="toolbar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <addaction name="wmspace"/>
+        <addaction name="mail"/>
+        <addaction name="center"/>
+        <addaction name="app"/>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="find">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Input WMID/EMail/Name/ to find contact.</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit#find
+{
+border-left:30px solid rgba(255,255,255,0);
+border-right:30px solid rgba(255,255,255,0);
+border-top:none;
+border-bottom:none;
+background-color:rgba(255,255,255,100);
+}
+QLineEdit#find:focus
+{
+background-color:white;
+}</string>
+     </property>
+     <property name="cursorPosition">
+      <number>0</number>
+     </property>
+     <property name="placeholderText">
+      <string>Search</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="search">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../res.qrc">:/res/mainwindow/nts.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="checked" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="autoRepeat" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive" stdset="0">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cancel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="toolTip">
+         <string>Clear</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-image:url(:/res/mainwindow/qwm.png)
+}</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="QWidget" name="chatter"/>
+     <widget class="QWidget" name="session">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="contact">
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="groups">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="group_bar" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget#group_bar
+{
+border-bottom:1px solid rgba(191, 191, 191,120);
+border-top:1px solid rgba(191, 191, 191,120);
+background-color:rgba(255,255,255,150);
+}</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QRadioButton" name="groups_button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton::indicator 
+{
+width: 0;
+height: 0;
+}
+QRadioButton::checked 
+{
+background-color:rgba(0,0,0,80);
+}
+QRadioButton::unchecked:hover
+{
+border:none;
+background-color:rgba(0,0,0,40);
+}</string>
+            </property>
+            <property name="text">
+             <string>Groups</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="multitalk_button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton::indicator 
+{
+width: 0;
+height: 0;
+}
+QRadioButton::checked 
+{
+background-color:rgba(0,0,0,80);
+}
+QRadioButton::unchecked:hover
+{
+border:none;
+background-color:rgba(0,0,0,40);
+}</string>
+            </property>
+            <property name="text">
+             <string>MultiTalk</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="online_button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton::indicator 
+{
+width: 0;
+height: 0;
+}
+QRadioButton::checked 
+{
+background-color:rgba(0,0,0,80);
+}
+QRadioButton::unchecked:hover
+{
+border:none;
+background-color:rgba(0,0,0,40);
+}</string>
+            </property>
+            <property name="text">
+             <string>Online</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="create_button">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton
+{
+border:none;
+background-color:rgba(0,0,0,0);
+}
+QPushButton:hover
+{
+background-color:rgba(0,0,0,40);
+}
+QPushButton:pressed
+{
+background-color:rgba(0,0,0,80);
+}</string>
+            </property>
+            <property name="text">
+             <string>Create</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>:/res/gtm.png</normaloff>:/res/gtm.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QStackedWidget" name="groups_stacked">
+         <property name="styleSheet">
+          <string notr="true">QStackedWidget
+{
+border:none;
+}</string>
+         </property>
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <widget class="QWidget" name="group">
+          <property name="styleSheet">
+           <string notr="true">QWidget#group
+{
+border:none;
+}</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="multitalk">
+          <property name="styleSheet">
+           <string notr="true">QWidget#multitalk
+{
+border:none;
+}</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="boradcast"/>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="bottom" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>42</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>42</height>
+      </size>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="contact_toggle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-top:3px solid rgb(195, 195, 195);
+background-color: rgba(255, 255, 255,180);
+image: url(:/res/mainwindow/skin_tab_icon_contact_normal.png);
+padding:6px;
+}
+QPushButton:checked
+{
+border-top:3px solid rgb(65, 138, 255);
+image: url(:/res/mainwindow/skin_tab_icon_contact_selected.png);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="chatter_toggle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-top:3px solid rgb(195, 195, 195);
+background-color: rgba(255, 255, 255,180);
+image: url(:/res/mainwindow/skin_tab_icon_plugin_normal.png);
+padding:6px;
+}
+QPushButton:checked
+{
+border-top:3px solid rgb(65, 138, 255);
+image: url(:/res/mainwindow/skin_tab_icon_plugin_selected.png)
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="groups_toggle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-top:3px solid rgb(195, 195, 195);
+background-color: rgba(255, 255, 255,180);
+image: url(:/res/mainwindow/skin_tab_icon_now_normal.png);
+padding:6px;
+}
+QPushButton:checked
+{
+border-top:3px solid rgb(65, 138, 255);
+image: url(:/res/mainwindow/skin_tab_icon_now_selected.png)
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="sessions_toggle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-top:3px solid rgb(195, 195, 195);
+background-color: rgba(255, 255, 255,180);
+image: url(:/res/mainwindow/skin_tab_icon_conversation_normal.png);
+padding:6px;
+}
+QPushButton:checked
+{
+border-top:3px solid rgb(65, 138, 255);
+image: url(:/res/mainwindow/skin_tab_icon_conversation_selected.png)
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+  <action name="createGroups">
+   <property name="text">
+    <string>CreateGroup</string>
+   </property>
+   <property name="toolTip">
+    <string>Create Groups</string>
+   </property>
+  </action>
+  <action name="createMultitalk">
+   <property name="text">
+    <string>CreateMultiTalk</string>
+   </property>
+  </action>
+  <action name="wmspace">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/mainwindow/contact.png</normaloff>:/res/mainwindow/contact.png</iconset>
+   </property>
+   <property name="text">
+    <string>WM space</string>
+   </property>
+   <property name="toolTip">
+    <string>Access Space</string>
+   </property>
+  </action>
+  <action name="mail">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/mainwindow/writing.png</normaloff>:/res/mainwindow/writing.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mail</string>
+   </property>
+   <property name="toolTip">
+    <string>Access WM E-Mail</string>
+   </property>
+  </action>
+  <action name="center">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/mainwindow/center.png</normaloff>:/res/mainwindow/center.png</iconset>
+   </property>
+   <property name="text">
+    <string>Perconal Center</string>
+   </property>
+   <property name="toolTip">
+    <string>Access Personal Center</string>
+   </property>
+  </action>
+  <action name="app">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/mainwindow/app.png</normaloff>:/res/mainwindow/app.png</iconset>
+   </property>
+   <property name="text">
+    <string>Application</string>
+   </property>
+   <property name="toolTip">
+    <string>Access Application</string>
+   </property>
+  </action>
+  <action name="online">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/mainwindow/evk.png</normaloff>:/res/mainwindow/evk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Online</string>
+   </property>
+   <property name="toolTip">
+    <string>Online</string>
+   </property>
+  </action>
+  <action name="mme">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/res/mainwindow/fhu.png</normaloff>:/res/mainwindow/fhu.png</iconset>
+   </property>
+   <property name="text">
+    <string>M me</string>
+   </property>
+   <property name="toolTip">
+    <string>Message me</string>
+   </property>
+  </action>
+  <action name="leave">
+   <property name="text">
+    <string>leave</string>
+   </property>
+   <property name="toolTip">
+    <string>Leave off</string>
+   </property>
+  </action>
+  <action name="bussy">
+   <property name="text">
+    <string>bussy</string>
+   </property>
+   <property name="toolTip">
+    <string>I am bussy</string>
+   </property>
+  </action>
+  <action name="dnd">
+   <property name="text">
+    <string>Don't disturb</string>
+   </property>
+   <property name="toolTip">
+    <string>Please don't disturb me</string>
+   </property>
+  </action>
+  <action name="hide">
+   <property name="text">
+    <string>Hide me</string>
+   </property>
+   <property name="toolTip">
+    <string>Hide me, not show online status</string>
+   </property>
+  </action>
+  <action name="offline">
+   <property name="text">
+    <string>Offline</string>
+   </property>
+   <property name="toolTip">
+    <string>Offline</string>
+   </property>
+  </action>
+  <action name="novoice">
+   <property name="text">
+    <string>Close all voice</string>
+   </property>
+   <property name="toolTip">
+    <string>Close all sound</string>
+   </property>
+  </action>
+  <action name="noblink">
+   <property name="text">
+    <string>Don't blink head icon</string>
+   </property>
+   <property name="toolTip">
+    <string>Close all head icon blink</string>
+   </property>
+  </action>
+  <action name="lock">
+   <property name="text">
+    <string>Lock WM</string>
+   </property>
+   <property name="toolTip">
+    <string>Lock current WM</string>
+   </property>
+  </action>
+  <action name="setting">
+   <property name="text">
+    <string>System Setting</string>
+   </property>
+   <property name="toolTip">
+    <string>Open system setting</string>
+   </property>
+  </action>
+  <action name="card">
+   <property name="text">
+    <string>My perconal card</string>
+   </property>
+   <property name="toolTip">
+    <string>Open my personal card</string>
+   </property>
+  </action>
+  <action name="pcenter">
+   <property name="text">
+    <string>My WM center</string>
+   </property>
+   <property name="toolTip">
+    <string>Open my center</string>
+   </property>
+  </action>
+  <action name="main_setting">
+   <property name="text">
+    <string>Setting</string>
+   </property>
+   <property name="toolTip">
+    <string>Setting</string>
+   </property>
+  </action>
+  <action name="mm">
+   <property name="text">
+    <string>Message Manage</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Message Manager</string>
+   </property>
+  </action>
+  <action name="file_assitance">
+   <property name="text">
+    <string>File Assitance</string>
+   </property>
+   <property name="toolTip">
+    <string>Open File Assitance</string>
+   </property>
+  </action>
+  <action name="enshiren">
+   <property name="text">
+    <string>My Enshiren</string>
+   </property>
+   <property name="toolTip">
+    <string>Open My Enshiren</string>
+   </property>
+  </action>
+  <action name="wmms">
+   <property name="text">
+    <string>WM Membershiper</string>
+   </property>
+  </action>
+  <action name="security">
+   <property name="text">
+    <string>Security</string>
+   </property>
+  </action>
+  <action name="help">
+   <property name="text">
+    <string>Help</string>
+   </property>
+  </action>
+  <action name="upgrade">
+   <property name="text">
+    <string>Upgrade</string>
+   </property>
+   <property name="toolTip">
+    <string>Upgrade Software To Latest Version</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
+ <connections/>
+</ui>

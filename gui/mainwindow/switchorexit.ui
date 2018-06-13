@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SwitchOrExit</class>
+ <widget class="QWidget" name="SwitchOrExit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>254</width>
+    <height>53</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QPushButton" name="switcher">
+     <property name="minimumSize">
+      <size>
+       <width>96</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>96</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#switcher
+{
+border:1px solid gray;
+border-radius:2px;
+background-color:white;
+}
+QPushButton#switcher:hover
+{
+background-color:rgb(216, 216, 216);
+}</string>
+     </property>
+     <property name="text">
+      <string>Switch Account</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="exit">
+     <property name="minimumSize">
+      <size>
+       <width>96</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>96</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#exit
+{
+border:1px solid gray;
+border-radius:2px;
+background-color:white;
+}
+QPushButton#exit:hover
+{
+background-color:rgb(216, 216, 216);
+}</string>
+     </property>
+     <property name="text">
+      <string>Exit Account</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
