@@ -1,0 +1,1961 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SkinSetting</class>
+ <widget class="QWidget" name="SkinSetting">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>716</width>
+    <height>542</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>8</number>
+   </property>
+   <property name="topMargin">
+    <number>8</number>
+   </property>
+   <property name="rightMargin">
+    <number>8</number>
+   </property>
+   <property name="bottomMargin">
+    <number>8</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="top" native="true">
+     <property name="styleSheet">
+      <string notr="true">#top
+{
+background-color: rgba(150, 183, 208,120);
+}</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>28</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>28</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../res.qrc">:/res/skin/wm_icon_w.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">QLabel
+{
+color:white;
+}</string>
+        </property>
+        <property name="text">
+         <string>Change Skin</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="close">
+        <property name="minimumSize">
+         <size>
+          <width>28</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>28</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#close
+{
+border-image: url(:/res/skin/qns.png);
+}
+#close:hover
+{
+background-color: rgb(255, 0, 4);
+}
+#close:pressed
+{
+background-color: rgb(225, 0, 4);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="toolbar" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#toolbar
+{
+background-color: rgb(213, 213, 213);
+}</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <property name="leftMargin">
+       <number>30</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="skin">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-radius:2px;
+padding-right:10;
+padding-left:10;
+}
+QPushButton:hover
+{
+border:1px solid gray;
+}
+QPushButton:checked
+{
+color: rgb(38, 121, 255)
+}
+QPushButton:checked:hover
+{
+border:1px solid gray;
+background-color: rgb(208, 215, 255);
+}</string>
+        </property>
+        <property name="text">
+         <string>Skin Set</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res.qrc">
+          <normaloff>:/res/skin/qq_setting_zhuangban.png</normaloff>:/res/skin/qq_setting_zhuangban.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="show">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-radius:2px;
+padding-right:10;
+padding-left:10;
+}
+QPushButton:hover
+{
+border:1px solid gray;
+}
+QPushButton:checked
+{
+color: rgb(38, 121, 255)
+}
+QPushButton:checked:hover
+{
+border:1px solid gray;
+background-color: rgb(208, 215, 255);
+}</string>
+        </property>
+        <property name="text">
+         <string>Show</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res.qrc">
+          <normaloff>:/res/skin/qq_setting_xiangce.png</normaloff>:/res/skin/qq_setting_xiangce.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bubble">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-radius:2px;
+padding-right:10;
+padding-left:10;
+}
+QPushButton:hover
+{
+border:1px solid gray;
+}
+QPushButton:checked
+{
+color: rgb(38, 121, 255)
+}
+QPushButton:checked:hover
+{
+border:1px solid gray;
+background-color: rgb(208, 215, 255);
+}</string>
+        </property>
+        <property name="text">
+         <string>Colored Bubble</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res.qrc">
+          <normaloff>:/res/skin/qq_setting_tim.png</normaloff>:/res/skin/qq_setting_tim.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="uimanage">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>28</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border:none;
+border-radius:2px;
+padding-right:10;
+padding-left:10;
+}
+QPushButton:hover
+{
+border:1px solid gray;
+}
+QPushButton:checked
+{
+color: rgb(38, 121, 255)
+}
+QPushButton:checked:hover
+{
+border:1px solid gray;
+background-color: rgb(208, 215, 255);
+}</string>
+        </property>
+        <property name="text">
+         <string>UI Manage</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../res.qrc">
+          <normaloff>:/res/skin/qq_setting_schedule.png</normaloff>:/res/skin/qq_setting_schedule.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="setting">
+        <property name="minimumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border-image: url(:/res/skin/shx.png);
+}
+QPushButton:hover
+{
+border-image: url(:/res/skin/shy.png);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="skin_page">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_16">
+            <property name="spacing">
+             <number>2</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="item1">
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="item2"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item3"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item4"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item5"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_17">
+            <property name="spacing">
+             <number>2</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="item6"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item7"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item8"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item9"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item10"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_18">
+            <property name="spacing">
+             <number>2</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="item11"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item12"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item13"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item14"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="item15"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+}
+QPushButton:hover
+{
+background-color:rgba(76, 184, 255,80)
+}
+QPushButton:pressed
+{
+background-color: rgba(221, 221, 221,120);
+padding-top:6;
+padding-bottom:2;
+padding-left:12;
+padding-right:8;
+}</string>
+           </property>
+           <property name="text">
+            <string>7day skin package</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+}
+QPushButton:hover
+{
+background-color:rgba(76, 184, 255,80)
+}
+QPushButton:pressed
+{
+background-color: rgba(221, 221, 221,120);
+padding-top:6;
+padding-bottom:2;
+padding-left:12;
+padding-right:8;
+}</string>
+           </property>
+           <property name="text">
+            <string>Custom</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../res.qrc">
+             <normaloff>:/res/skin/pau.png</normaloff>:/res/skin/pau.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+}
+QPushButton:hover
+{
+background-color:rgba(76, 184, 255,80)
+}
+QPushButton:pressed
+{
+background-color: rgba(221, 221, 221,120);
+padding-top:6;
+padding-bottom:2;
+padding-left:12;
+padding-right:8;
+}</string>
+           </property>
+           <property name="text">
+            <string>More</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>28</width>
+             <height>28</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>28</width>
+             <height>28</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+}
+QPushButton:hover
+{
+background-color:rgba(76, 184, 255,80)
+}
+QPushButton:pressed
+{
+background-color: rgba(221, 221, 221,120);
+padding-top:6;
+padding-bottom:2;
+padding-left:12;
+padding-right:8;
+}</string>
+           </property>
+           <property name="text">
+            <string>color set</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="transparent">
+           <property name="minimumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#transparent
+{
+border:none;
+	image: url(:/res/skin/rtf.png);
+}
+#transparent:hover
+{
+border:1px solid gray;
+border-radius:2px;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="show_page">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_2" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="minimumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border-left:1px solid gray;
+border-bottom:1px solid gray;
+border-top:1px solid gray;
+border-right:none;
+background-color: rgba(221, 221, 221,120);
+border-top-left-radius:2px;
+border-bottom-left-radius:2px;
+}
+QPushButton:checked
+{
+background-color: gray;
+color:white;
+}</string>
+           </property>
+           <property name="text">
+            <string>Male</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="minimumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border-top:1px solid gray;
+border-bottom:1px solid gray;
+border-right:1px solid gray;
+border-left:none;
+background-color: rgba(221, 221, 221,120);
+border-top-right-radius:2px;
+border-bottom-right-radius:2px;
+}
+QPushButton:checked
+{
+background-color: gray;
+color:white;
+}</string>
+           </property>
+           <property name="text">
+            <string>Female</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>15</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+}
+QPushButton:hover
+{
+background-color:rgba(76, 184, 255,80)
+}
+QPushButton:pressed
+{
+background-color: rgba(221, 221, 221,120);
+padding-top:6;
+padding-bottom:2;
+padding-left:12;
+padding-right:8;
+}</string>
+           </property>
+           <property name="text">
+            <string>More</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>28</width>
+             <height>28</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>28</width>
+             <height>28</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="link">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:none;
+color:rgb(32, 151, 255)
+}
+QPushButton:hover
+{
+font: 9pt &quot;Sans Serif&quot;;
+	text-decoration: underline;
+}</string>
+           </property>
+           <property name="text">
+            <string>You can use all shows for frre</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="bubble_page">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_3" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_8">
+           <property name="minimumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border-left:1px solid gray;
+border-bottom:1px solid gray;
+border-top:1px solid gray;
+border-right:none;
+background-color: rgba(221, 221, 221,120);
+border-top-left-radius:2px;
+border-bottom-left-radius:2px;
+}
+QPushButton:checked
+{
+background-color: gray;
+color:white;
+}</string>
+           </property>
+           <property name="text">
+            <string>Male</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_9">
+           <property name="minimumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>64</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border-top:1px solid gray;
+border-bottom:1px solid gray;
+border-right:1px solid gray;
+border-left:none;
+background-color: rgba(221, 221, 221,120);
+border-top-right-radius:2px;
+border-bottom-right-radius:2px;
+}
+QPushButton:checked
+{
+background-color: gray;
+color:white;
+}</string>
+           </property>
+           <property name="text">
+            <string>Female</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="minimumSize">
+            <size>
+             <width>28</width>
+             <height>28</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>28</width>
+             <height>28</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="styleSheet">
+            <string notr="true">QLabel
+{
+color:gray;
+}</string>
+           </property>
+           <property name="text">
+            <string>WM membership can use all VIP bubble for free</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_10">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+color:red;
+}
+</string>
+           </property>
+           <property name="text">
+            <string>open a membership</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="ui_page">
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>20</number>
+       </property>
+       <property name="rightMargin">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>50</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Show in main panel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>24</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QWidget" name="left" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#left
+{
+border:1px solid gray;
+border-radius:2px;
+}</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="leftMargin">
+             <number>15</number>
+            </property>
+            <property name="topMargin">
+             <number>5</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QCheckBox" name="session">
+                <property name="text">
+                 <string>Session</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/res/skin/qq_setting_schedule.png</normaloff>:/res/skin/qq_setting_schedule.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_9">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <widget class="QCheckBox" name="contacts">
+                <property name="text">
+                 <string>Contacts</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/res/skin/tql.png</normaloff>:/res/skin/tql.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QCheckBox" name="checkBox_3">
+                <property name="text">
+                 <string>GroupTalk</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/res/skin/tql.png</normaloff>:/res/skin/tql.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QCheckBox" name="online">
+                <property name="text">
+                 <string>Online</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/res/skin/tqr.png</normaloff>:/res/skin/tqr.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item>
+               <widget class="QCheckBox" name="classes">
+                <property name="text">
+                 <string>Class</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/res/skin/qq_setting_tim.png</normaloff>:/res/skin/qq_setting_tim.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_13">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_14">
+              <item>
+               <widget class="QCheckBox" name="space">
+                <property name="text">
+                 <string>Space</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/res/skin/tqp.png</normaloff>:/res/skin/tqp.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_14">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <item>
+               <widget class="QCheckBox" name="weather">
+                <property name="text">
+                 <string>Weather</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res.qrc">
+                  <normaloff>:/res/skin/qq_setting_zhuangban.png</normaloff>:/res/skin/qq_setting_zhuangban.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_15">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Show in personal info area</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>2</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="up">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>64</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>64</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+}
+QPushButton:hover
+{
+background-color:rgba(76, 184, 255,80)
+}
+QPushButton:pressed
+{
+background-color: rgba(221, 221, 221,120);
+padding-top:6;
+padding-bottom:2;
+padding-left:12;
+padding-right:8;
+}</string>
+             </property>
+             <property name="text">
+              <string>Up</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../res.qrc">
+               <normaloff>:/res/skin/pxp.png</normaloff>:/res/skin/pxp.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="down">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>64</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>64</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton
+{
+border:1px solid gray;
+background-color: rgba(221, 221, 221,120);
+border-radius:2px;
+padding-left:10;
+padding-right:10;
+padding-top:4;
+padding-bottom:4;
+}
+QPushButton:hover
+{
+background-color:rgba(76, 184, 255,80)
+}
+QPushButton:pressed
+{
+background-color: rgba(221, 221, 221,120);
+padding-top:6;
+padding-bottom:2;
+padding-left:12;
+padding-right:8;
+}</string>
+             </property>
+             <property name="text">
+              <string>Down</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../res.qrc">
+               <normaloff>:/res/skin/pxq.png</normaloff>:/res/skin/pxq.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QListWidget" name="right">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">::text
+{
+left:70px;
+}
+::indicator
+{
+left:30px;
+}
+::icon
+{
+left:70px;
+}
+::item
+{
+height:24px;
+}
+::item:hover
+{
+background-color:rgb(235, 219, 169);
+}
+::item:selected
+{
+background-color:rgba(235, 219, 169,120);
+}
+#right
+{
+border:1px solid gray;
+border-radius:2px;
+background-color:rgb(223, 223, 223);
+}</string>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>WM space</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>241</red>
+               <green>241</green>
+               <blue>241</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/tqp.png</normaloff>:/res/skin/tqp.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>My mail-box</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>223</red>
+               <green>223</green>
+               <blue>223</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/qq_setting_tim.png</normaloff>:/res/skin/qq_setting_tim.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Membership center</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>241</red>
+               <green>241</green>
+               <blue>241</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/qq_setting_schedule.png</normaloff>:/res/skin/qq_setting_schedule.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Country</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>223</red>
+               <green>223</green>
+               <blue>223</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/qq_setting_zhuangban.png</normaloff>:/res/skin/qq_setting_zhuangban.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Miniweb</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>241</red>
+               <green>241</green>
+               <blue>241</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/qq_setting_xiangce.png</normaloff>:/res/skin/qq_setting_xiangce.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Application</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>223</red>
+               <green>223</green>
+               <blue>223</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/taj.png</normaloff>:/res/skin/taj.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>My purchase</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>241</red>
+               <green>241</green>
+               <blue>241</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/tam.png</normaloff>:/res/skin/tam.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Critical</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>223</red>
+               <green>223</green>
+               <blue>223</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/tak.png</normaloff>:/res/skin/tak.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Personal Center</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>241</red>
+               <green>241</green>
+               <blue>241</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/tal.png</normaloff>:/res/skin/tal.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>My wallet</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>223</red>
+               <green>223</green>
+               <blue>223</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/qq_setting_schedule.png</normaloff>:/res/skin/qq_setting_schedule.png</iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>UI manage</string>
+            </property>
+            <property name="background">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>241</red>
+               <green>241</green>
+               <blue>241</blue>
+              </color>
+             </brush>
+            </property>
+            <property name="checkState">
+             <enum>Unchecked</enum>
+            </property>
+            <property name="icon">
+             <iconset resource="../res.qrc">
+              <normaloff>:/res/skin/pau.png</normaloff>:/res/skin/pau.png</iconset>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
+ <connections/>
+</ui>
