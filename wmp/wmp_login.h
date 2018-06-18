@@ -88,11 +88,13 @@ WMPSHARED_EXPORT extern void print_wmp_login(wmp_login_t *p_wmp_login);
 
 
 
-#define WMP_KEY_LENGTH							256
+#define WMP_KEY_LENGTH							255
 
+#define WMP_LOGIN_KEY_PUBLIC                    1
+#define WMP_LOGIN_KEY_PRIVATE                   2
 
 /* *********************************************************************************************
- * Walking Message protocol login.
+ * Walking Message protocol login key.
  * @attr			Walking Message login attribute.
  * @result			Walking Message login result.
  * @user_id			Walking Message login user id.

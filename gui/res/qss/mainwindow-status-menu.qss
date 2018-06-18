@@ -1,0 +1,31 @@
+/*ÓÃ»§×´Ì¬²Ëµ¥*/
+QMenu
+{
+    border-width:2px;
+    padding:0px;
+}
+ 
+QMenu::item
+{
+    padding:5 20 5 30;
+}
+ 
+QMenu::item:selected
+{
+    background:rgb(39 , 134 , 228);
+}
+ 
+QMenu:icon
+{
+    padding:0 0 0 10 ;
+}
+ 
+QMenu::separator
+{
+    height:1px;
+    margin-left:25;
+    margin-top:2px;
+    margin-right:0;
+    margin-bottom:2px;
+    background-color:rgb(183 , 195 , 204);
+}

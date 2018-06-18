@@ -1,0 +1,4 @@
+QTreeWidget#contact_view
+{
+border:none;
+}

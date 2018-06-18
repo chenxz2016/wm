@@ -10,7 +10,7 @@ public:
 
     void init()
     {
-//        p->setUniqueID(WMP_PROTO_MSG_ID);
+        p->setUniqueID(WMP_PROTO_MSG_ID);
     }
 
     int timeout;

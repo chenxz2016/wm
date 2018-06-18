@@ -1,0 +1,4 @@
+QTreeWidget#group_view
+{
+border:none;
+}

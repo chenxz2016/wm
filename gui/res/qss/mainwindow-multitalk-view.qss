@@ -1,0 +1,4 @@
+QTreeWidget#multitalk_view
+{
+border:none;
+}

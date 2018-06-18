@@ -25,7 +25,7 @@
 #include <QDateTime>
 
 
-#define WM_HOST_FAKE    "192.168.0.111"
+#define WM_HOST_FAKE    "192.168.0.100"
 #define WM_PORT_FAKE    3710
 
 
@@ -35,6 +35,7 @@ class ClientServicePrivate
 public:
     ClientServicePrivate(ClientService *parent)
         :p(parent)
+        ,sequence(0)
     {
         tcp = new QTcpSocket(p);
     }
@@ -50,8 +51,8 @@ public:
         process = new CSMsgProcess(id,p);
         pm[process->uniqueID()] = process;
 
-        process = new CSScreenShotProcess(id,p);
-        pm[process->uniqueID()] = process;
+//        process = new CSScreenShotProcess(id,p);
+//        pm[process->uniqueID()] = process;
 
         process = new CSUserProcess(id,p);
         pm[process->uniqueID()] = process;
@@ -84,6 +85,7 @@ public:
     QByteArray pwd;
     WMEncryptKey key;
 
+    quint32 sequence;
     quint8 protoType;
     char localDevice[24];
     quint8 network;
@@ -195,7 +197,7 @@ bool ClientService::sendData(const char *data, quint32 data_len)
     p_d->tcp->write(data,data_len);
     bool ret = p_d->tcp->waitForBytesWritten();
 
-    if(ret)
+    if(!ret)
         p_d->error = p_d->tcp->errorString();
 
     return ret;
@@ -211,6 +213,13 @@ bool ClientService::sendPackage(wm_protocol_t *proto)
         p_d->error = tr("WMP error, package failed.");
         return false;
     }
+    bool ret = sendData(package->data,package->length);
+    if(!ret)
+    {
+        p_d->error = tr("WMP error, send failed.");
+        return false;
+    }
+    p_d->sequence++;
 	return true;
 }
 
@@ -237,6 +246,11 @@ quint32 ClientService::time() const
 void ClientService::protoVersion(char *version)
 {
     memcpy(version,p_d->version,12);
+}
+
+quint32 ClientService::protoSequence() const
+{
+    return p_d->sequence;
 }
 
 void ClientService::setEncryptKey(const WMEncryptKey &key) const

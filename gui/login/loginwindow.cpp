@@ -231,7 +231,7 @@ void LoginWindow::startLogin()
 
     /* start to login server. */
     QMap<QString,QVariant> map;
-    map["opt"] = WMP_PROTO_LOGIN_ID;
+    map["opt"] = WMP_PROTO_LOGIN_KEY_ID;
     map["account"]  = ui->account->text().toInt();
     map["pwd"]  = ui->pwd->text();
     WMCore::globalInstance()->flush("ClientService",map);

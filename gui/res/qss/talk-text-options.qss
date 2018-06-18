@@ -1,0 +1,42 @@
+QListWidget
+{
+background-color:white;
+border:2px solid rgb(26, 156, 255);
+border-radius:4px;
+}
+QListWidget::item:hover
+{
+background-color:rgb(26, 156, 255);
+}
+QScrollBar::add-page
+{
+background-color: white;
+}
+QScrollBar::add-page:hover
+{
+background-color: lightgray;
+}
+QScrollBar::sub-page
+{
+background-color: white;
+}
+QScrollBar::sub-page:hover
+{
+background-color: lightgray;
+}
+QScrollBar:vertical 
+{
+border: none;
+width: 10px;
+border-radius:1px;
+}
+QScrollBar::handle:vertical
+{
+background: rgb(232, 232, 232);
+border-radius:5px;
+min-height: 20px;
+}
+QScrollBar::handle:vertical:hover
+{
+background: rgb(149, 149, 149);
+}

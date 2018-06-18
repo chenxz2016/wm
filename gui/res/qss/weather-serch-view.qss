@@ -1,0 +1,16 @@
+QListWidget
+{
+border:1px solid blue;
+border-radius:2px;
+background-color: rgba(255, 255, 255,0);
+border-color: rgb(42, 138, 255);
+}
+QListWidget::item
+{
+border:1px solid white;
+background-color: white;
+}
+QListWidget::item:selected
+{
+background-color: rgb(66, 107, 255);
+}

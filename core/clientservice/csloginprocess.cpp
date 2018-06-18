@@ -5,17 +5,25 @@
 #include<wmp_login.h>
 #include<protocol_crypt.h>
 
+static void generate_public_key(uint8_t *pub_key,uint8_t key_len)
+{
+    qsrand(time(NULL));
+    for(uint8_t i=0;i<key_len;i++)
+        pub_key[i] = qrand()%255;
+}
+
 class CSLoginProcessPrivate
 {
 public:
     CSLoginProcessPrivate(CSLoginProcess *parent)
         :p(parent)
         ,status(CSLoginProcess::Offline)
+        ,timeout(30*1000)
     {}
 
     void init()
     {
-        p->setUniqueID(WMP_PROTO_LOGIN_ID);
+        p->setUniqueID(WMP_PROTO_LOGIN_KEY_ID);
 
         int ret = protocol_crypt_init(0);
         if(ret!=P_CRYPT_SUCCESS)
@@ -117,55 +125,119 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
     return true;
 }
 
+/* *************************************************************************
+ *
+ * @brief:      1. Send public key to request private key.
+ *              2. Create a crypted connection to server.
+ *
+ *
+ * ************************************************************************/
 bool CSLoginProcess::syncSend(const QVariant &data)
 {
     QMap<QString,QVariant> map = data.toMap();
     bool ok = true;
-    p_userID = map["account"].toString().toInt(&ok);
-    if(p_userID<1000)
+    int opt = map["opt"].toInt();
+
+    /* When opt is WMP_PROTO_LOGIN_ID try to create a crypted connection to server. */
+    if(opt==WMP_PROTO_LOGIN_ID)
     {
-        p_userID = 0;
-        return false;
+        p_userID = map["account"].toString().toInt(&ok);
+        if(p_userID<1000)
+        {
+            p_userID = 0;
+            return false;
+        }
+
+        p_d->pwd = map["pwd"].toByteArray();
+        if(p_d->pwd.isEmpty())
+            return false;
+
+        /* 2 parameters, user id and user pwd. */
+        wm_protocol_t *proto = allocate_wmp(1);
+
+        proto->base.proto_type = p_service->protoType();
+        proto->base.src = p_userID;
+        proto->base.dst = CS_SERVICE_ID;
+        p_service->localDevice(proto->base.device);
+
+        proto->base.network = p_service->network();
+        proto->base.time = p_service->time();
+
+        p_service->protoVersion(proto->base.version);
+
+        wmp_login_key_t *login = allocate_wmp_login_key();
+
+        proto->body.param->main_id = WMP_PROTO_LOGIN_ID;
+        proto->body.param->data = reinterpret_cast<char *>(login);
+
+        login->attr = 1;
+        login->user_id = p_userID;
+
+        print_wmp(proto);
+
+        bool ret = p_service->sendPackage(proto);
+        if(!ret)
+        {
+            return false;
+        }
+
+        p_d->timerID = startTimer(p_d->timeout);
+        return true;
+    }
+    /* When opt is WMP_PROTO_LOGIN_KEY_ID, request private key from server. */
+    else if(opt==WMP_PROTO_LOGIN_KEY_ID)
+    {
+        p_userID = map["account"].toString().toInt(&ok);
+        if(p_userID<1000)
+        {
+            p_userID = 0;
+            return false;
+        }
+
+        p_d->pwd = map["pwd"].toByteArray();
+        if(p_d->pwd.isEmpty())
+            return false;
+
+        /* 1 parameters, user id and user pwd. */
+        wm_protocol_t *proto = allocate_wmp(1);
+
+        proto->head = WMP_HEAD_ID;
+        proto->sequence = p_service->protoSequence();
+        proto->tail = WMP_TAIL_ID;
+
+
+        proto->base.proto_type = p_service->protoType();
+        proto->base.src = p_userID;
+        proto->base.dst = CS_SERVICE_ID;
+        p_service->localDevice(proto->base.device);
+
+        proto->base.network = p_service->network();
+        proto->base.time = p_service->time();
+
+        p_service->protoVersion(proto->base.version);
+
+        wmp_login_key_t *key = allocate_wmp_login_key();
+
+        proto->body.param->main_id = WMP_PROTO_LOGIN_KEY_ID;
+        proto->body.param->data = reinterpret_cast<char *>(key);
+
+        key->attr = 0;
+        key->user_id = p_userID;
+        key->type = WMP_LOGIN_KEY_PUBLIC;
+        key->key_len = WMP_KEY_LENGTH;
+        generate_public_key(key->key,key->key_len);
+
+        bool ret = p_service->sendPackage(proto);
+        if(!ret)
+        {
+            return false;
+        }
+
+        p_d->timerID = startTimer(p_d->timeout);
+        return true;
     }
 
-    p_d->pwd = map["pwd"].toByteArray();
-    if(p_d->pwd.isEmpty())
-        return false;
-
-    quint8 type = map["type"].toInt();
-    if(!type)
-        return false;
-
-    /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
-
-    proto->base.proto_type = p_service->protoType();
-    proto->base.src = p_userID;
-    proto->base.dst = CS_SERVICE_ID;
-    p_service->localDevice(proto->base.device);
-
-    proto->base.network = p_service->network();
-    proto->base.time = p_service->time();
-
-    p_service->protoVersion(proto->base.version);
-
-    wmp_login_key_t *key = allocate_wmp_login_key();
-
-    proto->body.param->main_id = WMP_PROTO_LOGIN_KEY_ID;
-    proto->body.param->data = reinterpret_cast<char *>(key);
-
-    key->type = type;
-    key->attr = 1;
-    key->user_id = p_userID;
-
-    bool ret = p_service->sendPackage(proto);
-    if(!ret)
-    {
-        return false;
-    }
-
-    p_d->timerID = startTimer(p_d->timeout);
-    return true;
+    return false;
 }
 
 void CSLoginProcess::ayncRecv(wm_parameter_t *param, quint16 param_num)

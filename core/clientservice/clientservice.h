@@ -58,6 +58,8 @@ public:
     quint8 network()const;
     quint32 time()const;
     void protoVersion(char *version);
+
+    quint32 protoSequence()const;
 signals:
     void error(QString);
 protected:

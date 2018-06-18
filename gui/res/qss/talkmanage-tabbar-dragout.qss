@@ -1,0 +1,27 @@
+QTabBar
+{
+background: rgba(122, 98, 255,120);
+border: none;
+padding: 3px;
+}
+QTabBar::close-button
+{
+image: url(:/res/talk/qhg.png);
+}
+QTabBar::close-button:pressed
+{
+image: url(:/res/talk/qhh.png)
+}
+QTabBar::tab
+{
+height:42px;
+top:3px;left:3px;
+}
+QTabBar::tab:selected
+{
+background: rgb(122, 98, 255);
+}
+QTabBar::tab:!selected
+{
+background: transparent;
+}

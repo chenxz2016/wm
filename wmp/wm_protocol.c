@@ -246,15 +246,81 @@ static int parser_wmp_body(const char *package,uint32_t pack_len,wm_body_t *p_wm
         p_wm_body->param[i].main_id = ntohs(*(uint16_t *)(package+index));
         index+=2;
 
-		p_wm_body->param[i].length = ntohs(*(uint16_t *)(package+index));
-		index+=2;
+        p_wm_body->param[i].length = ntohl(*(uint32_t *)(package+index));
+        index+=4;
 
-		/* Check length for data. */
-		WMP_CheckLen(index,p_wm_body->param[i].length,pack_len)
-
-		set_wmp_param_len(p_wm_body->param+i,p_wm_body->param[i].length);
-		memcpy(p_wm_body->param[i].data,package+index,p_wm_body->param[i].length);
-		index+=p_wm_body->param[i].length;
+        switch(p_wm_body->param[i].main_id)
+        {
+        case WMP_PROTO_LOGIN_KEY_ID:
+        {
+            wmp_login_key_t *key = parser_wmp_login_key(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)key;
+            break;
+        }
+        case WMP_PROTO_LOGIN_ID:
+        {
+            wmp_login_t *login = parser_wmp_login(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)login;
+            break;
+        }
+        case WMP_PROTO_BH_ID:
+        {
+            wmp_beat_heart_t *bh = parser_wmp_beat_heart(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)bh;
+            break;
+        }
+        case WMP_PROTO_FILE_ID:
+        {
+            wmp_file_t *file = parser_wmp_file(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)file;
+            break;
+        }
+        case WMP_PROTO_GROUP_ID:
+        {
+            wmp_group_t *group = parser_wmp_group(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)group;
+            break;
+        }
+        case WMP_PROTO_MSG_ID:
+        {
+            wmp_message_t *msg = parser_wmp_message(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)msg;
+            break;
+        }
+        case WMP_PROTO_REGISTER_ID:
+        {
+            wmp_register_t *reg = parser_wmp_register(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)reg;
+            break;
+        }
+        case WMP_PROTO_SESSION_ID:
+        {
+            wmp_session_t *session = parser_wmp_session(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)session;
+            break;
+        }
+        case WMP_PROTO_SOUND_ID:
+        {
+            wmp_sound_t *sound = parser_wmp_sound(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)sound;
+            break;
+        }
+        case WMP_PROTO_VIDEO_ID:
+        {
+            wmp_video_t *video = parser_wmp_video(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)video;
+            break;
+        }
+        case WMP_PROTO_USER_ID:
+        {
+            wmp_user_t *user = parser_wmp_user(package+index,pack_len-index);
+            p_wm_body->param[i].data = (char *)user;
+            break;
+        }
+        default:
+            break;
+        }
+        index += p_wm_body->param[i].length;
 	}
 	return WMP_PARSER_SUCCESS;
 }
@@ -347,20 +413,28 @@ wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const 
 static uint32_t package_wmp_base(char *package,const wm_base_t *p_wm_base)
 {
 	uint32_t index = 0;
+
 	*(uint16_t *)(package+index) = htons(p_wm_base->proto_type);
 	index+=2;
+
 	*(uint32_t*)(package+index) = htonl(p_wm_base->src);
 	index+=4;
+
 	*(uint32_t *)(package+index) = htonl(p_wm_base->dst);
 	index+=4;
+
 	memcpy(package+index,p_wm_base->device,24);
 	index+=24;
+
 	*(uint8_t *)(package+index) = p_wm_base->network;
 	index++;
+
 	*(uint32_t *)(package+index) = htonl(p_wm_base->time);
 	index+=4;
+
 	memcpy(package+index,p_wm_base->version,10);
 	index+=10;
+
 	return index;
 }
 
@@ -376,9 +450,11 @@ static uint32_t package_wmp_base(char *package,const wm_base_t *p_wm_base)
 static uint32_t package_wmp_body(char *package,const wm_body_t *p_wm_body)
 {
 	uint32_t index = 0;
+
 	*(uint16_t *)(package+index) = htons(p_wm_body->param_num);
 	index+=2;
-	for(uint16_t i=0;i<p_wm_body->param_num;i++)
+
+    for(uint16_t i=0;i<p_wm_body->param_num;i++)
 	{
 		*(uint32_t *)(package+index) = htonl(p_wm_body->param[i].attr);
 		index+=4;
@@ -388,9 +464,15 @@ static uint32_t package_wmp_body(char *package,const wm_body_t *p_wm_body)
 
         uint32_t *len_ptr = NULL;
         len_ptr = (uint32_t *)(package+index);
-        index+=2;
+        index+=4;
         switch(p_wm_body->param[i].main_id)
         {
+        case WMP_PROTO_LOGIN_KEY_ID:
+        {
+            wmp_login_key_t *key = (wmp_login_key_t *)p_wm_body->param[i].data;
+            p_wm_body->param[i].length = package_wmp_login_key(package+index,key);
+            break;
+        }
         case WMP_PROTO_LOGIN_ID:
         {
             wmp_login_t *login = (wmp_login_t *)p_wm_body->param[i].data;
@@ -455,10 +537,8 @@ static uint32_t package_wmp_body(char *package,const wm_body_t *p_wm_body)
             break;
         }
 
-        *(len_ptr) = htonl(p_wm_body->param[i].length);
-
-		memcpy(package+index,p_wm_body->param[i].data,p_wm_body->param[i].length);
-		index+=p_wm_body->param[i].length;
+        (*len_ptr) = htonl(p_wm_body->param[i].length);
+        index += p_wm_body->param[i].length;
 	}
 	return index;
 }
@@ -475,7 +555,7 @@ static uint32_t package_wmp_body(char *package,const wm_body_t *p_wm_body)
  * **********************************************************************************************/
 protocol_package *package_wmp(const wm_protocol_t *p_wm,const char *key,const uint16_t key_len)
 {
-	char buffer[1024]="";
+    char buffer[5*1024]="";
 	uint32_t index = 0;
 	uint32_t *crc_ptr = NULL;
 	uint32_t *len_ptr = NULL;

@@ -1,0 +1,17 @@
+QListWidget#session_view
+{
+border:none;
+}
+QListWidget#session_view::item
+{
+height:70;
+background:white;
+}
+QListWidget#session_view::item:selected
+{
+background: #c2c2c2;
+}
+QListWidget#session_view::item:!selected:hover
+{
+background: rgb(223, 223, 223);
+}

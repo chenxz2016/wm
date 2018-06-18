@@ -222,7 +222,7 @@ wmp_login_key_t *parser_wmp_login_key(const char *package,uint32_t pack_len)
 }
 
 /* ***********************************************************************************
- * Parser wmp_login_key_t package.
+ * Package wmp_login_key_t package.
  *
  * @param:	package		package.
  * @param:	p_wmp_login_key	 wm_login_key_t pointer.
