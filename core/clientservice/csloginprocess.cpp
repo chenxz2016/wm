@@ -83,7 +83,7 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
         p_service->setEncryptKey(k);
 
 		/* push key request successfully to gui. */
-		resetPushData();
+        resetPushData();
         appendPushData("res",WM::KeyReqSuccess);
         emit p_service->startUpdate(p_service);
 		
@@ -93,8 +93,6 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
         map["pwd"] = p_d->pwd;
 		map["opt"] = WMP_PROTO_LOGIN_ID;
         syncSend(map);
-
-
     }
     else if(param->main_id==WMP_PROTO_LOGIN_ID)
     {
@@ -125,9 +123,9 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
             return false;
         }
 
-        resetPushData();
-        appendPushData("res",WM::LoginSuccess);
-        emit p_service->startUpdate(p_service);
+//        resetPushData();
+//        appendPushData("res",WM::LoginSuccess);
+//        emit p_service->startUpdate(p_service);
     }
 
     return true;
@@ -163,6 +161,10 @@ bool CSLoginProcess::syncSend(const QVariant &data)
         /* 2 parameters, user id and user pwd. */
         wm_protocol_t *proto = allocate_wmp(1);
 
+        proto->head = WMP_HEAD_ID;
+        proto->sequence = p_service->protoSequence();
+        proto->tail = WMP_TAIL_ID;
+
         proto->base.proto_type = p_service->protoType();
         proto->base.src = p_userID;
         proto->base.dst = CS_SERVICE_ID;
@@ -173,13 +175,15 @@ bool CSLoginProcess::syncSend(const QVariant &data)
 
         p_service->protoVersion(proto->base.version);
 
-        wmp_login_key_t *login = allocate_wmp_login_key();
+        wmp_login_t *login = allocate_wmp_login();
 
         proto->body.param->main_id = WMP_PROTO_LOGIN_ID;
         proto->body.param->data = reinterpret_cast<char *>(login);
 
-        login->attr = 1;
+        login->attr = 0;
         login->user_id = p_userID;
+        login->pwd_len = p_d->pwd.length();
+        memcpy(login->password,p_d->pwd.data(),p_d->pwd.length());
 
         print_wmp(proto);
 

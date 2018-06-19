@@ -24,6 +24,9 @@
 #include <crc32.h>
 #include <QDateTime>
 
+#include <WinSock2.h>
+#include <winsock.h>
+#pragma comment(lib,"ws2_32.lib")
 
 #define WM_HOST_FAKE    "192.168.0.100"
 #define WM_PORT_FAKE    3710
@@ -287,6 +290,8 @@ void ClientService::tcpRead()
     if(recv_data.size()<=0)
         return ;
 
+    qDebug() << "recv:" << recv_data.length();
+
     if(left_flag)
     {
         memcpy(dispose_data,left_data,left_data_size);
@@ -301,7 +306,7 @@ void ClientService::tcpRead()
         if((i+2)>=dispose_data_size)
             break;
 
-        quint32 len = *(quint32 *)(dispose_data+i+13);
+        quint32 len = ntohl(*(quint32 *)(dispose_data+i+13));
 
         if((i+len)>dispose_data_size || len <= 16)
         {
@@ -311,9 +316,9 @@ void ClientService::tcpRead()
 
         if(*(quint8 *)(dispose_data+i)==WMP_HEAD_ID && *(quint8*)(dispose_data+i+len-1)==WMP_TAIL_ID)
         {
-            quint32 p_crc_code = *(quint32 *)(dispose_data+i+1);
-            quint32 crc_code = crc32_check_char_buffer(dispose_data+i+5,len-6);
-            if(p_crc_code==crc_code)
+            quint32 p_crc_code = ntohl(*(quint32 *)(dispose_data+i+5));
+            quint32 crc_code = crc32_check_char_buffer(dispose_data+i+17,len-18);
+//            if(p_crc_code==crc_code)
             {
                 protocol_package *package = allocate_package(len);
                 memcpy(package->data,dispose_data+i,len);
@@ -341,31 +346,8 @@ void ClientService::tcpRead()
 
     foreach(protocol_package *package,list)
     {
-        wm_protocol_t *wmp = parser_wmp(package,p_d->key.key,p_d->key.key_len);
-        switch(wmp->body.param->main_id)
-        {
-        case WMP_PROTO_LOGIN_ID:
-            break;
-        case WMP_PROTO_BH_ID:
-            break;
-        case WMP_PROTO_FILE_ID:
-            break;
-        case WMP_PROTO_GROUP_ID:
-            break;
-        case WMP_PROTO_MSG_ID:
-            break;
-        case WMP_PROTO_REGISTER_ID:
-            break;
-        case WMP_PROTO_SESSION_ID:
-            break;
-        case WMP_PROTO_SOUND_ID:
-            break;
-        case WMP_PROTO_VIDEO_ID:
-            break;
-        case WMP_PROTO_USER_ID:
-            break;
-        default:
-            break;
-        }
+        wm_protocol_t *p_wm = parser_wmp(package,p_d->key.key,p_d->key.key_len);
+        AbstractCSProcess *process = p_d->pm[p_wm->body.param[0].main_id];
+        process->syncRecv(p_wm->body.param,p_wm->body.param_num);
     }
 }
