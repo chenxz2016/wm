@@ -206,17 +206,15 @@ wmp_login_key_t *parser_wmp_login_key(const char *package,uint32_t pack_len)
         p_wmp_login_key->result = *(uint8_t *)(package+index);
         index+=sizeof(p_wmp_login_key->result);
     }
-    else if((p_wmp_login_key->attr & 1) == 0)
-    {
-        p_wmp_login_key->type = *(uint8_t *)(package+index);
-        index+=sizeof(p_wmp_login_key->type);
+	
+	p_wmp_login_key->type = *(uint8_t *)(package+index);
+	index+=sizeof(p_wmp_login_key->type);
 
-        p_wmp_login_key->key_len = *(uint8_t *)(package+index);
-        index+=sizeof(p_wmp_login_key->key_len);
+	p_wmp_login_key->key_len = *(uint8_t *)(package+index);
+	index+=sizeof(p_wmp_login_key->key_len);
 
-        memcpy(p_wmp_login_key->key,package+index,p_wmp_login_key->key_len);
-        index+=p_wmp_login_key->key_len;
-    }
+	memcpy(p_wmp_login_key->key,package+index,p_wmp_login_key->key_len);
+	index+=p_wmp_login_key->key_len;
 
     return p_wmp_login_key;
 }
@@ -244,17 +242,16 @@ uint32_t package_wmp_login_key(char *package,const wmp_login_key_t *p_wmp_login_
         *(uint8_t *)(package+index) = p_wmp_login_key->result;
         index+=sizeof(p_wmp_login_key->result);
     }
-    else if((p_wmp_login_key->attr & 1) == 0)
-    {
-        *(uint8_t *)(package+index) = p_wmp_login_key->type;
-        index+=sizeof(p_wmp_login_key->type);
+	
+	*(uint8_t *)(package+index) = p_wmp_login_key->type;
+	index+=sizeof(p_wmp_login_key->type);
 
-        *(uint8_t *)(package+index) = p_wmp_login_key->key_len;
-        index+=sizeof(p_wmp_login_key->key_len);
+	*(uint8_t *)(package+index) = p_wmp_login_key->key_len;
+	index+=sizeof(p_wmp_login_key->key_len);
 
-        memcpy(package+index,p_wmp_login_key->key,p_wmp_login_key->key_len);
-        index+=p_wmp_login_key->key_len;
-    }
+	memcpy(package+index,p_wmp_login_key->key,p_wmp_login_key->key_len);
+	index+=p_wmp_login_key->key_len;
+	
     return index;
 }
 
