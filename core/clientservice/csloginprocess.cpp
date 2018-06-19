@@ -77,24 +77,31 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
         if(key->user_id!=p_userID)
             return false;
 
+		/* Update key. */
         WMEncryptKey k;
         k.setKey(key->key_len,(char *)key->key,key->type);
         p_service->setEncryptKey(k);
 
+		/* push key request successfully to gui. */
+		resetPushData();
+        appendPushData("res",WM::KeyReqSuccess);
+        emit p_service->startUpdate(p_service);
+		
+		/* Start login. */
         QMap<QString,QVariant> map;
         map["account"] = p_userID;
         map["pwd"] = p_d->pwd;
+		map["opt"] = WMP_PROTO_LOGIN_ID;
         syncSend(map);
 
-        resetPushData();
-        appendPushData("res",WM::KeyReqSuccess);
-        emit p_service->startUpdate(p_service);
+
     }
     else if(param->main_id==WMP_PROTO_LOGIN_ID)
     {
         wmp_login_t *login = reinterpret_cast<wmp_login_t *>(param->data);
         if(!login)
         {
+			/* Parser wmp_login_t failed, push failed to gui. */
             resetPushData();
             appendPushData("res",WM::PacketError);
             emit p_service->startUpdate(p_service);
@@ -103,6 +110,7 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 
         if(login->user_id!=p_userID)
         {
+			/* Parser wmp_login_t failed, push failed to gui. */
             resetPushData();
             appendPushData("res",WM::IDError);
             emit p_service->startUpdate(p_service);
