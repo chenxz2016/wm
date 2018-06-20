@@ -83,7 +83,7 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
         p_service->setEncryptKey(k);
 
 		/* push key request successfully to gui. */
-        resetPushData();
+		resetPushData();
         appendPushData("res",WM::KeyReqSuccess);
         emit p_service->startUpdate(p_service);
 		
@@ -123,9 +123,9 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
             return false;
         }
 
-//        resetPushData();
-//        appendPushData("res",WM::LoginSuccess);
-//        emit p_service->startUpdate(p_service);
+        resetPushData();
+        appendPushData("res",WM::LoginSuccess);
+        emit p_service->startUpdate(p_service);
     }
 
     return true;
@@ -161,10 +161,6 @@ bool CSLoginProcess::syncSend(const QVariant &data)
         /* 2 parameters, user id and user pwd. */
         wm_protocol_t *proto = allocate_wmp(1);
 
-        proto->head = WMP_HEAD_ID;
-        proto->sequence = p_service->protoSequence();
-        proto->tail = WMP_TAIL_ID;
-
         proto->base.proto_type = p_service->protoType();
         proto->base.src = p_userID;
         proto->base.dst = CS_SERVICE_ID;
@@ -175,15 +171,13 @@ bool CSLoginProcess::syncSend(const QVariant &data)
 
         p_service->protoVersion(proto->base.version);
 
-        wmp_login_t *login = allocate_wmp_login();
+        wmp_login_key_t *login = allocate_wmp_login_key();
 
         proto->body.param->main_id = WMP_PROTO_LOGIN_ID;
         proto->body.param->data = reinterpret_cast<char *>(login);
 
-        login->attr = 0;
+        login->attr = 1;
         login->user_id = p_userID;
-        login->pwd_len = p_d->pwd.length();
-        memcpy(login->password,p_d->pwd.data(),p_d->pwd.length());
 
         print_wmp(proto);
 
@@ -300,3 +294,149 @@ void CSLoginProcess::setEnryptKey(const WMEncryptKey &key)
     p_service->setEncryptKey(key);
 }
 
+
+class CSLoginKeyProcessPrivate
+{
+public:
+	CSLoginKeyProcessPrivate(CSLoginKeyProcess *parent)
+		:p(parent)
+	{}
+	
+	void init()
+	{}
+	
+	WMEncryptKey pubKey;
+	WMEncryptKey priKey;
+	int timeout;
+	CSLoginKeyProcess *p;
+};
+
+CSLoginKeyProcess::CSLoginKeyProcess(ClientService *parent)
+    :AbstractCSProcess(parent)
+    ,p_d(new CSLoginKeyProcessPrivate(this))
+{
+	p_d->init();
+}
+
+CSLoginKeyProcess::~CSLoginKeyProcess()
+{
+	delete p_d;
+}
+
+bool CSLoginKeyProcess::syncRecv(wm_parameter_t *param,quint16 param_num)
+{
+	wmp_login_key_t *key = reinterpret_cast<wmp_login_key_t *>(param->data);
+	if(!key)
+		return false;
+
+	if(key->user_id!=p_userID)
+		return false;
+
+	/* Update key. */
+	WMEncryptKey k;
+	k.setKey(key->key_len,(char *)key->key,key->type);
+	p_service->setEncryptKey(k);
+
+	/* push key request successfully to gui. */
+	resetPushData();
+	appendPushData("res",WM::KeyReqSuccess);
+	emit p_service->startUpdate(p_service);
+	
+	return true;
+}
+
+bool CSLoginKeyProcess::syncSend(const QVariant &data)
+{
+	QMap<QString,QVariant> map = data.toMap();
+    bool ok = true;
+    int opt = map["opt"].toInt();
+	p_userID = map["account"].toString().toInt(&ok);
+	if(p_userID<1000)
+	{
+		p_userID = 0;
+		return false;
+	}
+
+	p_d->pwd = map["pwd"].toByteArray();
+	if(p_d->pwd.isEmpty())
+		return false;
+
+	/* 1 parameters, user id and user pwd. */
+	wm_protocol_t *proto = allocate_wmp(1);
+
+	proto->head = WMP_HEAD_ID;
+	proto->sequence = p_service->protoSequence();
+	proto->tail = WMP_TAIL_ID;
+
+
+	proto->base.proto_type = p_service->protoType();
+	proto->base.src = p_userID;
+	proto->base.dst = CS_SERVICE_ID;
+	p_service->localDevice(proto->base.device);
+
+	proto->base.network = p_service->network();
+	proto->base.time = p_service->time();
+
+	p_service->protoVersion(proto->base.version);
+
+	wmp_login_key_t *key = allocate_wmp_login_key();
+
+	proto->body.param->main_id = WMP_PROTO_LOGIN_KEY_ID;
+	proto->body.param->data = reinterpret_cast<char *>(key);
+
+	key->attr = 0;
+	key->user_id = p_userID;
+	key->type = WMP_LOGIN_KEY_PUBLIC;
+	key->key_len = WMP_KEY_LENGTH;
+	generate_public_key(key->key,key->key_len);
+
+	bool ret = p_service->sendPackage(proto);
+	if(!ret)
+	{
+		return false;
+	}
+
+	/* start to login to server. */
+	p_service->flush(map);
+	
+	p_d->timerID = startTimer(p_d->timeout);
+	return true;
+}
+
+void CSLoginKeyProcess::ayncRecv(wm_parameter_t *param,quint16 param_num)
+{
+	Q_UNUSED(param)
+	Q_UNUSED(param_num)
+	return true;
+}
+
+void CSLoginKeyProcess::ayncSend(const QVariant &data)
+{
+	Q_UNUSED(data)
+	return true;
+}
+
+void CSLoginKeyProcess::setTimeout(int timeout)
+{
+	p_d->timeout = timeout;
+}
+
+int CSLoginKeyProcess::timeout()const
+{
+	return p_d->timeout;
+}
+
+WMEncryptKey CSLoginKeyProcess::publicKey()const
+{
+	return pubKey;
+}
+
+WMEncryptKey CSLoginKeyProcess::privateKey()const
+{
+	return priKey;
+}
+
+void CSLoginKeyProcess::timerEvent(QTimerEvent *event)
+{
+	QObject::timerEvent(event);
+}
