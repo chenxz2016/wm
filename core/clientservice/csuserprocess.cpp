@@ -43,6 +43,22 @@ bool CSUserProcess::syncSend(const QVariant &data)
 {
     QMap<QString,QVariant> map = data.toMap();
     bool ok = true;
+    quint32 id = map["dst"].toInt();
+    switch(id)
+    {
+    case WMP_USER_ADD_ID:
+        break;
+    case WMP_USER_DEL_ID:
+        break;
+    case WMP_USER_SET_ID:
+        break;
+    case WMP_USER_MSG_ID:
+        break;
+    case WMP_USER_FRIEND_ID:
+        break;
+    default:
+        break;
+    }
     quint32 dst = map["dst"].toString().toInt(&ok);
     if(dst<1000)
     {

@@ -24,6 +24,9 @@ public:
     void init();
     void showNotice(int type,const QVariant &notice);
     void loginSuccess();
+    void fetchFriends();
+    void fetchGroups();
+    void fetchSessions();
 
     void clearAction();
     void addAction(QAction *action);

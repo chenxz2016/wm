@@ -72,7 +72,7 @@ private:
     class ClientServicePrivate *p_d;
     friend class ClientServicePrivate;
     friend class AbstractCSProcess;
-    friend class CSLoginProcess;
+    friend class CSLoginKeyProcess;
 };
 
 

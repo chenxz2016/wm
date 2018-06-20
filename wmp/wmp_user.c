@@ -248,7 +248,14 @@ void deallocate_wmp_user_friend(wmp_user_friend_t **p_wmp_user_friend)
  *
  * ***********************************************************************************/
 void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_user_friend,uint16_t friend_num)
-{}
+{
+    if(p_wmp_user_friend->friend_list)
+        free(p_wmp_user_friend->friend_list);
+
+    p_wmp_user_friend->friend_num = friend_num;
+    p_wmp_user_friend->friend_list = (uint32_t *)malloc(friend_num * sizeof(uint32_t));
+    memset(p_wmp_user_friend->friend_list,0,friend_num * sizeof(uint32_t));
+}
 
 
 

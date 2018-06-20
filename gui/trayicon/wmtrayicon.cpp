@@ -15,6 +15,8 @@
 #include <close/wmclose.h>
 
 #include <wmcore/wmcore.h>
+#include <wm_protocol.h>
+#include <wmp_user.h>
 
 
 class WMTrayIconPrivate
@@ -101,10 +103,29 @@ QVariant WMTrayIcon::serviceData()
 void WMTrayIcon::setServiceData(QVariant data)
 {
     QMap<QString,QVariant> map = data.toMap();
-    if(map["service"].toString()=="ClientService")
+    if(map["service"].toString()!="ClientService")
+        return ;
+
+    if(map["opt"].toInt()!=WM::CSLoginID)
+        return ;
+
+    if(map["res"].toInt()!=WM::LoginSuccess)
+        return ;
+
+    /* login successfully */
+    if(p_d->login_window)
     {
-        if(p_d->login_window)
-            loginSuccess();
+        /* change gui. */
+        loginSuccess();
+
+        /* fetch friends. */
+        fetchFriends();
+
+        /* fetch groups. */
+        fetchGroups();
+
+        /* fetch sessions. */
+        fetchSessions();
     }
 }
 
@@ -128,6 +149,30 @@ void WMTrayIcon::loginSuccess()
 {
     p_d->closeLoginWindow();
     p_d->initMainWindow();
+}
+
+void WMTrayIcon::fetchFriends()
+{
+    QMap<QString,QVariant> map;
+    map["opt"] = WMP_PROTO_USER_ID;
+    map["id"] = WMP_USER_FRIEND_ID;
+    WMCore::globalInstance()->flush("ClientService",map);
+}
+
+void WMTrayIcon::fetchGroups()
+{
+    QMap<QString,QVariant> map;
+    map["opt"] = WMP_PROTO_GROUP_ID;
+//    map["id"] = WMP_USER_FRIEND_ID;
+    WMCore::globalInstance()->flush("ClientService",map);
+}
+
+void WMTrayIcon::fetchSessions()
+{
+    QMap<QString,QVariant> map;
+    map["opt"] = WMP_PROTO_SESSION_ID;
+//    map["id"] = WMP_USER_FRIEND_ID;
+    WMCore::globalInstance()->flush("ClientService",map);
 }
 
 void WMTrayIcon::clearAction()

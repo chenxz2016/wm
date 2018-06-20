@@ -37,10 +37,45 @@ public:
     int loginTimeout()const;
 protected:
     void timerEvent(QTimerEvent *event);
-    void setEnryptKey(const WMEncryptKey &key);
 private:
     class CSLoginProcessPrivate *p_d;
     friend class CSLoginProcessPrivate;
+};
+
+
+class CSLoginKeyProcess : public AbstractCSProcess
+{
+    Q_OBJECT
+    Q_PROPERTY(int timeout READ timeout WRITE setTimeout)
+public:
+    enum CSLoginStatus
+    {
+        Offline,
+        Online,
+        Leave,
+        Hide,
+        Bussy
+    };
+
+    explicit CSLoginKeyProcess(ClientService *parent = 0);
+    ~CSLoginKeyProcess();
+
+    bool syncRecv(wm_parameter_t *param,quint16 param_num);
+    bool syncSend(const QVariant &data);
+
+    void ayncRecv(wm_parameter_t *param,quint16 param_num);
+    void ayncSend(const QVariant &data);
+
+    WMEncryptKey publicKey() const;
+    WMEncryptKey privateKey() const;
+
+    void setTimeout(int timeout);
+    int timeout()const;
+protected:
+    void timerEvent(QTimerEvent *event);
+private:
+    class CSLoginKeyProcessPrivate *p_d;
+    friend class CSLoginKeyProcessPrivate;
 };
 
 #endif // CSLOGINPROCESS_H

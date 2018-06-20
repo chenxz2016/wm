@@ -184,7 +184,7 @@ typedef struct
 #define WMP_USER_DEL_ID                                     0x0602
 #define WMP_USER_SET_ID                                     0x0603
 #define WMP_USER_MSG_ID                                     0x0604
-
+#define WMP_USER_FRIEND_ID                                  0x0605
 
 #define WMP_UserSrc(p_wmp_user) 							(p_wmp_user->src)
 #define WMP_UserDst(p_wmp_user) 							(p_wmp_user->dst)

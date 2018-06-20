@@ -33,19 +33,19 @@ enum WMLoginResult
     WaitForVerify
 };
 
-//enum WMCoreServiceRequestID
-//{
-//    CSLoginID = WMP_PROTO_LOGIN_ID,
-//    CSBeatHeartID = WMP_PROTO_BH_ID,
-//    CSFileID = WMP_PROTO_FILE_ID,
-//    CSMsgID = WMP_PROTO_MSG_ID,
-//    CSUserID = WMP_PROTO_USER_ID,
-//    CSVideoID = WMP_PROTO_VIDEO_ID,
-//    CSVoiceID = WMP_PROTO_SOUND_ID,
-//    CSGroupID = WMP_PROTO_GROUP_ID,
-//    CSRegisterID = WMP_PROTO_REGISTER_ID,
-//    CSSessionID = WMP_PROTO_SESSION_ID
-//};
+enum WMCoreServiceRequestID
+{
+    CSLoginID = 0,      //WMP_PROTO_LOGIN_ID
+    CSBeatHeartID,      //WMP_PROTO_BH_ID
+    CSFileID,           //WMP_PROTO_FILE_ID
+    CSMsgID,            //WMP_PROTO_MSG_ID
+    CSUserID,           //WMP_PROTO_USER_ID
+    CSVideoID,          //WMP_PROTO_VIDEO_ID
+    CSVoiceID,          //WMP_PROTO_SOUND_ID
+    CSGroupID,          //WMP_PROTO_GROUP_ID
+    CSRegisterID,       //WMP_PROTO_REGISTER_ID
+    CSSessionID         //WMP_PROTO_SESSION_ID
+};
 
 }
 
