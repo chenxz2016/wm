@@ -132,19 +132,31 @@ WMPSHARED_EXPORT extern void set_wmp_user_set_property_num(wmp_user_set_t *p_use
 
 /* *********************************************************************************************
  * Walking Message protocol user property.
- * @attr				Walking Message user property attribute.
- * @property_num		Walking Message user property numbers.
- * @property_list		Walking Message user property list.
+ * @attr				Walking Message user friend attribute.
+ * @team_num            Walking Message user friend team number.
+ * @team_index          Walking Message user friend team index.
+ * @team_name_len		Walking Message user friend name length.
+ * @team_name           Walking Message user friend name.
+ * @friend_num          Walking Message user friend number.
+ * @friend_list         Walking Message user friend list.
  *
  * **********************************************************************************************/
 typedef struct
 {
 	uint16_t attr;
+    uint16_t team_num;
+    uint16_t team_index;
 	uint8_t team_name_len;
 	uint8_t team_name[255];
 	uint16_t friend_num;
 	uint32_t *friend_list;
 }wmp_user_friend_t;
+
+#define WMP_USER_FRIEND_LIST_REQ            0x0101
+#define WMP_USER_FRIEND_LIST_RSP            0x0102
+#define WMP_USER_FRIEND_NUM_REQ             0x0201
+#define WMP_USER_FRIEND_NUM_RSP             0x0202
+
 
 /* Create wmp_user_friend_t structure. */
 WMPSHARED_EXPORT extern wmp_user_friend_t *allocate_wmp_user_friend(uint16_t friend_num);

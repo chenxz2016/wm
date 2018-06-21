@@ -237,7 +237,7 @@ void deallocate_wmp_user_friend(wmp_user_friend_t **p_wmp_user_friend)
 		(*p_wmp_user_friend)->friend_list = NULL;
 	}
 	free(*p_wmp_user_friend);
-	p_wmp_user_friend = NULL;
+    (*p_wmp_user_friend) = NULL;
 }
 
 /* ***********************************************************************************
@@ -256,9 +256,6 @@ void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_user_friend,uint16_t frien
     p_wmp_user_friend->friend_list = (uint32_t *)malloc(friend_num * sizeof(uint32_t));
     memset(p_wmp_user_friend->friend_list,0,friend_num * sizeof(uint32_t));
 }
-
-
-
 
 /* ***********************************************************************************
  * Allocate wmp_user_t.
@@ -298,6 +295,11 @@ void deallocate_wmp_user(wmp_user_t **p_wmp_user)
 			case WMP_USER_MSG_ID:
 				deallocate_wmp_user_msg((wmp_user_msg_t **)&((*p_wmp_user)->param));
 				break;
+            case WMP_USER_FRIEND_ID:
+                deallocate_wmp_user_friend((wmp_user_friend_t **)&((*p_wmp_user)->param));
+                break;
+            default:
+                break;
 		}
 		free((*p_wmp_user));
 		(*p_wmp_user) = NULL;
@@ -329,7 +331,8 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
 	wmp_user_del_t *p_wmp_user_del = NULL;
 	wmp_user_msg_t *p_wmp_user_msg = NULL;
 	wmp_user_set_t *p_wmp_user_set = NULL;
-	switch(p_wmp_user->id)
+    wmp_user_friend_t *p_wmp_user_friend = NULL;
+    switch(p_wmp_user->id)
 	{
 		case WMP_USER_ADD_ID:
 			p_wmp_user_add = allocate_wmp_user_add();
@@ -385,6 +388,38 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
 				memcpy(p_wmp_user_add->msg,package+index,p_wmp_user_add->msg_len);
 				index+=p_wmp_user_add->msg_len;
 			}
+        case WMP_USER_FRIEND_ID:
+            p_wmp_user_friend = allocate_wmp_user_friend(0);
+            p_wmp_user->param = (uint8_t *)p_wmp_user_friend;
+            p_wmp_user_friend->attr = ntohs(*(uint16_t *)(package+index));
+            index+=2;
+            switch(p_wmp_user_friend->attr)
+            {
+            case WMP_USER_FRIEND_LIST_REQ:
+            case WMP_USER_FRIEND_LIST_RSP:
+                p_wmp_user_friend->team_index = ntohs(*(uint16_t *)(package+index));
+                index += 2;
+                p_wmp_user_friend->team_name_len = *(uint8_t *)(package+index);
+                index++;
+                memcpy(p_wmp_user_friend->team_name,package+index,p_wmp_user_friend->team_name_len);
+                index+=p_wmp_user_friend->team_name_len;
+                p_wmp_user_friend->friend_num = ntohs(*(uint16_t *)(package+index));
+                index += 2;
+                set_wmp_user_friend_num(p_wmp_user_friend,p_wmp_user_friend->friend_num);
+                for(uint16_t i=0;i<p_wmp_user_friend->friend_num;i++)
+                {
+                    p_wmp_user_friend->friend_list[i] = ntohl(*(uint32_t *)(package+index));
+                    index += 4;
+                }
+                break;
+            case WMP_USER_FRIEND_NUM_REQ:
+            case WMP_USER_FRIEND_NUM_RSP:
+                p_wmp_user_friend->team_num = ntohs(*(uint16_t *)(package+index));
+                index += 2;
+                break;
+            default:
+                break;
+            }
 			break;
 		default:
 			return 0;
@@ -443,10 +478,9 @@ static uint32_t package_wmp_user_parameter(char *package,const wmp_user_t *p_wmp
 	wmp_user_del_t *p_wmp_user_del = NULL;
 	wmp_user_msg_t *p_wmp_user_msg = NULL;
 	wmp_user_set_t *p_wmp_user_set = NULL;
-	
+    wmp_user_friend_t *p_wmp_user_friend = NULL;
 	switch(p_wmp_user->id)
 	{
-
 		case WMP_USER_ADD_ID:
 			p_wmp_user_add = (wmp_user_add_t *)(p_wmp_user->param);
 			*(uint16_t *)(package+index) = htons(p_wmp_user_add->attr);
@@ -495,8 +529,39 @@ static uint32_t package_wmp_user_parameter(char *package,const wmp_user_t *p_wmp
 				index+=p_wmp_user_msg->msg_len;
 			}
 			break;
-		default:
-			return 0;
+        case WMP_USER_FRIEND_ID:
+            p_wmp_user_friend = (wmp_user_friend_t *)(p_wmp_user->param);
+            *(uint16_t *)(package+index) = htons(p_wmp_user_msg->attr);
+            index+=2;
+            switch(p_wmp_user_friend->attr)
+            {
+            case WMP_USER_FRIEND_LIST_REQ:
+            case WMP_USER_FRIEND_LIST_RSP:
+                *(uint16_t *)(package+index) = htons(p_wmp_user_friend->team_index);
+                index += 2;
+                *(uint8_t *)(package+index) = p_wmp_user_friend->team_name_len;
+                index++;
+                memcpy(package+index,p_wmp_user_friend->team_name,p_wmp_user_friend->team_name_len);
+                index+=p_wmp_user_friend->team_name_len;
+                *(uint16_t *)(package+index) = htons(p_wmp_user_friend->friend_num);
+                index += 2;
+                for(uint16_t i=0;i<p_wmp_user_friend->friend_num;i++)
+                {
+                    *(uint32_t *)(package+index) = htonl(p_wmp_user_friend->friend_list[i]);
+                    index += 4;
+                }
+                break;
+            case WMP_USER_FRIEND_NUM_REQ:
+            case WMP_USER_FRIEND_NUM_RSP:
+                *(uint16_t *)(package+index) = htons(p_wmp_user_friend->team_num);
+                index += 2;
+                break;
+            default:
+                break;
+            }
+            break;
+        default:
+            return 0;
 	}
 	return index;
 }
