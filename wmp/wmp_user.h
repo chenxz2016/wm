@@ -169,6 +169,101 @@ WMPSHARED_EXPORT extern void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_us
 
 
 /* *********************************************************************************************
+ * Walking Message protocol find other user information.
+ * @attr				Walking Message user find attribute.
+ * @condition           Walking Message user find condition.
+ * @user_id             Walking Message user find user_id.
+ * @sex         		Walking Message user find sex.
+ * @address             Walking Message user find address.
+ * @job                 Walking Message user find job.
+ * @label_len           Walking Message user find label_len.
+ * @label               Walking Message user find label.
+ * @age                 Walking Message user find age.
+ * @ctn                 Walking Message user find ctn.
+ * @brithday            Walking Message user find brithday.
+ *
+ * **********************************************************************************************/
+typedef struct
+{
+    uint16_t attr;
+    uint16_t condition;
+    uint32_t user_id;
+    uint8_t sex;
+    uint32_t address[2];
+    uint8_t job;
+    uint8_t label_len;
+    uint8_t label[255];
+    uint8_t age;
+    uint32_t ctn;
+    uint32_t brithday;
+    uint32_t result_num;
+    uint32_t *result_list;
+}wmp_user_find_t;
+
+#define WMP_USER_FIND_REQ                   1
+#define WMP_USER_FIND_RSP                   2
+
+#define WMP_USER_FIND_BY_ID                 1
+#define WMP_USER_FIND_BY_SEX                2
+#define WMP_USER_FIND_BY_ADDRESS            4
+#define WMP_USER_FIND_BY_JOB                8
+#define WMP_USER_FIND_BY_LABEL              16
+#define WMP_USER_FIND_BY_AGE                32
+#define WMP_USER_FIND_BY_CTN                64
+#define WMP_USER_FIND_BY_BRITHDAY           128
+
+/* Create wmp_user_fetch_t structure. */
+WMPSHARED_EXPORT extern wmp_user_find_t *allocate_wmp_user_find(uint32_t result_num);
+
+/* Delete wmp_user_fetch_t structure. */
+WMPSHARED_EXPORT extern void deallocate_wmp_user_find(wmp_user_find_t **p_wmp_user_find);
+
+/* Set wmp_user_fetch_t result list number structure. */
+WMPSHARED_EXPORT extern void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,uint32_t result_num);
+
+
+
+/* *********************************************************************************************
+ * Walking Message protocol fetch property structure.
+ * @type				Walking Message user find property type.
+ * @length              Walking Message user find property length.
+ * @property_num        Walking Message user find property data.
+ *
+ *
+ * Walking Message protocol fetch other user information.
+ * @attr				Walking Message user find attribute.
+ * @condition           Walking Message user find condition.
+ * @property_num        Walking Message user find user_id.
+ * @properties          Walking Message user find sex.
+ *
+ * **********************************************************************************************/
+typedef struct
+{
+    uint8_t type;
+    uint8_t length;
+    uint8_t data[255];
+}wmp_user_fetch_property_t;
+
+typedef struct
+{
+    uint16_t attr;
+    uint16_t property_num;
+    wmp_user_fetch_property_t *properties;
+}wmp_user_fetch_t;
+
+/* Create wmp_user_fetch_t structure. */
+WMPSHARED_EXPORT extern wmp_user_fetch_t *allocate_wmp_user_fetch(uint16_t property_num);
+
+/* Delete wmp_user_fetch_t structure. */
+WMPSHARED_EXPORT extern void deallocate_wmp_user_fetch(wmp_user_fetch_t **p_wmp_user_fetch);
+
+/* Set wmp_user_fetch_t properties number structure. */
+WMPSHARED_EXPORT extern void set_wmp_user_fetch_property_num(wmp_user_fetch_t *p_wmp_user_fetch,uint16_t property_num);
+
+
+
+
+/* *********************************************************************************************
  * Walking Message protocol user.
  * @attr				Walking Message user attribute.
  * @src					Walking Message user source id.
@@ -197,6 +292,9 @@ typedef struct
 #define WMP_USER_SET_ID                                     0x0603
 #define WMP_USER_MSG_ID                                     0x0604
 #define WMP_USER_FRIEND_ID                                  0x0605
+#define WMP_USER_FIND_ID                                    0x0606
+#define WMP_USER_FETCH_ID                                   0x0607
+
 
 #define WMP_UserSrc(p_wmp_user) 							(p_wmp_user->src)
 #define WMP_UserDst(p_wmp_user) 							(p_wmp_user->dst)

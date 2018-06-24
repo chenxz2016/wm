@@ -231,13 +231,16 @@ wmp_user_friend_t *allocate_wmp_user_friend(uint16_t friend_num)
  * ***********************************************************************************/
 void deallocate_wmp_user_friend(wmp_user_friend_t **p_wmp_user_friend)
 {
-	if((*p_wmp_user_friend)->friend_list)
-	{
-		free((*p_wmp_user_friend)->friend_list);
-		(*p_wmp_user_friend)->friend_list = NULL;
-	}
-	free(*p_wmp_user_friend);
-    (*p_wmp_user_friend) = NULL;
+    if((*p_wmp_user_friend))
+    {
+        if((*p_wmp_user_friend)->friend_list)
+        {
+            free((*p_wmp_user_friend)->friend_list);
+            (*p_wmp_user_friend)->friend_list = NULL;
+        }
+        free(*p_wmp_user_friend);
+        (*p_wmp_user_friend) = NULL;
+    }
 }
 
 /* ***********************************************************************************
@@ -256,6 +259,129 @@ void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_user_friend,uint16_t frien
     p_wmp_user_friend->friend_list = (uint32_t *)malloc(friend_num * sizeof(uint32_t));
     memset(p_wmp_user_friend->friend_list,0,friend_num * sizeof(uint32_t));
 }
+
+
+/* ***********************************************************************************
+ * Allocate wmp_user_find_t.
+ *
+ * ***********************************************************************************/
+wmp_user_find_t *allocate_wmp_user_find(uint32_t result_num)
+{
+    wmp_user_find_t *p_wmp_user_find = (wmp_user_find_t *)malloc(sizeof(wmp_user_find_t));
+    memset(p_wmp_user_find,0,sizeof(wmp_user_find_t));
+    if(result_num)
+    {
+        p_wmp_user_find->result_num = result_num;;
+        p_wmp_user_find->result_list = (uint32_t *)malloc(result_num * sizeof(uint32_t));
+        memset(p_wmp_user_find->result_list,0,result_num * sizeof(uint32_t));
+    }
+    return p_wmp_user_find;
+}
+
+/* ***********************************************************************************
+ * Allocate wmp_user_find_t.
+ *
+ * @param:  p_wmp_user_find
+ *
+ * ***********************************************************************************/
+void deallocate_wmp_user_find(wmp_user_find_t **p_wmp_user_find)
+{
+    if((*p_wmp_user_find))
+    {
+        if((*p_wmp_user_find)->result_list)
+        {
+            free((*p_wmp_user_find)->result_list);
+            (*p_wmp_user_find)->result_list = NULL;
+        }
+        free(*p_wmp_user_find);
+        (*p_wmp_user_find) = NULL;
+    }
+}
+
+/* Set wmp_user_fetch_t result list number structure. */
+void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,uint32_t result_num)
+{
+    if((*p_wmp_user_find).result_list)
+    {
+        free((*p_wmp_user_find).result_list);
+        (*p_wmp_user_find).result_list = NULL;
+    }
+    if(result_num)
+    {
+        (*p_wmp_user_find).result_num = result_num;
+        (*p_wmp_user_find).result_list = (uint32_t *)malloc(result_num * sizeof(uint32_t));
+        memset((*p_wmp_user_find).result_list,0,result_num * sizeof(uint32_t));
+    }
+}
+
+
+/* ***********************************************************************************
+ * Allocate wmp_user_fetch_t.
+ *
+ * @param:  property_num            property number
+ * @retval:	p_wmp_user				wmp_user_t pointer.
+ *
+ * ***********************************************************************************/
+wmp_user_fetch_t *allocate_wmp_user_fetch(uint16_t property_num)
+{
+    wmp_user_fetch_t *p_wmp_user_fetch = (wmp_user_fetch_t *)malloc(sizeof(wmp_user_fetch_t));
+    memset(p_wmp_user_fetch,0,sizeof(wmp_user_fetch_t));
+    if(property_num)
+    {
+        p_wmp_user_fetch->properties = (wmp_user_fetch_property_t *)malloc(property_num * sizeof(wmp_user_fetch_property_t));
+        memset(p_wmp_user_fetch->properties,0,property_num * sizeof(wmp_user_fetch_property_t));
+    }
+
+    return p_wmp_user_fetch;
+}
+
+
+/* ***********************************************************************************
+ * Deallocate wmp_user_fetch_t.
+ *
+ * @param:	p_wmp_user_fetch            wmp_user_fetch_t pointer.
+ *
+ * ***********************************************************************************/
+void deallocate_wmp_user_fetch(wmp_user_fetch_t **p_wmp_user_fetch)
+{
+    if((*p_wmp_user_fetch))
+    {
+        if((*p_wmp_user_fetch)->properties)
+        {
+            free((*p_wmp_user_fetch)->properties);
+            (*p_wmp_user_fetch)->properties = NULL;
+        }
+        free(*p_wmp_user_fetch);
+        (*p_wmp_user_fetch) = NULL;
+    }
+}
+
+/* ***********************************************************************************
+ * Set wmp_user_fetch_t property number.
+ *
+ * @param:	p_wmp_user_fetch            wmp_user_fetch_t pointer.
+ * @param:	property_num                wmp_user_fetch_t property number.
+ *
+ * ***********************************************************************************/
+void set_wmp_user_fetch_property_num(wmp_user_fetch_t *p_wmp_user_fetch,uint16_t property_num)
+{
+    if(p_wmp_user_fetch)
+    {
+        if(p_wmp_user_fetch->properties)
+        {
+            free(p_wmp_user_fetch->properties);
+            p_wmp_user_fetch->properties = NULL;
+        }
+        if(property_num)
+        {
+            p_wmp_user_fetch->properties = (wmp_user_fetch_property_t *)malloc(property_num * sizeof(wmp_user_fetch_property_t));
+            memset(p_wmp_user_fetch->properties,0,property_num * sizeof(wmp_user_fetch_property_t));
+        }
+    }
+}
+
+
+
 
 /* ***********************************************************************************
  * Allocate wmp_user_t.
@@ -298,6 +424,12 @@ void deallocate_wmp_user(wmp_user_t **p_wmp_user)
             case WMP_USER_FRIEND_ID:
                 deallocate_wmp_user_friend((wmp_user_friend_t **)&((*p_wmp_user)->param));
                 break;
+            case WMP_USER_FIND_ID:
+                deallocate_wmp_user_find((wmp_user_find_t **)&((*p_wmp_user)->param));
+                break;
+            case WMP_USER_FETCH_ID:
+                deallocate_wmp_user_fetch((wmp_user_fetch_t **)&((*p_wmp_user)->param));
+                break;
             default:
                 break;
 		}
@@ -332,6 +464,8 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
 	wmp_user_msg_t *p_wmp_user_msg = NULL;
 	wmp_user_set_t *p_wmp_user_set = NULL;
     wmp_user_friend_t *p_wmp_user_friend = NULL;
+    wmp_user_find_t *p_wmp_user_find = NULL;
+    wmp_user_fetch_t *p_wmp_user_fetch = NULL;
     switch(p_wmp_user->id)
 	{
 		case WMP_USER_ADD_ID:
@@ -420,7 +554,88 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
             default:
                 break;
             }
-			break;
+            break;
+        case WMP_USER_FIND_ID:
+            p_wmp_user_find = allocate_wmp_user_find(0);
+            p_wmp_user_find->attr = ntohs(*(uint16_t *)(package+index));
+            index+=2;
+            if(p_wmp_user_find->attr==WMP_USER_FIND_REQ)
+            {
+                p_wmp_user_find->condition = ntohs(*(uint16_t *)(package+index));
+                index+=2;
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_ID) == WMP_USER_FIND_BY_ID)
+                {
+                    p_wmp_user_find->user_id = ntohl(*(uint32_t *)(package+index));
+                    index+=4;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_SEX) == WMP_USER_FIND_BY_SEX)
+                {
+                    p_wmp_user_find->sex = *(uint8_t *)(package+index);
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_ADDRESS) == WMP_USER_FIND_BY_ADDRESS)
+                {
+                    p_wmp_user_find->address[0] = ntohl(*(uint32_t *)(package+index));
+                    index+=4;
+                    p_wmp_user_find->address[1] = ntohl(*(uint32_t *)(package+index));
+                    index+=4;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_JOB) == WMP_USER_FIND_BY_JOB)
+                {
+                    p_wmp_user_find->job = *(uint8_t *)(package+index);
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_LABEL) == WMP_USER_FIND_BY_LABEL)
+                {
+                    p_wmp_user_find->label_len = *(uint8_t *)(package+index);
+                    index++;
+                    memcpy(p_wmp_user_find->label,package+index,p_wmp_user_find->label_len);
+                    index+=p_wmp_user_find->label_len;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_AGE) == WMP_USER_FIND_BY_AGE)
+                {
+                    p_wmp_user_find->age = *(uint8_t *)(package+index);
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_CTN) == WMP_USER_FIND_BY_CTN)
+                {
+                    p_wmp_user_find->ctn = *(uint8_t *)(package+index);
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_BRITHDAY) == WMP_USER_FIND_BY_BRITHDAY)
+                {
+                    p_wmp_user_find->brithday = ntohl(*(uint8_t *)(package+index));
+                    index+=4;
+                }
+            }
+            else if(p_wmp_user_find->attr==WMP_USER_FIND_RSP)
+            {
+                p_wmp_user_find->result_num = ntohl(*(uint32_t *)(package+index));
+                index += 4;
+                set_wmp_user_find(p_wmp_user_find,p_wmp_user_find->result_num);
+                for(uint32_t i=0;i<p_wmp_user_find->result_num;i++)
+                {
+                    p_wmp_user_find->result_list[i] = ntohl(*(uint32_t *)(package+index));
+                    index+=4;
+                }
+            }
+            break;
+        case WMP_USER_FETCH_ID:
+            p_wmp_user_fetch = allocate_wmp_user_fetch(0);
+            p_wmp_user_fetch->attr = ntohs(*(uint16_t *)(package+index));
+            index+=2;
+            p_wmp_user_fetch->property_num = ntohs(*(uint16_t *)(package+index));
+            index+=2;
+            for(uint16_t i = 0;i<p_wmp_user_fetch->property_num;i++)
+            {
+                p_wmp_user_fetch->properties[i].type = *(uint8_t *)(package+index);
+                index++;
+                p_wmp_user_fetch->properties[i].length = *(uint8_t *)(package+index);
+                index++;
+                memcpy(p_wmp_user_fetch->properties[i].data,package+index,p_wmp_user_fetch->properties[i].length);
+                index+=p_wmp_user_fetch->properties[i].length;
+            }
+            break;
 		default:
 			return 0;
 	}
@@ -479,7 +694,9 @@ static uint32_t package_wmp_user_parameter(char *package,const wmp_user_t *p_wmp
 	wmp_user_msg_t *p_wmp_user_msg = NULL;
 	wmp_user_set_t *p_wmp_user_set = NULL;
     wmp_user_friend_t *p_wmp_user_friend = NULL;
-	switch(p_wmp_user->id)
+    wmp_user_find_t *p_wmp_user_find = NULL;
+    wmp_user_fetch_t *p_wmp_user_fetch = NULL;
+    switch(p_wmp_user->id)
 	{
 		case WMP_USER_ADD_ID:
 			p_wmp_user_add = (wmp_user_add_t *)(p_wmp_user->param);
@@ -560,6 +777,86 @@ static uint32_t package_wmp_user_parameter(char *package,const wmp_user_t *p_wmp
                 break;
             }
             break;
+        case WMP_USER_FIND_ID:
+            p_wmp_user_find = (wmp_user_find_t *)(p_wmp_user->param);
+            *(uint16_t *)(package+index) = htons(p_wmp_user_find->attr);
+            index+=2;
+            if(p_wmp_user_find->attr == WMP_USER_FIND_REQ)
+            {
+                *(uint16_t *)(package+index) = htons(p_wmp_user_find->condition);
+                index+=2;
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_ID) == WMP_USER_FIND_BY_ID)
+                {
+                    *(uint32_t *)(package+index) = htonl(p_wmp_user_find->user_id);
+                    index+=4;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_SEX) == WMP_USER_FIND_BY_SEX)
+                {
+                    *(uint8_t *)(package+index) = p_wmp_user_find->sex;
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_ADDRESS) == WMP_USER_FIND_BY_ADDRESS)
+                {
+                    *(uint32_t *)(package+index) = htonl(p_wmp_user_find->address[0]);
+                    index+=4;
+                    *(uint32_t *)(package+index) = htonl(p_wmp_user_find->address[1]);
+                    index+=4;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_JOB) == WMP_USER_FIND_BY_JOB)
+                {
+                    *(uint8_t *)(package+index) = p_wmp_user_find->job;
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_LABEL) == WMP_USER_FIND_BY_LABEL)
+                {
+                    *(uint8_t *)(package+index) = p_wmp_user_find->label_len;
+                    index++;
+                    memcpy(package+index,p_wmp_user_find->label,p_wmp_user_find->label_len);
+                    index+=p_wmp_user_find->label_len;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_AGE) == WMP_USER_FIND_BY_AGE)
+                {
+                    *(uint8_t *)(package+index) = p_wmp_user_find->age;
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_CTN) == WMP_USER_FIND_BY_CTN)
+                {
+                    *(uint8_t *)(package+index) = p_wmp_user_find->ctn;
+                    index++;
+                }
+                if((p_wmp_user_find->condition & WMP_USER_FIND_BY_BRITHDAY) == WMP_USER_FIND_BY_BRITHDAY)
+                {
+                    *(uint8_t *)(package+index) = p_wmp_user_find->brithday;
+                    index++;
+                }
+            }
+            else if(p_wmp_user_find->attr == WMP_USER_FIND_RSP)
+            {
+                *(uint32_t *)(package+index) = htonl(p_wmp_user_find->result_num);
+                index += 4;
+                for(uint32_t i=0;i<p_wmp_user_find->result_num;i++)
+                {
+                    *(uint32_t *)(package+index) = htonl(p_wmp_user_find->result_list[i]);
+                    index+=4;
+                }
+            }
+            break;
+        case WMP_USER_FETCH_ID:
+            p_wmp_user_fetch = (wmp_user_fetch_t *)(p_wmp_user->param);
+            *(uint16_t *)(package+index) = htons(p_wmp_user_fetch->attr);
+            index+=2;
+            *(uint16_t *)(package+index) = htons(p_wmp_user_fetch->property_num);
+            index+=2;
+            for(uint16_t i = 0;i<p_wmp_user_fetch->property_num;i++)
+            {
+                *(uint8_t *)(package+index) = p_wmp_user_fetch->properties[i].type;
+                index++;
+                *(uint8_t *)(package+index) = p_wmp_user_fetch->properties[i].length;
+                index++;
+                memcpy(package+index,p_wmp_user_fetch->properties[i].data,p_wmp_user_fetch->properties[i].length);
+                index+=p_wmp_user_fetch->properties[i].length;
+            }
+            break;
         default:
             return 0;
 	}
@@ -624,6 +921,7 @@ void print_wmp_user(const wmp_user_t *p_wmp_user)
 	wmp_user_del_t *p_wmp_user_del = NULL;
 	wmp_user_set_t *p_wmp_user_set = NULL;
 	wmp_user_msg_t *p_wmp_user_msg = NULL;
+    wmp_user_friend_t *p_wmp_user_friend = NULL;
 
 	switch(p_wmp_user->id)
 	{
@@ -669,6 +967,18 @@ void print_wmp_user(const wmp_user_t *p_wmp_user)
 			}
 			printf("\n");
 			break;
+        case WMP_USER_FRIEND_ID:
+            p_wmp_user_friend = (wmp_user_friend_t *)p_wmp_user->param;
+            printf("attr:%d;team_num:%d;team_index:%d;team_name_len:%d;"
+                   "team_name:%s;friend_num:%d",p_wmp_user_friend->attr,
+                   p_wmp_user_friend->team_num,p_wmp_user_friend->team_index,\
+                    p_wmp_user_friend->team_name_len,p_wmp_user_friend->team_name,\
+                   p_wmp_user_friend->friend_num);
+            printf("team_list:\n");
+            for(uint16_t i=0;i<p_wmp_user_friend->friend_num;i++)
+                printf("friend[%d]:%d ",i,p_wmp_user_friend->friend_list[i]);
+            printf("\n");
+            break;
 		default:
 			printf("unknown parameter.\n");
 			break;
