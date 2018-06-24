@@ -181,6 +181,8 @@ WMPSHARED_EXPORT extern void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_us
  * @age                 Walking Message user find age.
  * @ctn                 Walking Message user find ctn.
  * @brithday            Walking Message user find brithday.
+ * @result_num          Walking Message user find result number.
+ * @result_list         Walking Message user find result list.
  *
  * **********************************************************************************************/
 typedef struct
@@ -194,7 +196,7 @@ typedef struct
     uint8_t label_len;
     uint8_t label[255];
     uint8_t age;
-    uint32_t ctn;
+    uint8_t ctn;
     uint32_t brithday;
     uint32_t result_num;
     uint32_t *result_list;
@@ -218,7 +220,7 @@ WMPSHARED_EXPORT extern wmp_user_find_t *allocate_wmp_user_find(uint32_t result_
 /* Delete wmp_user_fetch_t structure. */
 WMPSHARED_EXPORT extern void deallocate_wmp_user_find(wmp_user_find_t **p_wmp_user_find);
 
-/* Set wmp_user_fetch_t result list number structure. */
+/* Set wmp_user_fetch_t result list number. */
 WMPSHARED_EXPORT extern void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,uint32_t result_num);
 
 
@@ -227,14 +229,13 @@ WMPSHARED_EXPORT extern void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,
  * Walking Message protocol fetch property structure.
  * @type				Walking Message user find property type.
  * @length              Walking Message user find property length.
- * @property_num        Walking Message user find property data.
+ * @data                Walking Message user find property data.
  *
  *
  * Walking Message protocol fetch other user information.
  * @attr				Walking Message user find attribute.
- * @condition           Walking Message user find condition.
- * @property_num        Walking Message user find user_id.
- * @properties          Walking Message user find sex.
+ * @property_num        Walking Message user find property number.
+ * @properties          Walking Message user find properties.
  *
  * **********************************************************************************************/
 typedef struct

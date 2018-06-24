@@ -279,7 +279,7 @@ wmp_user_find_t *allocate_wmp_user_find(uint32_t result_num)
 }
 
 /* ***********************************************************************************
- * Allocate wmp_user_find_t.
+ * Deallocate wmp_user_find_t.
  *
  * @param:  p_wmp_user_find
  *
@@ -298,19 +298,19 @@ void deallocate_wmp_user_find(wmp_user_find_t **p_wmp_user_find)
     }
 }
 
-/* Set wmp_user_fetch_t result list number structure. */
+/* Set wmp_user_find_t result list number structure. */
 void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,uint32_t result_num)
 {
-    if((*p_wmp_user_find).result_list)
+    if(p_wmp_user_find->result_list)
     {
-        free((*p_wmp_user_find).result_list);
-        (*p_wmp_user_find).result_list = NULL;
+        free(p_wmp_user_find->result_list);
+        p_wmp_user_find->result_list = NULL;
     }
     if(result_num)
     {
-        (*p_wmp_user_find).result_num = result_num;
-        (*p_wmp_user_find).result_list = (uint32_t *)malloc(result_num * sizeof(uint32_t));
-        memset((*p_wmp_user_find).result_list,0,result_num * sizeof(uint32_t));
+        p_wmp_user_find->result_num = result_num;
+        p_wmp_user_find->result_list = (uint32_t *)malloc(result_num * sizeof(uint32_t));
+        memset(p_wmp_user_find->result_list,0,result_num * sizeof(uint32_t));
     }
 }
 
@@ -379,8 +379,6 @@ void set_wmp_user_fetch_property_num(wmp_user_fetch_t *p_wmp_user_fetch,uint16_t
         }
     }
 }
-
-
 
 
 /* ***********************************************************************************
@@ -604,7 +602,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
                 }
                 if((p_wmp_user_find->condition & WMP_USER_FIND_BY_BRITHDAY) == WMP_USER_FIND_BY_BRITHDAY)
                 {
-                    p_wmp_user_find->brithday = ntohl(*(uint8_t *)(package+index));
+                    p_wmp_user_find->brithday = ntohl(*(uint32_t *)(package+index));
                     index+=4;
                 }
             }
@@ -826,8 +824,8 @@ static uint32_t package_wmp_user_parameter(char *package,const wmp_user_t *p_wmp
                 }
                 if((p_wmp_user_find->condition & WMP_USER_FIND_BY_BRITHDAY) == WMP_USER_FIND_BY_BRITHDAY)
                 {
-                    *(uint8_t *)(package+index) = p_wmp_user_find->brithday;
-                    index++;
+                    *(uint32_t *)(package+index) = htonl(p_wmp_user_find->brithday);
+                    index+=4;
                 }
             }
             else if(p_wmp_user_find->attr == WMP_USER_FIND_RSP)
