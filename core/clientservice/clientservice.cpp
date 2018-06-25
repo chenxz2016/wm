@@ -28,7 +28,7 @@
 #include<winsock.h>
 #pragma comment(lib,"ws2_32.lib")
 
-#define WM_HOST_FAKE    "192.168.0.100"
+#define WM_HOST_FAKE    "192.168.0.110"
 #define WM_PORT_FAKE    3710
 
 

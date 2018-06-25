@@ -16,6 +16,11 @@ ContactView::~ContactView()
 
 }
 
+void ContactView::appendContacts(const QVariant &d)
+{
+    Q_UNUSED(d)
+}
+
 void ContactView::update()
 {
     updateGeometries();

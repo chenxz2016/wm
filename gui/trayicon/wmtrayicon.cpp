@@ -106,26 +106,39 @@ void WMTrayIcon::setServiceData(QVariant data)
     if(map["service"].toString()!="ClientService")
         return ;
 
-    if(map["opt"].toInt()!=WM::CSLoginID)
-        return ;
-
-    if(map["res"].toInt()!=WM::LoginSuccess)
-        return ;
-
-    /* login successfully */
-    if(p_d->login_window)
+    int opt = map["opt"].toInt();
+    switch(opt)
     {
-        /* change gui. */
-        loginSuccess();
+    case WM::CSLoginID:
+    {
+        if(map["res"].toInt()!=WM::LoginSuccess)
+            return ;
 
-        /* fetch friends. */
-        fetchFriends();
+        /* login successfully */
+        if(p_d->login_window)
+        {
+            /* change gui. */
+            loginSuccess();
 
-        /* fetch groups. */
-        fetchGroups();
+            /* fetch friends. */
+            fetchFriends();
 
-        /* fetch sessions. */
-        fetchSessions();
+            /* fetch groups. */
+            fetchGroups();
+
+            /* fetch sessions. */
+            fetchSessions();
+        }
+        break;
+    }
+    case WM::CSUserID:
+    {
+        if(map["id"].toInt()==WMP_USER_FRIEND_ID)
+            p_d->main_window->updateFriends(map);
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -156,6 +169,8 @@ void WMTrayIcon::fetchFriends()
     QMap<QString,QVariant> map;
     map["opt"] = WMP_PROTO_USER_ID;
     map["id"] = WMP_USER_FRIEND_ID;
+    map["attr"] = 1;
+    map["user_friend_attr"] = WMP_USER_FRIEND_LIST_REQ;
     WMCore::globalInstance()->flush("ClientService",map);
 }
 

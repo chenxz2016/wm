@@ -182,6 +182,21 @@ void MainWindow::sessionViewTest()
     p_d->session_view->setItemWidget(item,i);
 }
 
+void MainWindow::updateFriends(QVariant d)
+{
+    p_d->contact_view->appendContacts(d);
+}
+
+void MainWindow::updateGroups(QVariant d)
+{
+    Q_UNUSED(d)
+}
+
+void MainWindow::updateSessions(QVariant d)
+{
+    Q_UNUSED(d)
+}
+
 void MainWindow::openSessionWindow(SessionItem *item)
 {
     if(!item)

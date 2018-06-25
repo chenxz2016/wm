@@ -34,13 +34,13 @@ CSUserProcess::~CSUserProcess()
 
 bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 {
-	if(para_num!=1)
+    if(param_num!=1)
 		return false;
 	
 	if(!param)
 		return false;
 	
-	wmp_user_t *user = reinterpret_cast<char *>(param->data);
+    wmp_user_t *user = reinterpret_cast<wmp_user_t *>(param->data);
 	if(!user)
 		return false;
 	
@@ -57,7 +57,7 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 		appendPushData("src",user->src);
 		appendPushData("user_id",user->id);
 		appendPushData("user_add_attr",add->attr);
-		appendPushData("msg",QString(add->msg,add->msg_len));
+        appendPushData("msg",QString::fromLatin1(add->msg,add->msg_len));
 		emit p_service->startUpdate(p_service);
         break;
     }
@@ -68,25 +68,12 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 		appendPushData("opt",WM::CSUserID);
 		appendPushData("src",user->src);
 		appendPushData("user_id",user->id);
-		appendPushData("attr",add->attr);
+        appendPushData("attr",del->attr);
 		emit p_service->startUpdate(p_service);
         break;
     }
     case WMP_USER_SET_ID:
     {
-        QList<QVariant> list = map["list"].toList();
-        wmp_user_set_t *set = allocate_wmp_user_set(list.count());
-        user->param = reinterpret_cast<uint8_t *>(set);
-        set->attr = map["attr"].toInt();
-        for(uint16_t i = 0;i<set->property_num;i++)
-        {
-            QMap<QString,QVariant> m = list.at(i).toMap();
-            QByteArray d = m["data"].toByteArray();
-            set->property_list[i].id = m["id"].toInt();
-            set->property_list[i].type = m["type"].toInt();
-            set->property_list[i].len = d.length();
-            memcpy(set->property_list[i].data,d.data(),d.length());
-        }
         break;
     }
     case WMP_USER_MSG_ID:
@@ -97,17 +84,17 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 		appendPushData("src",user->src);
 		appendPushData("user_id",user->id);
 		appendPushData("attr",msg->attr);
-		appendPushData("msg",QString(msg->msg,msg->msg_len));
+        appendPushData("msg",QString::fromLatin1(msg->msg,msg->msg_len));
 		emit p_service->startUpdate(p_service);
         break;
     }
 	case WMP_USER_FRIEND_ID:
 	{
-		wmp_user_friend_t *friends = reinterpret_cast<wmp_user_msg_t *>(user->param);
+        wmp_user_friend_t *friends = reinterpret_cast<wmp_user_friend_t *>(user->param);
         user->param = reinterpret_cast<uint8_t *>(friends);
-        friends->attr = map["user_friend_attr"].toInt();
-		
+
 		resetPushData();
+        appendPushData("id",user->id);
 		appendPushData("opt",WM::CSUserID);
 		appendPushData("src",user->src);
 		appendPushData("user_friend_attr",friends->attr);
@@ -118,11 +105,11 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 				break;
 			case WMP_USER_FRIEND_LIST_RSP:
 			{
-				appendPushData("team_name",QString(friends->team_name,friends->team_name_len));
+                appendPushData("team_name",QString::fromLatin1((char *)friends->team_name,friends->team_name_len));
 				appendPushData("user_friend_team_index",friends->team_index);
 				
 				QList<QVariant> list;
-				for(uint16_t i = friends->friend_num;i++)
+                for(uint16_t i = 0;i<friends->friend_num;i++)
 					list.append(friends->friend_list[i]);
 				
 				appendPushData("user_friend_list",list);
@@ -139,6 +126,14 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 		emit p_service->startUpdate(p_service);
 		break;
 	}
+	case WMP_USER_FIND_ID:
+	{
+		break;
+	}
+	case WMP_USER_FETCH_ID:
+	{
+		break;
+	}
     default:
         break;		
 	}
@@ -149,26 +144,13 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 bool CSUserProcess::syncSend(const QVariant &data)
 {
     QMap<QString,QVariant> map = data.toMap();
-    bool ok = true;
     quint32 id = map["id"].toInt();
-
-    quint32 dst = map["dst"].toString().toInt(&ok);
-    if(dst<1000)
-    {
-        return false;
-    }
 
     quint8 attr = map["attr"].toInt();
     if(!attr)
     {
-        return true;
-    }
-
-    quint32 opt = map["opt"].toInt();
-
-    QByteArray message = map["msg"].toByteArray();
-    if(message.isEmpty())
         return false;
+    }
 
     /* 2 parameters, user id and user pwd. */
     wm_protocol_t *proto = allocate_wmp(1);
@@ -188,12 +170,13 @@ bool CSUserProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-	wmp_user_t *user = allocate_wmp_user_add();
+    wmp_user_t *user = allocate_wmp_user();
+    proto->body.param_num = 1;
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(user);
 
     user->src = p_userID;
-    user->dst = dst;
+    user->dst = map["dst"].toInt();
     user->id = id;
 
     switch(id)
@@ -203,6 +186,12 @@ bool CSUserProcess::syncSend(const QVariant &data)
         wmp_user_add_t *add = allocate_wmp_user_add();
         user->param = reinterpret_cast<uint8_t *>(add);
         add->attr = map["attr"].toInt();
+        QByteArray message = map["msg"].toByteArray();
+        if(message.isEmpty())
+        {
+            deallocate_wmp(&proto);
+            return false;
+        }
         add->msg_len = message.length();
         memcpy(add->msg,message.data(),add->msg_len);
         break;
@@ -234,6 +223,13 @@ bool CSUserProcess::syncSend(const QVariant &data)
     }
     case WMP_USER_MSG_ID:
     {
+        QByteArray message = map["msg"].toByteArray();
+        if(message.isEmpty())
+        {
+            deallocate_wmp(&proto);
+            return false;
+        }
+
         wmp_user_msg_t *msg = allocate_wmp_user_msg(message.length());
         user->param = reinterpret_cast<uint8_t *>(msg);
         msg->attr = map["attr"].toInt();

@@ -31,7 +31,11 @@ public:
 #if 1 //WM_TEST
     void sessionViewTest();
 #endif
+
 public slots:
+    void updateFriends(QVariant d);
+    void updateGroups(QVariant d);
+    void updateSessions(QVariant d);
     void openSessionWindow(SessionItem *item);
 protected:
     bool eventFilter(QObject *watched, QEvent *event);

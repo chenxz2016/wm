@@ -10,6 +10,7 @@ public:
     ContactView(QWidget*parent= 0);
     ~ContactView();
 
+    void appendContacts(const QVariant &d);
     void update();
 private slots:
     void contactViewItemExpland(QTreeWidgetItem*);
