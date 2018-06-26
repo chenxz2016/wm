@@ -520,6 +520,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
 				memcpy(p_wmp_user_add->msg,package+index,p_wmp_user_add->msg_len);
 				index+=p_wmp_user_add->msg_len;
 			}
+            break;
         case WMP_USER_FRIEND_ID:
             p_wmp_user_friend = allocate_wmp_user_friend(0);
             p_wmp_user->param = (uint8_t *)p_wmp_user_friend;
@@ -555,6 +556,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
             break;
         case WMP_USER_FIND_ID:
             p_wmp_user_find = allocate_wmp_user_find(0);
+            p_wmp_user->param = (uint8_t *)p_wmp_user_find;
             p_wmp_user_find->attr = ntohs(*(uint16_t *)(package+index));
             index+=2;
             if(p_wmp_user_find->attr==WMP_USER_FIND_REQ)
@@ -620,6 +622,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
             break;
         case WMP_USER_FETCH_ID:
             p_wmp_user_fetch = allocate_wmp_user_fetch(0);
+            p_wmp_user->param = (uint8_t *)p_wmp_user_fetch;
             p_wmp_user_fetch->attr = ntohs(*(uint16_t *)(package+index));
             index+=2;
             p_wmp_user_fetch->property_num = ntohs(*(uint16_t *)(package+index));
@@ -656,7 +659,7 @@ wmp_user_t *parser_wmp_user(const char *package,uint32_t pack_len)
 #ifdef WMP_DEBUG
 		printf("[WMP] parser wmp failed.\n");
 #endif
-		return NULL;
+        return NULL;
 	}
 
 	uint32_t index = 0;
@@ -677,8 +680,8 @@ wmp_user_t *parser_wmp_user(const char *package,uint32_t pack_len)
 #ifdef WMP_DEBUG
 		printf("[WMP] parser wmp_user_t parameter failed.\n");
 #endif
-		deallocate_wmp_user(&p_wmp_user);
-		return NULL;
+        deallocate_wmp_user(&p_wmp_user);
+        return NULL;
 	}
 	return p_wmp_user;
 }
@@ -746,7 +749,7 @@ static uint32_t package_wmp_user_parameter(char *package,const wmp_user_t *p_wmp
 			break;
         case WMP_USER_FRIEND_ID:
             p_wmp_user_friend = (wmp_user_friend_t *)(p_wmp_user->param);
-            *(uint16_t *)(package+index) = htons(p_wmp_user_msg->attr);
+            *(uint16_t *)(package+index) = htons(p_wmp_user_friend->attr);
             index+=2;
             switch(p_wmp_user_friend->attr)
             {
@@ -877,7 +880,7 @@ uint32_t package_wmp_user(char *package,const wmp_user_t *p_wmp_user)
 #ifdef WMP_DEBUG
 		printf("[WMP] package wmp_user_t failed.\n");
 #endif
-		return 0;
+        return NULL;
 	}
 	uint32_t index = 0;
 

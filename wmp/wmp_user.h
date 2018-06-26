@@ -306,6 +306,12 @@ typedef struct
 #define WMP_UserSetDst(p_wmp_user,id) 						(p_wmp_user->dst = id)
 #define WMP_UserSetID(p_wmp_user,i) 						(p_wmp_user->id = i)
 
+#define WMP_UserSetID(p_wmp_user,i) \
+    uint32_t id = p_wmp_user->src;\
+    p_wmp_user->src = p_wmp_user->dst;\
+    p_wmp_user->dst = id;
+
+
 WMPSHARED_EXPORT extern wmp_user_t *allocate_wmp_user();
 
 WMPSHARED_EXPORT extern void deallocate_wmp_user(wmp_user_t **p_wmp_user);

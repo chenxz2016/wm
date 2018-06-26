@@ -1,5 +1,7 @@
 #include "contactview.h"
 #include "viewdelegate.h"
+#include <QDebug>
+#include <wmp_user.h>
 
 ContactView::ContactView(QWidget *parent)
     :QTreeWidget(parent)
@@ -18,7 +20,45 @@ ContactView::~ContactView()
 
 void ContactView::appendContacts(const QVariant &d)
 {
-    Q_UNUSED(d)
+    QMap<QString,QVariant> map = d.toMap();
+    quint32 id = map["id"].toInt();
+    quint16 user_friend_attr = map["user_friend_attr"].toInt();
+    QString team_name = map["team_name"].toInt();
+    quint16 team_index = map["team_index"].toInt();
+
+    switch(id)
+    {
+    case WMP_USER_ADD_ID:
+    case WMP_USER_DEL_ID:
+    case WMP_USER_SET_ID:
+    case WMP_USER_MSG_ID:
+        break;
+    case WMP_USER_FRIEND_ID:
+    {
+
+        switch(user_friend_attr)
+        {
+        case WMP_USER_FRIEND_LIST_REQ:
+        case WMP_USER_FRIEND_LIST_RSP:
+        {
+            addTopLevelItem(new QTreeWidgetItem(QStringList(team_name)));
+            break;
+        }
+        case WMP_USER_FRIEND_NUM_REQ:
+        case WMP_USER_FRIEND_NUM_RSP:
+            reset();
+            break;
+        default:
+            break;
+        }
+
+        break;
+    }
+    case WMP_USER_FIND_ID:
+    case WMP_USER_FETCH_ID:
+    default:
+        break;
+    }
 }
 
 void ContactView::update()

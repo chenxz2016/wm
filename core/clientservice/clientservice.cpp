@@ -226,7 +226,17 @@ bool ClientService::sendPackage(wm_protocol_t *proto)
         return false;
     }
     p_d->sequence++;
-	return true;
+    return true;
+}
+
+quint32 ClientService::userID() const
+{
+    return p_d->id;
+}
+
+void ClientService::setUserID(quint32 id)
+{
+    p_d->id = id;
 }
 
 quint16 ClientService::protoType() const

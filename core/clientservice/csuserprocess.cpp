@@ -44,7 +44,7 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 	if(!user)
 		return false;
 	
-	if(user->dst != p_userID)
+    if(user->dst != p_service->userID())
 		return false;
 	
 	switch(user->id)
@@ -161,7 +161,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
 	
     proto->base.proto_type = p_service->protoType();
 	
-    proto->base.src = p_userID;
+    proto->base.src = p_service->userID();
     proto->base.dst = CS_SERVICE_ID;
     p_service->localDevice(proto->base.device);
 
@@ -175,7 +175,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(user);
 
-    user->src = p_userID;
+    user->src = p_service->userID();
     user->dst = map["dst"].toInt();
     user->id = id;
 

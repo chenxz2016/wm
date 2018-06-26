@@ -84,6 +84,7 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
     resetPushData();
     appendPushData("opt",WM::CSLoginID);
     appendPushData("res",WM::LoginSuccess);
+    p_service->setUserID(p_userID);
     emit p_service->startUpdate(p_service);
     return true;
 }
