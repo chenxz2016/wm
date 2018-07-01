@@ -23,7 +23,7 @@ void ContactView::appendContacts(const QVariant &d)
     QMap<QString,QVariant> map = d.toMap();
     quint32 id = map["id"].toInt();
     quint16 user_friend_attr = map["user_friend_attr"].toInt();
-    QString team_name = map["team_name"].toInt();
+    QString team_name = map["team_name"].toString();
     quint16 team_index = map["team_index"].toInt();
 
     switch(id)
@@ -41,7 +41,16 @@ void ContactView::appendContacts(const QVariant &d)
         case WMP_USER_FRIEND_LIST_REQ:
         case WMP_USER_FRIEND_LIST_RSP:
         {
-            addTopLevelItem(new QTreeWidgetItem(QStringList(team_name)));
+            QList<QVariant> list = map["user_friend_list"].toList();
+            QTreeWidgetItem *item = new QTreeWidgetItem(QStringList(team_name));
+            addTopLevelItem(item);
+            QList<QTreeWidgetItem *> l;
+            foreach(QVariant i , list)
+            {
+                QTreeWidgetItem *c = new QTreeWidgetItem(QStringList(QString("asdasda"/*i.toInt()*/)));
+                l.append(c);
+            }
+            item->addChildren(l);
             break;
         }
         case WMP_USER_FRIEND_NUM_REQ:

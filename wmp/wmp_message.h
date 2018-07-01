@@ -60,6 +60,8 @@ WMPSHARED_EXPORT extern uint32_t package_wmp_message(char *package,wmp_message_t
 
 WMPSHARED_EXPORT extern void set_wmp_message_len(wmp_message_t *p_wmp_msg,uint32_t msg_len);
 
+WMPSHARED_EXPORT extern wmp_message_t *copy_wmp_message(wmp_message_t *p_wmp_msg);
+
 
 #ifdef __cplusplus
 }

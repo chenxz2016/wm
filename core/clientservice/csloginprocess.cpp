@@ -64,7 +64,7 @@ bool CSLoginProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
         return false;
     }
 
-    if(login->user_id!=p_userID)
+    if(login->user_id!=p_service->userID())
     {
         /* Parser wmp_login_t failed, push failed to gui. */
         resetPushData();
@@ -255,6 +255,7 @@ bool CSLoginKeyProcess::syncRecv(wm_parameter_t *param,quint16 param_num)
 	if(key->user_id!=p_userID)
 		return false;
 
+    p_service->setUserID(p_userID);
 	/* Update key. */
 	WMEncryptKey k;
 	k.setKey(key->key_len,(char *)key->key,key->type);

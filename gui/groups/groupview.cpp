@@ -17,6 +17,17 @@ void GroupView::update()
     updateGeometries();
 }
 
+void GroupView::appendGroups(const QVariant &d)
+{
+    QTreeWidgetItem *root = new QTreeWidgetItem(QStringList(QString("My Groups")));
+
+    QList<QVariant> list = d.toMap()["group_list"].toList();
+    foreach (QVariant i, list)
+    {
+        root->addChild(new QTreeWidgetItem(QStringList(QString::number(i.toInt()))));
+    }
+}
+
 void GroupView::groupsViewItemExpland(QTreeWidgetItem *item)
 {
     if(!item->isExpanded())

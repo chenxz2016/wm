@@ -43,6 +43,9 @@ WMPSHARED_EXPORT extern uint32_t package_wmp_req_register(char *package,const wm
 
 WMPSHARED_EXPORT extern void print_wmp_req_register(const wmp_req_register_t *p_wmp_req_register);
 
+WMPSHARED_EXPORT extern wmp_req_register_t *copy_wmp_req_register(const wmp_req_register_t *p_wmp_req_register);
+
+
 
 #define WMP_REGISTER_IDENTIFY_CODE_LENGTH					6
 
@@ -67,6 +70,8 @@ WMPSHARED_EXPORT extern wmp_register_t *parser_wmp_register(const char *package,
 WMPSHARED_EXPORT extern uint32_t package_wmp_register(char *package,const wmp_register_t *p_wmp_register);
 
 WMPSHARED_EXPORT extern void print_wmp_register(const wmp_register_t *p_wmp_register);
+
+WMPSHARED_EXPORT extern wmp_register_t *copy_wmp_register(const wmp_register_t *p_wmp_register);
 
 
 #ifdef __cplusplus

@@ -149,4 +149,23 @@ void set_wmp_video_len(wmp_video_t *p_wmp_video,uint32_t video_len)
 }
 
 
+/* ***********************************************************************************
+ * Copy wmp_video_t a new instance.
+ *
+ * @param:	p_wmp_video			wmp_video_t pointer.
+ * @retval: c_wmp_video         The pointer of new instance.
+ *
+ * ***********************************************************************************/
+wmp_video_t *copy_wmp_video(wmp_video_t *p_wmp_video)
+{
+    wmp_video_t *c_wmp_video = allocate_wmp_video(p_wmp_video->video_len);
+
+    c_wmp_video->attr = p_wmp_video->attr;
+    c_wmp_video->result = p_wmp_video->result;
+    c_wmp_video->src = p_wmp_video->src;
+    c_wmp_video->dst = p_wmp_video->dst;
+    memcpy(c_wmp_video->video,p_wmp_video->video,p_wmp_video->video_len);
+
+    return c_wmp_video;
+}
 

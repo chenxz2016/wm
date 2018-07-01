@@ -17,6 +17,7 @@
 #include <wmcore/wmcore.h>
 #include <wm_protocol.h>
 #include <wmp_user.h>
+#include <wmp_group.h>
 
 
 class WMTrayIconPrivate
@@ -137,6 +138,12 @@ void WMTrayIcon::setServiceData(QVariant data)
             p_d->main_window->updateFriends(map);
         break;
     }
+    case WM::CSGroupID:
+    {
+        if(map["id"].toInt()==WMP_GROUP_FETCH_ID)
+            p_d->main_window->updateGroups(map);
+        break;
+    }
     default:
         break;
     }
@@ -178,7 +185,7 @@ void WMTrayIcon::fetchGroups()
 {
     QMap<QString,QVariant> map;
     map["opt"] = WMP_PROTO_GROUP_ID;
-//    map["id"] = WMP_USER_FRIEND_ID;
+    map["attr"] = 1;
     WMCore::globalInstance()->flush("ClientService",map);
 }
 
@@ -186,7 +193,7 @@ void WMTrayIcon::fetchSessions()
 {
     QMap<QString,QVariant> map;
     map["opt"] = WMP_PROTO_SESSION_ID;
-//    map["id"] = WMP_USER_FRIEND_ID;
+    map["attr"] = 1;
     WMCore::globalInstance()->flush("ClientService",map);
 }
 

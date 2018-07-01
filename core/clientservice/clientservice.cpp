@@ -300,6 +300,7 @@ void ClientService::tcpRead()
 
     QByteArray recv_data = p_d->tcp->readAll();
 
+    qDebug() << "length:" << recv_data.length();
     if(recv_data.size()<=0)
         return ;
 

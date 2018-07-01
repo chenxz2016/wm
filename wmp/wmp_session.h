@@ -40,6 +40,9 @@ WMPSHARED_EXPORT extern wmp_session_cet_t *allocate_wmp_session_cet();
 /* Delete wmp_session_cet_t structure. */
 WMPSHARED_EXPORT extern void deallocate_wmp_session_cet(wmp_session_cet_t **p_wmp_session_cet);
 
+/* Copy wmp_session_cet_t structure. */
+WMPSHARED_EXPORT extern wmp_session_cet_t *copy_wmp_session_cet(wmp_session_cet_t *p_wmp_session_cet);
+
 
 /* **********************************************************************************************
  *	wm_session_dsv_t structure.
@@ -60,6 +63,9 @@ WMPSHARED_EXPORT extern wmp_session_dsv_t *allocate_wmp_session_dsv();
 /* Delete wmp_session_dsv_t structure. */
 WMPSHARED_EXPORT extern void deallocate_wmp_session_dsv(wmp_session_dsv_t **p_wmp_session_dsv);
 
+/* Copy wmp_session_dsv_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_dsv_t *copy_wmp_session_dsv(wmp_session_dsv_t *p_wmp_session_dsv);
+
 
 /* **********************************************************************************************
  *	wm_session_ext_t structure.
@@ -79,6 +85,9 @@ WMPSHARED_EXPORT extern wmp_session_ext_t *allocate_wmp_session_ext();
 
 /* Delete wmp_session_ext_t structure. */
 WMPSHARED_EXPORT extern void deallocate_wmp_session_ext(wmp_session_ext_t **p_wmp_session_ext);
+
+/* Copy wmp_session_ext_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_ext_t *copy_wmp_session_ext(wmp_session_ext_t *p_wmp_session_ext);
 
 
 /* **********************************************************************************************
@@ -106,6 +115,9 @@ WMPSHARED_EXPORT extern void deallocate_wmp_session_msg(wmp_session_msg_t **p_wm
 
 /* Set wmp_session_msg_t length. */
 WMPSHARED_EXPORT extern void set_wmp_session_msg_len(wmp_session_msg_t *p_wmp_session_msg,uint16_t msg_len);
+
+/* Copy wmp_session_msg_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_msg_t *copy_wmp_session_msg(wmp_session_msg_t *p_wmp_session_msg);
 
 
 /* **********************************************************************************************
@@ -142,6 +154,9 @@ WMPSHARED_EXPORT extern void deallocate_wmp_session_fle(wmp_session_fle_t **p_wm
 /* Set wmp_session_fle_t structure. */
 WMPSHARED_EXPORT extern void set_wmp_session_fle_len(wmp_session_fle_t *p_wmp_session_fle,uint16_t file_len);
 
+/* Copy wmp_session_fle_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_fle_t *copy_wmp_session_fle(wmp_session_fle_t *p_wmp_session_fle);
+
 
 
 /* **********************************************************************************************
@@ -165,6 +180,9 @@ WMPSHARED_EXPORT extern wmp_session_ivt_t *allocate_wmp_session_ivt();
 /* Delete wmp_session_ivt_t structure. */
 WMPSHARED_EXPORT extern void deallocate_wmp_session_ivt(wmp_session_ivt_t **p_wmp_session_ivt);
 
+/* Copy wmp_session_ivt_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_ivt_t *copy_wmp_session_ivt(wmp_session_ivt_t *p_wmp_session_ivt);
+
 
 
 /* **********************************************************************************************
@@ -182,7 +200,7 @@ typedef struct
 	uint32_t src;
 	uint32_t dst;
 	uint32_t id;
-	uint8_t *param;
+    void *param;
 }wmp_session_t;
 
 #define WMP_SESSION_LENGTH									sizeof(uint16_t)+sizeof(uint32_t)+sizeof(uint8_t)
@@ -216,6 +234,9 @@ WMPSHARED_EXPORT extern wmp_session_t *parser_wmp_session(const char *package,ui
 WMPSHARED_EXPORT extern uint32_t package_wmp_session(char *package,const wmp_session_t *p_wmp_session);
 
 WMPSHARED_EXPORT extern void print_wmp_session(const wmp_session_t *p_wmp_session);
+
+WMPSHARED_EXPORT extern wmp_session_t *copy_wmp_session(const wmp_session_t *p_wmp_session);
+
 
 #ifdef __cplusplus
 }

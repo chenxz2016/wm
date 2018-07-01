@@ -2,6 +2,26 @@
 #include "clientservice.h"
 #include "wmp_user.h"
 
+#include <QTimer>
+#include <QVector>
+#include <QDebug>
+
+static bool verify_team_info_fetch_full(quint16 team_num,const QVector<quint16> &vectors,QList<quint16> &list)
+{
+    if(!team_num || !vectors.count())
+		return false;
+	
+	for(quint16 i=0;i<team_num;i++)
+		list.append(i);
+	
+	foreach(quint16 i , vectors)
+        list.removeAll(i);
+		
+	if(list.isEmpty())
+		return true;
+	
+	return false;
+}
 
 class CSUserProcessPrivate
 {
@@ -17,6 +37,11 @@ public:
 
     int timeout;
     CSUserProcess *p;
+	
+	quint16 teamNum;
+	QVector<quint16> vectors;
+	QVariant sendMeta;
+	wm_protocol_t *cacheProto;
 };
 
 CSUserProcess::CSUserProcess(quint32 id,ClientService *parent)
@@ -113,7 +138,8 @@ bool CSUserProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 					list.append(friends->friend_list[i]);
 				
 				appendPushData("user_friend_list",list);
-				break;
+                qDebug() << "aaaaaaaaaaaaaa" ;
+                break;
 			}
 			case WMP_USER_FRIEND_NUM_REQ:
 				break;
@@ -151,7 +177,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
     {
         return false;
     }
-
+	
     /* 2 parameters, user id and user pwd. */
     wm_protocol_t *proto = allocate_wmp(1);
 
@@ -241,32 +267,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
 		wmp_user_friend_t *friends = allocate_wmp_user_friend(0);
         user->param = reinterpret_cast<uint8_t *>(friends);
         friends->attr = map["user_friend_attr"].toInt();
-		
-		/* wmp_user_friend_t char. */
-		//friends->team_num;
-		//friends->team_index;
-		//friends->team_name_len;
-		//friends->team_name[255];
-		//friends->friend_num;
-		//friends->friend_list;
-		
-		/* It is not necessary to set wmp_user_friend_t char. */
-		/*
-		switch(friends->attr)
-		{
-			case WMP_USER_FRIEND_LIST_REQ:
-				break;
-			case WMP_USER_FRIEND_LIST_RSP:
-				break;
-			case WMP_USER_FRIEND_NUM_REQ:
-				break;
-			case WMP_USER_FRIEND_NUM_RSP:
-				break;
-			default:
-				break;
-		}
-		*/
-		
+        QTimer::singleShot(1000*20,this,SLOT(verifyFriendsNum()));
 		break;
 	}
     default:
@@ -274,6 +275,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
     }
 
     bool ret = p_service->sendPackage(proto);
+	//p_d->cacheProto = proto;
     if(!ret)
     {
         p_error = p_service->error();
@@ -302,4 +304,34 @@ int CSUserProcess::timeout() const
 void CSUserProcess::setTimeout(int timeout)
 {
     p_d->timeout = timeout;
+}
+
+void CSUserProcess::verifyFriendsNum()
+{
+    QList<quint16> list;
+    bool ret = verify_team_info_fetch_full(p_d->teamNum,p_d->vectors,list);
+	if(!ret)
+	{
+		/* There is no any respond from server, resend request. */
+		if(list.isEmpty())
+		{
+			static quint8 resend_time = 0;
+			resend();
+			resend_time++;
+		}
+		/* Did not receive party team from server, resend this team request. */
+		else
+		{
+			
+		}
+	}
+}
+
+void CSUserProcess::resend()
+{
+	bool ret = p_service->sendPackage(p_d->cacheProto);
+    if(!ret)
+        p_error = p_service->error();
+	
+    QTimer::singleShot(1000*20,this,SLOT(verifyFriendsNum()));
 }

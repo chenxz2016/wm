@@ -62,6 +62,8 @@ WMPSHARED_EXPORT extern uint32_t package_wmp_beat_heart(char *package,const wmp_
 
 WMPSHARED_EXPORT extern void print_wmp_beat_heart(const wmp_beat_heart_t *p_wmp_bh);
 
+WMPSHARED_EXPORT extern wmp_beat_heart_t *copy_wmp_beat_heart(wmp_beat_heart_t *p_wmp_bh);
+
 
 #ifdef __cplusplus
 }

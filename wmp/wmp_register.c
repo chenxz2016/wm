@@ -124,6 +124,22 @@ void print_wmp_req_register(const wmp_req_register_t *p_wmp_req_register)
 	printf("***************************WM-req_register Protocol End************************\n");
 }
 
+
+/* ***********************************************************************************
+ * Copy wmp_req_register_t a new instance.
+ *
+ * @param:	p_wmp_req_register	wmp_req_register_t pointer.
+ *
+ * ***********************************************************************************/
+wmp_req_register_t *copy_wmp_req_register(const wmp_req_register_t *p_wmp_req_register)
+{
+    wmp_req_register_t *c_wmp_req_register = allocate_wmp_req_register();
+
+    memcpy(c_wmp_req_register,p_wmp_req_register,sizeof(wmp_req_register_t));
+
+    return c_wmp_req_register;
+}
+
 /* ***********************************************************************************
  * Allocate wmp_register_t package.
  *
@@ -233,4 +249,18 @@ void print_wmp_register(const wmp_register_t *p_wmp_register)
 	printf("***************************WM-req_register Protocol End************************\n");
 }
 
+/* ***********************************************************************************
+ * Copy wmp_register_t a new instance.
+ *
+ * @param:	p_wmp_register	wmp_register_t pointer.
+ * @retval  c_wmp_register  The pointer of new instance.
+ *
+ * ***********************************************************************************/
+wmp_register_t *copy_wmp_register(const wmp_register_t *p_wmp_register)
+{
+    wmp_register_t *c_wmp_register = allocate_wmp_register();
 
+    memcpy(c_wmp_register,p_wmp_register,sizeof(wmp_register_t));
+
+    return c_wmp_register;
+}

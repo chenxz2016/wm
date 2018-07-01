@@ -189,7 +189,7 @@ void MainWindow::updateFriends(QVariant d)
 
 void MainWindow::updateGroups(QVariant d)
 {
-    Q_UNUSED(d)
+    p_d->group_view->appendGroups(d);
 }
 
 void MainWindow::updateSessions(QVariant d)

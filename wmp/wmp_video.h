@@ -74,6 +74,8 @@ WMPSHARED_EXPORT extern uint32_t package_wmp_video(char *package,const wmp_video
 
 WMPSHARED_EXPORT extern void set_wmp_video_len(wmp_video_t *p_wmp_video,uint32_t video_len);
 
+WMPSHARED_EXPORT extern wmp_video_t *copy_wmp_video(wmp_video_t *p_wmp_video);
+
 
 #ifdef __cplusplus
 }

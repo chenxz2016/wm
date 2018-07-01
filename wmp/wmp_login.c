@@ -145,6 +145,22 @@ void print_wmp_login(wmp_login_t *p_wmp_login)
 }
 
 /* ***********************************************************************************
+ * Copy wmp_login_t a new instance.
+ *
+ * @param:	p_wmp_login		wmp_login_t pointer.
+ * @retval  c_wmp_login     The pointer of new instance.
+ *
+ * ***********************************************************************************/
+wmp_login_t *copy_wmp_login(wmp_login_t *p_wmp_login)
+{
+    wmp_login_t *c_wmp_login = allocate_wmp_login();
+
+    memcpy(c_wmp_login,p_wmp_login,sizeof(wmp_login_t));
+
+    return c_wmp_login;
+}
+
+/* ***********************************************************************************
  * Allocate wmp_login_key_t package.
  *
  * @retval:	p_wmp_login_key		wmp_login_key_t pointer.
@@ -283,4 +299,18 @@ void print_wmp_login_key(wmp_login_key_t *p_wmp_login_key)
     printf("***************************WM-login Protocol End************************\n");
 }
 
+/* ***********************************************************************************
+ * Copy wmp_login_key_t a new instance.
+ *
+ * @param:	p_wmp_login_key	 wm_login_key_t pointer.
+ * @retval  c_wmp_login_key  The pointer of new instance.
+ *
+ * ***********************************************************************************/
+wmp_login_key_t *copy_wmp_login_key(wmp_login_key_t *p_wmp_login_key)
+{
+    wmp_login_key_t *c_wmp_login_key = allocate_wmp_login_key();
 
+    memcpy(c_wmp_login_key,p_wmp_login_key,sizeof(wmp_login_key_t));
+
+    return c_wmp_login_key;
+}

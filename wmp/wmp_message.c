@@ -105,5 +105,17 @@ void set_wmp_message_len(wmp_message_t *p_wmp_msg,uint32_t msg_len)
 	}
 }
 
+wmp_message_t *copy_wmp_message(wmp_message_t *p_wmp_msg)
+{
+    wmp_message_t *c_wmp_msg = allocate_wmp_message();
 
+    c_wmp_msg->attr = p_wmp_msg->attr;
+    c_wmp_msg->result = p_wmp_msg->result;
+    c_wmp_msg->src = p_wmp_msg->src;
+    c_wmp_msg->dst = p_wmp_msg->dst;
+    set_wmp_message_len(c_wmp_msg,p_wmp_msg->msg_len);
+    memcpy(c_wmp_msg->msg,p_wmp_msg->msg,p_wmp_msg->msg_len);
+
+    return c_wmp_msg;
+}
 

@@ -649,5 +649,92 @@ void print_wmp(const wm_protocol_t *p_wm)
 }
 
 
+/* **********************************************************************************************
+ *	Copy wm_protocol_t a new instance.
+ *
+ *	@param:		p_wm		The pointer to wm_protocol_t.
+ *  @retval:    c_wm        The pointer to new wm_protocol_t instance.
+ *
+ * **********************************************************************************************/
+wm_protocol_t * copy_wmp(const wm_protocol_t *p_wm)
+{
+    wm_protocol_t *c_wm = allocate_wmp(p_wm->body.param_num);
+    c_wm->head = p_wm->head;
+    c_wm->sequence = p_wm->sequence;
+    c_wm->crc_check = p_wm->crc_check;
+    c_wm->attr = p_wm->attr;
+    c_wm->length = p_wm->length;
+    c_wm->tail = p_wm->tail;
+    memcpy(&c_wm->base,&p_wm->base,sizeof(wm_base_t));
+    c_wm->body.param_num = p_wm->body.param_num;
+    for(uint16_t i=0;i<p_wm->body.param_num;i++)
+    {
+        c_wm->body.param[i].attr = p_wm->body.param[i].attr;
+        c_wm->body.param[i].main_id = p_wm->body.param[i].main_id;
+        c_wm->body.param[i].length = p_wm->body.param[i].length;
+        switch(p_wm->body.param[i].main_id)
+        {
+        case WMP_PROTO_LOGIN_KEY_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_login_key((wmp_login_key_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_LOGIN_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_login((wmp_login_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_BH_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_beat_heart((wmp_beat_heart_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_FILE_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_file((wmp_file_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_GROUP_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_group((wmp_group_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_MSG_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_message((wmp_message_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_REGISTER_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_register((wmp_register_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_SESSION_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_session((wmp_session_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_SOUND_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_sound((wmp_sound_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_VIDEO_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_video((wmp_video_t *)p_wm->body.param[i].data);
+            break;
+        }
+        case WMP_PROTO_USER_ID:
+        {
+            c_wm->body.param[i].data = copy_wmp_user((wmp_user_t *)p_wm->body.param[i].data);
+            break;
+        }
+        default:
+            break;
+        }
+    }
+
+    return c_wm;
+}
 
 

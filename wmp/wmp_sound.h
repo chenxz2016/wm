@@ -71,6 +71,8 @@ WMPSHARED_EXPORT extern uint32_t package_wmp_sound(char *package,const wmp_sound
 
 WMPSHARED_EXPORT extern void set_wmp_sound_len(wmp_sound_t *p_wmp_sound,uint32_t msg_len);
 
+WMPSHARED_EXPORT extern wmp_sound_t *copy_wmp_sound(wmp_sound_t *p_wmp_sound);
+
 
 #ifdef __cplusplus
 }

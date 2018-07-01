@@ -43,6 +43,10 @@ WMPSHARED_EXPORT extern wmp_user_add_t *allocate_wmp_user_add();
 /* Delete wmp_user_add_t structure. */
 WMPSHARED_EXPORT extern void deallocate_wmp_user_add(wmp_user_add_t **p_wmp_user_add);
 
+/* Copy wmp_user_add_t new instance. */
+WMPSHARED_EXPORT extern wmp_user_add_t *copy_wmp_user_add(wmp_user_add_t *p_wmp_user_add);
+
+
 
 /* *********************************************************************************************
  * Walking Message protocol user del.
@@ -60,6 +64,9 @@ WMPSHARED_EXPORT extern wmp_user_del_t *allocate_wmp_user_del();
 
 /* Delete wmp_user_del_t structure. */
 WMPSHARED_EXPORT extern void deallocate_wmp_user_del(wmp_user_del_t **p_wmp_user_del);
+
+/* Delete wmp_user_del_t structure. */
+WMPSHARED_EXPORT extern wmp_user_del_t *copy_wmp_user_del(wmp_user_del_t *p_wmp_user_del);
 
 
 /* *********************************************************************************************
@@ -84,6 +91,9 @@ WMPSHARED_EXPORT extern void deallocate_wmp_user_msg(wmp_user_msg_t **p_wmp_user
 
 /* Set wmp_user_msg_t message length. */
 WMPSHARED_EXPORT extern void set_wmp_user_msg_len(wmp_user_msg_t *p_user_msg,uint32_t msg_len);
+
+/* Copy wmp_user_msg_t new instance. */
+WMPSHARED_EXPORT extern wmp_user_msg_t *copy_wmp_user_msg(wmp_user_msg_t *p_wmp_user_msg);
 
 
 
@@ -128,6 +138,9 @@ WMPSHARED_EXPORT extern void deallocate_wmp_user_set(wmp_user_set_t **p_wmp_user
 /* Set wmp_user_set_t property number. */
 WMPSHARED_EXPORT extern void set_wmp_user_set_property_num(wmp_user_set_t *p_user_set,uint32_t property_num);
 
+/* Copy wmp_user_set_t new instance. */
+WMPSHARED_EXPORT extern wmp_user_set_t *copy_wmp_user_set(wmp_user_set_t *p_wmp_user_set);
+
 
 
 /* *********************************************************************************************
@@ -166,6 +179,9 @@ WMPSHARED_EXPORT extern void deallocate_wmp_user_friend(wmp_user_friend_t **p_wm
 
 /* Set wmp_user_set_t property number. */
 WMPSHARED_EXPORT extern void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_user_friend,uint16_t friend_num);
+
+/* Set wmp_user_set_t property number. */
+WMPSHARED_EXPORT extern wmp_user_friend_t *copy_wmp_user_friend(wmp_user_friend_t *p_wmp_user_friend);
 
 
 /* *********************************************************************************************
@@ -223,6 +239,9 @@ WMPSHARED_EXPORT extern void deallocate_wmp_user_find(wmp_user_find_t **p_wmp_us
 /* Set wmp_user_fetch_t result list number. */
 WMPSHARED_EXPORT extern void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,uint32_t result_num);
 
+/* Copy wmp_user_fetch_t a new instance. */
+WMPSHARED_EXPORT extern wmp_user_find_t *copy_wmp_user_find(wmp_user_find_t *p_wmp_user_find);
+
 
 
 /* *********************************************************************************************
@@ -261,6 +280,9 @@ WMPSHARED_EXPORT extern void deallocate_wmp_user_fetch(wmp_user_fetch_t **p_wmp_
 /* Set wmp_user_fetch_t properties number structure. */
 WMPSHARED_EXPORT extern void set_wmp_user_fetch_property_num(wmp_user_fetch_t *p_wmp_user_fetch,uint16_t property_num);
 
+/* Set wmp_user_fetch_t properties number structure. */
+WMPSHARED_EXPORT extern wmp_user_fetch_t *copy_wmp_user_fetch(wmp_user_fetch_t *p_wmp_user_fetch);
+
 
 
 
@@ -278,7 +300,7 @@ typedef struct
 	uint32_t src;
 	uint32_t dst;
 	uint16_t id;
-	uint8_t *param;
+    void *param;
 }wmp_user_t;
 
 #define WMP_USER_MIN_LENGTH									sizeof(uint16_t)+sizeof(uint32_t)+sizeof(uint8_t)
@@ -306,7 +328,7 @@ typedef struct
 #define WMP_UserSetDst(p_wmp_user,id) 						(p_wmp_user->dst = id)
 #define WMP_UserSetID(p_wmp_user,i) 						(p_wmp_user->id = i)
 
-#define WMP_UserSetID(p_wmp_user,i) \
+#define WMP_UserSwapID(p_wmp_user,i) \
     uint32_t id = p_wmp_user->src;\
     p_wmp_user->src = p_wmp_user->dst;\
     p_wmp_user->dst = id;
@@ -321,6 +343,8 @@ WMPSHARED_EXPORT extern wmp_user_t *parser_wmp_user(const char *package,uint32_t
 WMPSHARED_EXPORT extern uint32_t package_wmp_user(char *package,const wmp_user_t *p_wmp_user);
 
 WMPSHARED_EXPORT extern void print_wmp_user(const wmp_user_t *p_wmp_user);
+
+WMPSHARED_EXPORT extern wmp_user_t *copy_wmp_user(const wmp_user_t *p_wmp_user);
 
 
 #ifdef __cplusplus

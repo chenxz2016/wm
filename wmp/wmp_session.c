@@ -48,6 +48,22 @@ void deallocate_wmp_session_cet(wmp_session_cet_t **p_wmp_session_cet)
 }
 
 /* **********************************************************************************************
+ *	Copy a wmp_session_cet_t a new instance.
+ *
+ *	@param:	p_wm_session_cet	The pointer to wmp_session_cet_t structure.
+ *  @retval:c_wm_session_cet    The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_cet_t *copy_wmp_session_cet(wmp_session_cet_t *p_wmp_session_cet)
+{
+    wmp_session_cet_t *c_wmp_session_cet = allocate_wmp_session_cet();
+
+    memcpy(c_wmp_session_cet,p_wmp_session_cet,sizeof(wmp_session_cet_t));
+
+    return c_wmp_session_cet;
+}
+
+/* **********************************************************************************************
  *	Allocate a wmp_session_dsv_t structure.
  *
  *	@param:	p_wm_session_dsv	The pointer to wmp_session_dsv_t structure.
@@ -73,6 +89,22 @@ void deallocate_wmp_session_dsv(wmp_session_dsv_t **p_wmp_session_dsv)
 		free(*p_wmp_session_dsv);
 		(*p_wmp_session_dsv) = NULL;
 	}
+}
+
+/* **********************************************************************************************
+ *	Copy a wmp_session_dsv_t a new instance.
+ *
+ *	@param:	p_wm_session_dsv	The pointer to wmp_session_dsv_t structure.
+ *  @retval:c_wm_session_dsv    The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_dsv_t *copy_wmp_session_dsv(wmp_session_dsv_t *p_wmp_session_dsv)
+{
+    wmp_session_dsv_t *c_wmp_session_dsv = allocate_wmp_session_dsv();
+
+    memcpy(c_wmp_session_dsv,p_wmp_session_dsv,sizeof(wmp_session_dsv_t));
+
+    return c_wmp_session_dsv;
 }
 
 
@@ -102,6 +134,22 @@ void deallocate_wmp_session_ext(wmp_session_ext_t **p_wmp_session_ext)
 		free(*p_wmp_session_ext);
 		(*p_wmp_session_ext) = NULL;
 	}	
+}
+
+/* **********************************************************************************************
+ *	Copy a wmp_session_ext_t a new instance.
+ *
+ *	@param:	p_wm_session_ext	The pointer to wmp_session_ext_t structure.
+ *  @retval:c_wm_session_ext    The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_ext_t *copy_wmp_session_ext(wmp_session_ext_t *p_wmp_session_ext)
+{
+    wmp_session_ext_t *c_wmp_session_ext = allocate_wmp_session_ext();
+
+    memcpy(c_wmp_session_ext,p_wmp_session_ext,sizeof(wmp_session_ext_t));
+
+    return c_wmp_session_ext;
 }
 
 /* **********************************************************************************************
@@ -169,6 +217,24 @@ void set_wmp_session_msg_len(wmp_session_msg_t *p_wmp_session_msg,uint16_t msg_l
 }
 
 /* **********************************************************************************************
+ *	Copy wmp_session_msg_t a new instance.
+ *
+ *	@param:	p_wm_session_msg	The pointer to wmp_session_msg_t structure.
+ *  @retval:c_wm_session_msg    The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_msg_t *copy_wmp_session_msg(wmp_session_msg_t *p_wmp_session_msg)
+{
+    wmp_session_msg_t *c_wmp_session_msg = allocate_wmp_session_msg(p_wmp_session_msg->msg_len);
+
+    c_wmp_session_msg->attr = p_wmp_session_msg->attr;
+    c_wmp_session_msg->session_id = p_wmp_session_msg->session_id;
+    memcpy(c_wmp_session_msg->msg,p_wmp_session_msg->msg,p_wmp_session_msg->msg_len);
+
+    return c_wmp_session_msg;
+}
+
+/* **********************************************************************************************
  *	Allocate a wmp_session_fle_t structure.
  *
  *	@param:		file_len			File data length.
@@ -233,6 +299,29 @@ void set_wmp_session_fle_len(wmp_session_fle_t *p_wmp_session_fle,uint16_t file_
 }
 
 /* **********************************************************************************************
+ *	Copy wmp_session_fle_t a new instance.
+ *
+ *	@param:		p_wmp_session_fle		The pointer of wmp_session_file_t pointer.
+ *  @retval:    c_wmp_session_fle       The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_fle_t *copy_wmp_session_fle(wmp_session_fle_t *p_wmp_session_fle)
+{
+    wmp_session_fle_t *c_wmp_session_fle = allocate_wmp_session_fle(p_wmp_session_fle->file_len);
+
+    c_wmp_session_fle->attr = p_wmp_session_fle->attr;
+    c_wmp_session_fle->session_id = p_wmp_session_fle->session_id;
+    c_wmp_session_fle->block = p_wmp_session_fle->block;
+    c_wmp_session_fle->sequence = p_wmp_session_fle->sequence;
+    c_wmp_session_fle->filename_len = p_wmp_session_fle->filename_len;
+    memcpy(c_wmp_session_fle->filename,p_wmp_session_fle->filename,p_wmp_session_fle->filename_len);
+    memcpy(c_wmp_session_fle->file,p_wmp_session_fle->file,p_wmp_session_fle->file_len);
+
+    return c_wmp_session_fle;
+}
+
+
+/* **********************************************************************************************
  *	Allocate wmp_session_ivt_t structure.
  *
  *	@param:		p_wmp_session_ivt	wmp_session_ivt_t pointer.
@@ -258,6 +347,22 @@ void deallocate_wmp_session_ivt(wmp_session_ivt_t **p_wmp_session_ivt)
 		free((*p_wmp_session_ivt));
 		(*p_wmp_session_ivt) = NULL;
 	}
+}
+
+/* **********************************************************************************************
+ *	Copy wmp_session_ivt_t a new instance.
+ *
+ *	@param:		p_wmp_session_ivt	wmp_session_ivt_t pointer.
+ *  @retval:    c_wmp_session_ivt   The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_ivt_t *copy_wmp_session_ivt(wmp_session_ivt_t *p_wmp_session_ivt)
+{
+    wmp_session_ivt_t *c_wmp_session_ivt = allocate_wmp_session_ivt();
+
+    memcpy(c_wmp_session_ivt,p_wmp_session_ivt,sizeof(wmp_session_ivt_t));
+
+    return c_wmp_session_ivt;
 }
 
 /* **********************************************************************************************
@@ -658,6 +763,47 @@ void print_wmp_session(const wmp_session_t *p_wmp_session)
 }
 
 
+/* **********************************************************************************************
+ *	Copy wmp_session_t a new instance.
+ *
+ *	@param:		p_wmp_session	wmp_session_t pointer.
+ *  @retval:    c_wmp_session   The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_t *copy_wmp_session(const wmp_session_t *p_wmp_session)
+{
+    wmp_session_t *c_wmp_session = allocate_wmp_session();
+
+    c_wmp_session->src = p_wmp_session->src;
+    c_wmp_session->dst = p_wmp_session->dst;
+    c_wmp_session->id = p_wmp_session->id;
+
+    switch(p_wmp_session->id)
+    {
+        case WMP_SESSION_CET_ID:
+            c_wmp_session->param = copy_wmp_session_cet((wmp_session_cet_t *)p_wmp_session->param);
+            break;
+        case WMP_SESSION_DSV_ID:
+            c_wmp_session->param = copy_wmp_session_dsv((wmp_session_dsv_t *)p_wmp_session->param);
+            break;
+        case WMP_SESSION_EXT_ID:
+            c_wmp_session->param = copy_wmp_session_ext((wmp_session_ext_t *)p_wmp_session->param);
+            break;
+        case WMP_SESSION_MSG_ID:
+            c_wmp_session->param = copy_wmp_session_msg((wmp_session_msg_t *)p_wmp_session->param);
+            break;
+        case WMP_SESSION_FLE_ID:
+            c_wmp_session->param = copy_wmp_session_fle((wmp_session_fle_t *)p_wmp_session->param);
+            break;
+        case WMP_SESSION_IVT_ID:
+            c_wmp_session->param = copy_wmp_session_ivt((wmp_session_ivt_t *)p_wmp_session->param);
+            break;
+        default:
+            break;
+    }
+
+    return c_wmp_session;
+}
 
 
 

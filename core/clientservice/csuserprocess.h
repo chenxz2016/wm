@@ -17,6 +17,10 @@ public:
 
     int timeout()const;
     void setTimeout(int timeout);
+protected:
+    void resend();
+protected slots:
+	void verifyFriendsNum();
 private:
     class CSUserProcessPrivate *p_d;
     friend class CSUserProcessPrivate;

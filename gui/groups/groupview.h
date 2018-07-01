@@ -10,6 +10,8 @@ public:
     GroupView(QWidget *parent = 0);
 
     void update();
+
+    void appendGroups(const QVariant &d);
 private slots:
     void groupsViewItemExpland(QTreeWidgetItem*);
     void groupsViewItemClicked(QModelIndex);

@@ -85,6 +85,9 @@ WMPSHARED_EXPORT extern uint32_t package_wmp_login(char *package,const wmp_login
 /* Print wmp_login_t. */
 WMPSHARED_EXPORT extern void print_wmp_login(wmp_login_t *p_wmp_login);
 
+/* Copy wmp_login_t. */
+WMPSHARED_EXPORT extern wmp_login_t *copy_wmp_login(wmp_login_t *p_wmp_login);
+
 
 
 
@@ -129,6 +132,8 @@ WMPSHARED_EXPORT extern uint32_t package_wmp_login_key(char *package,const wmp_l
 /* Print wmp_login_key_t. */
 WMPSHARED_EXPORT extern void print_wmp_login_key(wmp_login_key_t *p_wmp_login_key);
 
+/* Copy wmp_login_key_t a new instance. */
+WMPSHARED_EXPORT extern wmp_login_key_t *copy_wmp_login_key(wmp_login_key_t *p_wmp_login_key);
 
 
 #ifdef __cplusplus

@@ -74,7 +74,7 @@ typedef struct
 	uint32_t attr;
     uint16_t main_id;
     uint32_t length;
-	char *data;
+    void *data;
 }wm_parameter_t;
 
 /* **********************************************************************************************
@@ -245,6 +245,10 @@ WMPSHARED_EXPORT extern protocol_package *package_wmp(const wm_protocol_t *p_wm,
 
 /* print wm_protocol_t function. */
 WMPSHARED_EXPORT extern void print_wmp(const wm_protocol_t *p_wm);
+
+/* copy wm_protocol_t structure. */
+WMPSHARED_EXPORT extern wm_protocol_t * copy_wmp(const wm_protocol_t *p_wm);
+
 
 #ifdef __cplusplus
 }

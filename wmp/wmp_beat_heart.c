@@ -121,6 +121,18 @@ void print_wmp_beat_heart(const wmp_beat_heart_t *p_wmp_bh)
 	printf("***************************WM-beat_heart Protocol End************************\n");
 }
 
-
+/* ***********************************************************************************
+ * Copy wmp_beat_heart_t new instance.
+ *
+ * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
+ * @retval  c_wmp_bh    The pointer of new instance.
+ *
+ * ***********************************************************************************/
+wmp_beat_heart_t *copy_wmp_beat_heart(wmp_beat_heart_t *p_wmp_bh)
+{
+    wmp_beat_heart_t *c_wmp_bh = allocate_wmp_beat_heart();
+    memcpy(c_wmp_bh,p_wmp_bh,sizeof(wmp_beat_heart_t));
+    return c_wmp_bh;
+}
 
 

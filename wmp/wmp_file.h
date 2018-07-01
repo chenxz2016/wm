@@ -120,6 +120,11 @@ WMPSHARED_EXPORT extern void set_wmp_file_data_len(wmp_file_t *p_wmp_file,uint32
 /* Print wmp_file_t. */
 WMPSHARED_EXPORT extern void print_wmp_file(const wmp_file_t *p_wmp_file);
 
+/* Print wmp_file_t. */
+WMPSHARED_EXPORT extern wmp_file_t *copy_wmp_file(const wmp_file_t *p_wmp_file);
+
+
+
 #ifdef __cplusplus
 }
 #endif

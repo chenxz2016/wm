@@ -250,3 +250,17 @@ void print_wmp_file(const wmp_file_t *p_wmp_file)
 }
 
 
+/* ***********************************************************************************
+ * Copy wmp_file_t a new instance.
+ *
+ * @param:	p_wmp_file	wmp_file_t pointer.
+ * @retval  c_wmp_file  The pointer of new instance.
+ *
+ * ***********************************************************************************/
+wmp_file_t *copy_wmp_file(const wmp_file_t *p_wmp_file)
+{
+    wmp_file_t *c_wmp_file = allocate_wmp_file(p_wmp_file->data_len);
+    memcpy(c_wmp_file,p_wmp_file,sizeof(wmp_file_t));
+    memcpy(c_wmp_file->data,p_wmp_file->data,p_wmp_file->data_len);
+    return c_wmp_file;
+}

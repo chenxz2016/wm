@@ -105,7 +105,7 @@ bool CSFileProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
 
     for(quint16 i = 0;i<param_num;i++)
     {
-        wmp_file_t *file = reinterpret_cast<wmp_file_t *>(param->data+i);
+        wmp_file_t *file = reinterpret_cast<wmp_file_t *>(param[i].data);
         if(!file)
             continue ;
 

@@ -61,6 +61,8 @@ QSize ViewDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
             break;
         }
         break;
+    default:
+        size = QStyledItemDelegate::sizeHint(option,index);
     }
     qDebug() << "size:" << size;
     return size;

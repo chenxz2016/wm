@@ -148,5 +148,23 @@ void set_wmp_sound_len(wmp_sound_t *p_wmp_sound,uint32_t sound_len)
 	memset(p_wmp_sound->sound,0,sound_len);
 }
 
+/* ***********************************************************************************
+ * Copy wmp_sound_t a new instance.
+ *
+ * @param:	p_wmp_sound		wmp_sound_t pointer.
+ * @retval: c_wmp_sound     The pointer of new instance.
+ *
+ * ***********************************************************************************/
+wmp_sound_t *copy_wmp_sound(wmp_sound_t *p_wmp_sound)
+{
+    wmp_sound_t *c_wmp_sound = allocate_wmp_sound(p_wmp_sound->sound_len);
 
+    c_wmp_sound->attr = p_wmp_sound->attr;
+    c_wmp_sound->result = p_wmp_sound->result;
+    c_wmp_sound->src = p_wmp_sound->src;
+    c_wmp_sound->dst = p_wmp_sound->dst;
 
+    memcpy(c_wmp_sound->sound,p_wmp_sound->sound,p_wmp_sound->sound_len);
+
+    return c_wmp_sound;
+}
