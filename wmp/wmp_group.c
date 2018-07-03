@@ -982,7 +982,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
             index++;
             p_wmp_group_list->user_id = ntohl(*(uint32_t *)(package+index));
             index+=4;
-            if(p_wmp_group_list->attr == WMP_GROUP_FETCH_RSP)
+            if(p_wmp_group_list->attr == WMP_GROUP_LIST_RSP)
             {
                 p_wmp_group_list->group_num = ntohs(*(uint16_t *)(package+index));
                 index+=2;
@@ -1049,7 +1049,7 @@ wmp_group_t *parser_wmp_group(const char *package,uint32_t pack_len)
 	p_wmp_group->id = ntohs(*(uint16_t *)(package+index));
 	index+=sizeof(p_wmp_group->id);
 	
-	int ret = parser_wmp_group_parameter(p_wmp_group,package,pack_len-index);
+    int ret = parser_wmp_group_parameter(p_wmp_group,package+index,pack_len-index);
 	if(ret!=WMP_GROUP_PARSER_SUCCESS)
 	{
 		deallocate_wmp_group(&p_wmp_group);
@@ -1265,7 +1265,7 @@ uint32_t package_wmp_group(char *package,wmp_group_t *p_wmp_group)
     *(uint16_t *)(package+index) = htons(p_wmp_group->id);
 	index+=sizeof(p_wmp_group->id);
 	
-	index += package_wmp_group_parameter(p_wmp_group,package);
+    index += package_wmp_group_parameter(p_wmp_group,package+index);
 	
 	return index;
 }

@@ -21,6 +21,13 @@ extern "C"
 {
 #endif
 
+typedef struct
+{
+    uint8_t id;
+    uint8_t data_len;
+    uint8_t data[255];
+}wmp_session_property_t;
+
 /* **********************************************************************************************
  *	wm_session_cet_t structure.
  *
@@ -184,6 +191,72 @@ WMPSHARED_EXPORT extern void deallocate_wmp_session_ivt(wmp_session_ivt_t **p_wm
 WMPSHARED_EXPORT extern wmp_session_ivt_t *copy_wmp_session_ivt(wmp_session_ivt_t *p_wmp_session_ivt);
 
 
+/* *********************************************************************************************
+ * Walking Message protocol session list.
+ * @attr			Walking Message session list attribute.
+ * @user_id         Walking Message session list user id.
+ * @session_num     Walking Message session list number.
+ * @session_list    Walking Message session list.
+ *
+ * **********************************************************************************************/
+typedef struct
+{
+    uint8_t attr;
+    uint32_t user_id;
+    uint16_t session_num;
+    uint32_t *session_list;
+}wmp_session_list_t;
+
+
+#define WMP_SESSION_LIST_REQ                    0x00
+#define WMP_SESSION_LIST_RSP                    0x01
+
+/* Create wmp_session_list_t structure. */
+WMPSHARED_EXPORT extern wmp_session_list_t *allocate_wmp_session_list(uint16_t session_num);
+
+/* Delete wmp_session_list_t structure. */
+WMPSHARED_EXPORT extern void deallocate_wmp_session_list(wmp_session_list_t **p_wmp_session_list);
+
+/* Set wmp_session_list_t group number. */
+WMPSHARED_EXPORT extern void set_wmp_session_list_num(wmp_session_list_t *p_wmp_session_list,uint16_t session_num);
+
+/* Copy wmp_session_list_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_list_t * copy_wmp_session_list(const wmp_session_list_t *p_wmp_session_list);
+
+
+/* *********************************************************************************************
+ * Walking Message protocol session fetch.
+ * @attr			Walking Message session fetch attribute.
+ * @session_id      Walking Message session fetch group id.
+ * @property_num    Walking Message session fetch property number.
+ * @properties		Walking Message session fetch property list.
+ *
+ * **********************************************************************************************/
+typedef struct
+{
+    uint8_t attr;
+    uint32_t session_id;
+    uint16_t property_num;
+    wmp_session_property_t *properties;
+}wmp_session_fetch_t;
+
+
+#define WMP_SESSION_FETCH_REQ                   0x00
+#define WMP_SESSION_FETCH_RSP                   0x01
+
+/* Create wmp_session_fetch_t structure. */
+WMPSHARED_EXPORT extern wmp_session_fetch_t *allocate_wmp_session_fetch(uint16_t property_num);
+
+/* Delete wmp_session_fetch_t structure. */
+WMPSHARED_EXPORT extern void deallocate_wmp_session_fetch(wmp_session_fetch_t **p_wmp_session_fetch);
+
+/* Set wmp_session_fetch_t group number. */
+WMPSHARED_EXPORT extern void set_wmp_session_fetch_num(wmp_session_fetch_t *p_wmp_group_fetch,uint16_t property_num);
+
+/* Copy wmp_session_fetch_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_fetch_t * copy_wmp_group_fetch(const wmp_session_fetch_t *p_wmp_session_fetch);
+
+
 
 /* **********************************************************************************************
  *	wm_session_t structure.
@@ -211,7 +284,8 @@ typedef struct
 #define WMP_SESSION_MSG_ID									0x0504
 #define WMP_SESSION_FLE_ID									0x0505
 #define WMP_SESSION_IVT_ID									0x0506
-
+#define WMP_SESSION_LIST_ID									0x0507
+#define WMP_SESSION_FETCH_ID                                0x0508
 
 #define WMP_PARSER_SESSION_FAILED							(-1)
 #define WMP_PARSER_SESSION_SUCCESS							(0)

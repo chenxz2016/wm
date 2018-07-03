@@ -19,7 +19,9 @@ void GroupView::update()
 
 void GroupView::appendGroups(const QVariant &d)
 {
+    qDebug() << "append groups";
     QTreeWidgetItem *root = new QTreeWidgetItem(QStringList(QString("My Groups")));
+    addTopLevelItem(root);
 
     QList<QVariant> list = d.toMap()["group_list"].toList();
     foreach (QVariant i, list)

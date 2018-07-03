@@ -83,22 +83,38 @@ bool CSGroupProcess::syncRecv(wm_parameter_t *param, quint16 param_num)
         wmp_group_ivt_t *ivt = reinterpret_cast<wmp_group_ivt_t *>(group->param);
         break;
     }
+    case WMP_GROUP_LIST_ID:
+    {
+        wmp_group_list_t *group_list = reinterpret_cast<wmp_group_list_t *>(group->param);
+
+        if(group_list->user_id != p_service->userID())
+            break;
+
+        QList<QVariant> list;
+        for(quint16 i=0;i<group_list->group_num;i++)
+            list.append(group_list->group_list[i]);
+
+        appendPushData("opt",WM::CSGroupID);
+        appendPushData("id",WMP_GROUP_LIST_ID);
+        appendPushData("group_list",list);
+        emit p_service->startUpdate(p_service);
+        break;
+    }
     case WMP_GROUP_FETCH_ID:
     {
         wmp_group_fetch_t *fetch = reinterpret_cast<wmp_group_fetch_t *>(group->param);
 
-        if(fetch->user_id != p_service->userID())
+        if(fetch->group_id != p_service->userID())
             break;
 
         QList<QVariant> list;
-        for(quint16 i=0;i<fetch->group_num;i++)
-            list.append(fetch->group_list[i]);
+        for(quint16 i=0;i<fetch->property_num;i++)
+            list.append(fetch->properties[i].id);
         resetPushData();
         appendPushData("opt",WM::CSGroupID);
-        appendPushData("id",WMP_GROUP_FLE_ID);
+        appendPushData("id",WMP_GROUP_FETCH_ID);
         appendPushData("group_list",list);
         emit p_service->startUpdate(p_service);
-
         break;
     }
     default:
@@ -138,8 +154,8 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(group);
 
-    group->src = p_userID;
-    group->dst = dst;
+    group->src = p_service->userID();
+    group->dst = 0;
     group->id = id;
 
     switch(group->id)
@@ -231,6 +247,24 @@ bool CSGroupProcess::syncSend(const QVariant &data)
         ivt->attr = 0;
         ivt->group_id = map["group_id"].toInt();
         ivt->invite_id = map["invite_id"].toInt();
+        break;
+    }
+    case WMP_GROUP_LIST_ID:
+    {
+        wmp_group_list_t *group_list = allocate_wmp_group_list(0);
+        group->param = group_list;
+        group_list->attr = 0;
+        group_list->user_id = p_service->userID();
+        group_list->attr = map["attr"].toInt();
+        break;
+    }
+    case WMP_GROUP_FETCH_ID:
+    {
+        wmp_group_fetch_t *fetch = allocate_wmp_group_fetch(0);
+        group->param = fetch;
+        fetch->attr = 0;
+        fetch->group_id = p_service->userID();
+        fetch->attr = map["attr"].toInt();
         break;
     }
     default:

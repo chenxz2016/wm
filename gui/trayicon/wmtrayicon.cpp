@@ -122,7 +122,7 @@ void WMTrayIcon::setServiceData(QVariant data)
             loginSuccess();
 
             /* fetch friends. */
-            fetchFriends();
+            //fetchFriends();
 
             /* fetch groups. */
             fetchGroups();
@@ -140,7 +140,7 @@ void WMTrayIcon::setServiceData(QVariant data)
     }
     case WM::CSGroupID:
     {
-        if(map["id"].toInt()==WMP_GROUP_FETCH_ID)
+        if(map["id"].toInt()==WMP_GROUP_LIST_ID)
             p_d->main_window->updateGroups(map);
         break;
     }
@@ -185,7 +185,8 @@ void WMTrayIcon::fetchGroups()
 {
     QMap<QString,QVariant> map;
     map["opt"] = WMP_PROTO_GROUP_ID;
-    map["attr"] = 1;
+    map["attr"] = WMP_GROUP_LIST_REQ;
+    map["id"] = WMP_GROUP_LIST_ID;
     WMCore::globalInstance()->flush("ClientService",map);
 }
 

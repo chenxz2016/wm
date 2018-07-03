@@ -1,8 +1,10 @@
 #include "clientservice.h"
 #include "csfileprocess.h"
+#include "csgroupprocess.h"
 #include "csloginprocess.h"
 #include "csmsgprocess.h"
 #include "csscreenshotprocess.h"
+#include "cssessionprocess.h"
 #include "csuserprocess.h"
 #include "csvideoprocess.h"
 #include "csvoiceprocess.h"
@@ -61,6 +63,12 @@ public:
         pm[process->uniqueID()] = process;
 
         process = new CSUserProcess(id,p);
+        pm[process->uniqueID()] = process;
+
+        process = new CSGroupProcess(id,p);
+        pm[process->uniqueID()] = process;
+
+        process = new CSSessionProcess(id,p);
         pm[process->uniqueID()] = process;
 
         process = new CSVideoProcess(id,p);

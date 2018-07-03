@@ -365,6 +365,109 @@ wmp_session_ivt_t *copy_wmp_session_ivt(wmp_session_ivt_t *p_wmp_session_ivt)
     return c_wmp_session_ivt;
 }
 
+
+/* **********************************************************************************************
+ *	Allocate wmp_session_list_t a new instance.
+ *
+ *	@param:		session_num         wmp_session_ivt_t pointer.
+ *  @retval:    p_wmp_session_list  The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_list_t *allocate_wmp_session_list(uint16_t session_num)
+{
+    wmp_session_list_t *p_wmp_session_list = (wmp_session_list_t *)malloc(sizeof(wmp_session_list_t));
+    memset(p_wmp_session_list,0,sizeof(wmp_session_list_t));
+    if(session_num)
+    {
+        p_wmp_session_list->session_num =session_num;
+        p_wmp_session_list->session_list = (uint32_t *)malloc(session_num * sizeof(uint32_t));
+        memset(p_wmp_session_list->session_list,0,session_num * sizeof(uint32_t));
+    }
+
+    return p_wmp_session_list;
+}
+
+/* **********************************************************************************************
+ *	Deallocate wmp_session_list_t.
+ *
+ *	@param:		p_wmp_session_list 	The pointer of wmp_session_list_t pointer.
+ *
+ * **********************************************************************************************/
+void deallocate_wmp_session_list(wmp_session_list_t **p_wmp_session_list)
+{
+    if((*p_wmp_session_list))
+    {
+        if((*p_wmp_session_list)->session_list)
+        {
+            free((*p_wmp_session_list)->session_list);
+            (*p_wmp_session_list)->session_list = NULL;
+        }
+        free((*p_wmp_session_list));
+        (*p_wmp_session_list) = NULL;
+    }
+}
+
+/* **********************************************************************************************
+ *	Copy wmp_session_ivt_t a new instance.
+ *
+ *	@param:		p_wmp_session_ivt	wmp_session_ivt_t pointer.
+ *  @retval:    c_wmp_session_ivt   The pointer of new instance.
+ *
+ * **********************************************************************************************/
+void set_wmp_session_list_num(wmp_session_list_t *p_wmp_session_list,uint16_t session_num)
+{
+    if((*p_wmp_session_list))
+    {
+        if((*p_wmp_session_list).session_list)
+        {
+            free((*p_wmp_session_list).session_list);
+            (*p_wmp_session_list).session_list = NULL;
+        }
+        p_wmp_session_list->session_num =session_num;
+        if(session_num)
+        {
+            p_wmp_session_list->session_list = (uint32_t *)malloc(session_num * sizeof(uint32_t));
+            memset(p_wmp_session_list->session_list,0,session_num * sizeof(uint32_t));
+        }
+    }
+}
+
+/* **********************************************************************************************
+ *	Copy wmp_session_list_t a new instance.
+ *
+ *	@param:		p_wmp_session_list      wmp_session_list_t pointer.
+ *  @retval:    c_wmp_session_list      The pointer of new instance.
+ *
+ * **********************************************************************************************/
+wmp_session_list_t * copy_wmp_session_list(const wmp_session_list_t *p_wmp_session_list)
+{
+    wmp_session_list_t *c_wmp_session_list = allocate_wmp_session_list(p_wmp_session_list->session_num);
+
+    c_wmp_session_list->attr = p_wmp_session_list->attr;
+    c_wmp_session_list->user_id = p_wmp_session_list->user_id;
+    c_wmp_session_list->session_num = p_wmp_session_list->session_num;
+    memcpy(c_wmp_session_list->session_list,p_wmp_session_list->session_list,p_wmp_session_list->session_num*sizeof(uint32_t));
+
+    return c_wmp_session_list;
+}
+
+
+/* Create wmp_session_fetch_t structure. */
+WMPSHARED_EXPORT extern wmp_session_fetch_t *allocate_wmp_session_fetch(uint16_t property_num);
+
+/* Delete wmp_session_fetch_t structure. */
+WMPSHARED_EXPORT extern void deallocate_wmp_session_fetch(wmp_session_fetch_t **p_wmp_session_fetch);
+
+/* Set wmp_session_fetch_t group number. */
+WMPSHARED_EXPORT extern void set_wmp_session_fetch_num(wmp_session_fetch_t *p_wmp_group_fetch,uint16_t property_num);
+
+/* Copy wmp_session_fetch_t a new instance. */
+WMPSHARED_EXPORT extern wmp_session_fetch_t * copy_wmp_group_fetch(const wmp_session_fetch_t *p_wmp_session_fetch);
+
+
+
+
+
 /* **********************************************************************************************
  *	Allocate wmp_session_t structure.
  *
