@@ -4,36 +4,28 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  gcc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
 
-#include"protocol_def.h"
-#include"wmp_beat_heart.h"
 #include<malloc.h>
 #include<string.h>
 
-/* ***********************************************************************************
- * Allocate wmp_beat_heart_t.
- *
- * @retval:	p_wm_bh		The pointer of wmp_beat_heart_t.
- *
- * ***********************************************************************************/
-wmp_beat_heart_t *allocate_wmp_beat_heart()
+#include"protocol_def.h"
+#include"wmp_beat_heart.h"
+
+
+/* Create a wmp_beat_heart_t instance. */
+wmp_beat_heart_t *create_wmp_beat_heart()
 {
 	wmp_beat_heart_t *p_wmp_bh = (wmp_beat_heart_t *)malloc(sizeof(wmp_beat_heart_t));
 	memset(p_wmp_bh,0,sizeof(wmp_beat_heart_t));
 	return p_wmp_bh;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_beat_heart_t.
- *
- * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
- *
- * ***********************************************************************************/
-void deallocate_wmp_beat_heart(wmp_beat_heart_t **p_wmp_bh)
+/* Delete wmp_beat_heart_t instance. */
+void delete_wmp_beat_heart(wmp_beat_heart_t **p_wmp_bh)
 {
 	if(p_wmp_bh && (*p_wmp_bh))
 	{
@@ -41,15 +33,8 @@ void deallocate_wmp_beat_heart(wmp_beat_heart_t **p_wmp_bh)
 		(*p_wmp_bh) = NULL;
 	}
 }
-/* ***********************************************************************************
- * Parser wmp_beat_heart_t package.
- *
- * @param:	package		package buffer.
- * @param:	pack_len	package length.
- *
- * @retval:	p_wm_bh		The pointer of wm_beat_heart_t.
- *
- * ***********************************************************************************/
+
+/* Parser package as wmp_beat_heart_t. */
 wmp_beat_heart_t *parser_wmp_beat_heart(const char *package,uint32_t pack_len)
 {
 	if(!package || pack_len<WMP_BEAT_HEART_LENGTH)
@@ -61,7 +46,7 @@ wmp_beat_heart_t *parser_wmp_beat_heart(const char *package,uint32_t pack_len)
 	}
 	
 	uint32_t index = 0;
-	wmp_beat_heart_t *p_wmp_bh = allocate_wmp_beat_heart();
+    wmp_beat_heart_t *p_wmp_bh = create_wmp_beat_heart();
 	
 	p_wmp_bh->attr = *(uint8_t *)(package+index);
 	index+=sizeof(p_wmp_bh->attr);
@@ -75,15 +60,7 @@ wmp_beat_heart_t *parser_wmp_beat_heart(const char *package,uint32_t pack_len)
 	return p_wmp_bh;
 }
 
-/* ***********************************************************************************
- * Package wmp_beat_heart_t.
- *
- * @param:	package		package buffer.
- * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
- *
- * @retval:	index		Length of wmp_beat_heart_t package.
- *
- * ***********************************************************************************/
+/* Package wmp_beat_heart_t as package. */
 uint32_t package_wmp_beat_heart(char *package,const wmp_beat_heart_t *p_wmp_bh)
 {
 	uint32_t index = 0;
@@ -100,12 +77,7 @@ uint32_t package_wmp_beat_heart(char *package,const wmp_beat_heart_t *p_wmp_bh)
 	return index;
 }
 
-/* ***********************************************************************************
- * Print wmp_beat_heart_t.
- *
- * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
- *
- * ***********************************************************************************/
+/* Print wmp_beat_heart_t. */
 void print_wmp_beat_heart(const wmp_beat_heart_t *p_wmp_bh)
 {
 	if(!p_wmp_bh)
@@ -116,21 +88,15 @@ void print_wmp_beat_heart(const wmp_beat_heart_t *p_wmp_bh)
 		return ;
 	}
 
-	printf("***************************WM-beat_heart Protocol Start**********************\n");
+    printf("******************************wm_beat_heart_start******************************\n");
 	printf("attr:%02x;user_id:%d;flag:%d;\n",p_wmp_bh->attr,p_wmp_bh->user_id,p_wmp_bh->flag);
-	printf("***************************WM-beat_heart Protocol End************************\n");
+    printf("*******************************wm_beat_heart_end*******************************\n");
 }
 
-/* ***********************************************************************************
- * Copy wmp_beat_heart_t new instance.
- *
- * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
- * @retval  c_wmp_bh    The pointer of new instance.
- *
- * ***********************************************************************************/
+/* Copy a new wmp_beat_heart_t instance. */
 wmp_beat_heart_t *copy_wmp_beat_heart(wmp_beat_heart_t *p_wmp_bh)
 {
-    wmp_beat_heart_t *c_wmp_bh = allocate_wmp_beat_heart();
+    wmp_beat_heart_t *c_wmp_bh = create_wmp_beat_heart();
     memcpy(c_wmp_bh,p_wmp_bh,sizeof(wmp_beat_heart_t));
     return c_wmp_bh;
 }

@@ -80,7 +80,7 @@ static uint32_t CRC32_Table[256] =
    0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D
 };
 
-uint32_t crc32_check_package(protocol_package *package)
+uint32_t crc32_check_package(const wm_package *package)
 {
     uint32_t check_sum = 0xffffffff;
     for (uint32_t i = 0; i < package->length; i++)

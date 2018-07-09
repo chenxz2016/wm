@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,21 +12,30 @@
 #ifndef WMP_SESSION_H_
 #define WMP_SESSION_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
+
+
+/* **********************************************************************************************
+ * wmp_session_property_t structure.
+ *
+ * @id:                 wmp_session_property_t id.
+ * @data_len:           wmp_session_property_t data_len.
+ * @data:               wmp_session_property_t data;
+ *
+ * **********************************************************************************************/
 typedef struct
 {
     uint8_t id;
     uint8_t data_len;
     uint8_t data[255];
 }wmp_session_property_t;
+
 
 /* **********************************************************************************************
  *	wm_session_cet_t structure.
@@ -41,14 +50,30 @@ typedef struct
 	uint32_t session_id;
 }wmp_session_cet_t;
 
-/* Create wmp_session_cet_t structure. */
-WMPSHARED_EXPORT extern wmp_session_cet_t *allocate_wmp_session_cet();
 
-/* Delete wmp_session_cet_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_cet(wmp_session_cet_t **p_wmp_session_cet);
+/* **********************************************************************************************
+ *	Create wmp_session_cet_t instance.
+ *
+ *	@retval:	p_wm_session		The pointer to wmp_session_cet_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_cet_t *create_wmp_session_cet();
 
-/* Copy wmp_session_cet_t structure. */
-WMPSHARED_EXPORT extern wmp_session_cet_t *copy_wmp_session_cet(wmp_session_cet_t *p_wmp_session_cet);
+/* **********************************************************************************************
+ *	Delete a wmp_session_cet_t instance.
+ *
+ *	@param:	p_wm_session_cet	The pointer to wmp_session_cet_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session_cet(wmp_session_cet_t **p_wmp_session_cet);
+
+/* **********************************************************************************************
+ *	Copy a new wmp_session_cet_t instance.
+ *
+ *	@param:	p_wm_session_cet	The pointer to wmp_session_cet_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_cet_t *copy_wmp_session_cet(const wmp_session_cet_t *p_wmp_session_cet);
 
 
 /* **********************************************************************************************
@@ -64,14 +89,29 @@ typedef struct
 	uint32_t session_id;
 }wmp_session_dsv_t;
 
-/* Create wmp_session_dsv_t structure. */
-WMPSHARED_EXPORT extern wmp_session_dsv_t *allocate_wmp_session_dsv();
+/* **********************************************************************************************
+ *	Create a wmp_session_dsv_t instance.
+ *
+ *	@param:	p_wm_session_dsv	The pointer to wmp_session_dsv_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_dsv_t *create_wmp_session_dsv();
 
-/* Delete wmp_session_dsv_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_dsv(wmp_session_dsv_t **p_wmp_session_dsv);
+/* **********************************************************************************************
+ *	Delete a wmp_session_dsv_t instance.
+ *
+ *	@param:	p_wm_session_dsv	The pointer to wmp_session_dsv_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session_dsv(wmp_session_dsv_t **p_wmp_session_dsv);
 
-/* Copy wmp_session_dsv_t a new instance. */
-WMPSHARED_EXPORT extern wmp_session_dsv_t *copy_wmp_session_dsv(wmp_session_dsv_t *p_wmp_session_dsv);
+/* **********************************************************************************************
+ *	Copy wmp_session_dsv_t a new instance.
+ *
+ *	@param:	p_wm_session_dsv	The pointer to wmp_session_dsv_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_dsv_t *copy_wmp_session_dsv(const wmp_session_dsv_t *p_wmp_session_dsv);
 
 
 /* **********************************************************************************************
@@ -87,14 +127,27 @@ typedef struct
 	uint32_t session_id;
 }wmp_session_ext_t;
 
-/* Create wmp_session_ext_t structure. */
-WMPSHARED_EXPORT extern wmp_session_ext_t *allocate_wmp_session_ext();
+/* **********************************************************************************************
+ *	Create a wmp_session_ext_t instance.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_ext_t *create_wmp_session_ext();
 
-/* Delete wmp_session_ext_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_ext(wmp_session_ext_t **p_wmp_session_ext);
+/* **********************************************************************************************
+ *	Delete a wmp_session_ext_t instance.
+ *
+ *	@param:	p_wm_session_ext	The pointer of wmp_session_ext_t.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session_ext(wmp_session_ext_t **p_wmp_session_ext);
 
-/* Copy wmp_session_ext_t a new instance. */
-WMPSHARED_EXPORT extern wmp_session_ext_t *copy_wmp_session_ext(wmp_session_ext_t *p_wmp_session_ext);
+/* **********************************************************************************************
+ *	Copy a new wmp_session_ext_t instance.
+ *
+ *	@param:	p_wm_session_ext	The pointer of wmp_session_ext_t.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_ext_t *copy_wmp_session_ext(const wmp_session_ext_t *p_wmp_session_ext);
 
 
 /* **********************************************************************************************
@@ -114,17 +167,38 @@ typedef struct
 	char *msg;
 }wmp_session_msg_t;
 
-/* Create wmp_session_msg_t structure. */
-WMPSHARED_EXPORT extern wmp_session_msg_t *allocate_wmp_session_msg(uint16_t msg_len);
+/* **********************************************************************************************
+ *	Create a wmp_session_msg_t structure.
+ *
+ *	@param:		msg_len				Message length.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_msg_t *create_wmp_session_msg(uint16_t msg_len);
 
-/* Delete wmp_session_msg_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_msg(wmp_session_msg_t **p_wmp_session_msg);
+/* **********************************************************************************************
+ *	Delete a wmp_session_msg_t structure.
+ *
+ *	@param:	p_wm_session_msg	The pointer to wmp_session_msg_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session_msg(wmp_session_msg_t **p_wmp_session_msg);
 
-/* Set wmp_session_msg_t length. */
-WMPSHARED_EXPORT extern void set_wmp_session_msg_len(wmp_session_msg_t *p_wmp_session_msg,uint16_t msg_len);
+/* **********************************************************************************************
+ *	Set wmp_session_msg_t message length.
+ *
+ *	@param:	p_wm_session_msg	The pointer to wmp_session_msg_t structure.
+ *	@param:	msg_len				message length.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_session_msg_len(wmp_session_msg_t *p_wmp_session_msg,uint16_t msg_len);
 
-/* Copy wmp_session_msg_t a new instance. */
-WMPSHARED_EXPORT extern wmp_session_msg_t *copy_wmp_session_msg(wmp_session_msg_t *p_wmp_session_msg);
+/* **********************************************************************************************
+ *	Copy a new wmp_session_msg_t instance.
+ *
+ *	@param:	p_wm_session_msg	The pointer to wmp_session_msg_t structure.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_msg_t *copy_wmp_session_msg(wmp_session_msg_t *p_wmp_session_msg);
 
 
 /* **********************************************************************************************
@@ -152,17 +226,39 @@ typedef struct
 	char *file;
 }wmp_session_fle_t;
 
-/* Create wmp_session_fle_t structure. */
-WMPSHARED_EXPORT extern wmp_session_fle_t *allocate_wmp_session_fle(uint16_t file_len);
 
-/* Delete wmp_session_fle_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_fle(wmp_session_fle_t **p_wmp_session_fle);
+/* **********************************************************************************************
+ *	Create a wmp_session_fle_t instance.
+ *
+ *	@param:		file_len                File data length.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_fle_t *create_wmp_session_fle(uint16_t file_len);
 
-/* Set wmp_session_fle_t structure. */
-WMPSHARED_EXPORT extern void set_wmp_session_fle_len(wmp_session_fle_t *p_wmp_session_fle,uint16_t file_len);
+/* **********************************************************************************************
+ *	Delete a wmp_session_fle_t instance.
+ *
+ *	@param:		p_wmp_session_fle		The pointer of wmp_session_file_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void deallocate_wmp_session_fle(wmp_session_fle_t **p_wmp_session_fle);
 
-/* Copy wmp_session_fle_t a new instance. */
-WMPSHARED_EXPORT extern wmp_session_fle_t *copy_wmp_session_fle(wmp_session_fle_t *p_wmp_session_fle);
+/* **********************************************************************************************
+ *	Set wmp_session_fle_t file size.
+ *
+ *	@param:		p_wmp_session_fle		The pointer of wmp_session_file_t pointer.
+ *	@param:		file_len				File data length.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_session_fle_len(wmp_session_fle_t *p_wmp_session_fle,uint16_t file_len);
+
+/* **********************************************************************************************
+ *	Copy a new wmp_session_fle_t instance.
+ *
+ *	@param:		p_wmp_session_fle		The pointer of wmp_session_file_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_fle_t *copy_wmp_session_fle(const wmp_session_fle_t *p_wmp_session_fle);
 
 
 
@@ -181,22 +277,36 @@ typedef struct
 	uint32_t invite_id;
 }wmp_session_ivt_t;
 
-/* Create wmp_session_ivt_t structure. */
-WMPSHARED_EXPORT extern wmp_session_ivt_t *allocate_wmp_session_ivt();
 
-/* Delete wmp_session_ivt_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_ivt(wmp_session_ivt_t **p_wmp_session_ivt);
+/* **********************************************************************************************
+ *	Create wmp_session_ivt_t instance.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_ivt_t *create_wmp_session_ivt();
 
-/* Copy wmp_session_ivt_t a new instance. */
-WMPSHARED_EXPORT extern wmp_session_ivt_t *copy_wmp_session_ivt(wmp_session_ivt_t *p_wmp_session_ivt);
+/* **********************************************************************************************
+ *	Delete wmp_session_ivt_t instance.
+ *
+ *	@param:		p_wmp_session_ivt	The pointer of wmp_session_ivt_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session_ivt(wmp_session_ivt_t **p_wmp_session_ivt);
+
+/* **********************************************************************************************
+ *	Copy a new wmp_session_ivt_t instance.
+ *
+ *	@param:		p_wmp_session_ivt	wmp_session_ivt_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_ivt_t *copy_wmp_session_ivt(const wmp_session_ivt_t *p_wmp_session_ivt);
 
 
 /* *********************************************************************************************
- * Walking Message protocol session list.
- * @attr			Walking Message session list attribute.
- * @user_id         Walking Message session list user id.
- * @session_num     Walking Message session list number.
- * @session_list    Walking Message session list.
+ * wmp_session_list_t structure.
+ * @attr                wmp_session_list_t attribute.
+ * @user_id             wmp_session_list_t user id.
+ * @session_num         wmp_session_list_t list number.
+ * @session_list        wmp_session_list_t list.
  *
  * **********************************************************************************************/
 typedef struct
@@ -211,25 +321,45 @@ typedef struct
 #define WMP_SESSION_LIST_REQ                    0x00
 #define WMP_SESSION_LIST_RSP                    0x01
 
-/* Create wmp_session_list_t structure. */
-WMPSHARED_EXPORT extern wmp_session_list_t *allocate_wmp_session_list(uint16_t session_num);
+/* **********************************************************************************************
+ *	Create wmp_session_list_t instance.
+ *
+ *	@param:		session_num         wmp_session_ivt_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_list_t *create_wmp_session_list(uint16_t session_num);
 
-/* Delete wmp_session_list_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_list(wmp_session_list_t **p_wmp_session_list);
+/* **********************************************************************************************
+ *	Delete wmp_session_list_t.
+ *
+ *	@param:		p_wmp_session_list 	The pointer of wmp_session_list_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session_list(wmp_session_list_t **p_wmp_session_list);
 
-/* Set wmp_session_list_t group number. */
-WMPSHARED_EXPORT extern void set_wmp_session_list_num(wmp_session_list_t *p_wmp_session_list,uint16_t session_num);
+/* **********************************************************************************************
+ *	Set wmp_session_list_t list number.
+ *
+ *	@param:		p_wmp_session_list	wmp_session_ivt_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_session_list_num(wmp_session_list_t *p_wmp_session_list,uint16_t session_num);
 
-/* Copy wmp_session_list_t a new instance. */
-WMPSHARED_EXPORT extern wmp_session_list_t * copy_wmp_session_list(const wmp_session_list_t *p_wmp_session_list);
+/* **********************************************************************************************
+ *	Copy a new wmp_session_list_t instance.
+ *
+ *	@param:		p_wmp_session_list      wmp_session_list_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_list_t * copy_wmp_session_list(const wmp_session_list_t *p_wmp_session_list);
 
 
 /* *********************************************************************************************
- * Walking Message protocol session fetch.
- * @attr			Walking Message session fetch attribute.
- * @session_id      Walking Message session fetch group id.
- * @property_num    Walking Message session fetch property number.
- * @properties		Walking Message session fetch property list.
+ * wmp_session_fetch_t structure.
+ * @attr                wmp_session_fetch_t attribute.
+ * @session_id          wmp_session_fetch_t group id.
+ * @property_num        wmp_session_fetch_t property number.
+ * @properties          wmp_session_fetch_t property list.
  *
  * **********************************************************************************************/
 typedef struct
@@ -244,17 +374,40 @@ typedef struct
 #define WMP_SESSION_FETCH_REQ                   0x00
 #define WMP_SESSION_FETCH_RSP                   0x01
 
-/* Create wmp_session_fetch_t structure. */
-WMPSHARED_EXPORT extern wmp_session_fetch_t *allocate_wmp_session_fetch(uint16_t property_num);
 
-/* Delete wmp_session_fetch_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_session_fetch(wmp_session_fetch_t **p_wmp_session_fetch);
+/* **********************************************************************************************
+ *	Create wmp_session_fetch_t instance.
+ *
+ *	@param:		property_num            wmp_session_fetch_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_fetch_t *create_wmp_session_fetch(uint16_t property_num);
 
-/* Set wmp_session_fetch_t group number. */
-WMPSHARED_EXPORT extern void set_wmp_session_fetch_num(wmp_session_fetch_t *p_wmp_group_fetch,uint16_t property_num);
+/* **********************************************************************************************
+ *	Delete wmp_session_fetch_t instance.
+ *
+ *	@param:		p_wmp_session_fetch         The pointer of wmp_session_fetch_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session_fetch(wmp_session_fetch_t **p_wmp_session_fetch);
 
-/* Copy wmp_session_fetch_t a new instance. */
-WMPSHARED_EXPORT extern wmp_session_fetch_t * copy_wmp_group_fetch(const wmp_session_fetch_t *p_wmp_session_fetch);
+/* **********************************************************************************************
+ *	Set wmp_session_fetch_t property number.
+ *
+ *	@param:		p_wmp_session_fetch         The pointer of wmp_session_fetch_t pointer.
+ *  @param:     property_num                property number.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_session_fetch_num(wmp_session_fetch_t *p_wmp_group_fetch,uint16_t property_num);
+
+
+/* **********************************************************************************************
+ *	Set wmp_session_fetch_t property number.
+ *
+ *	@param:		p_wmp_session_fetch         The pointer of wmp_session_fetch_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_fetch_t * copy_wmp_session_fetch(const wmp_session_fetch_t *p_wmp_session_fetch);
 
 
 
@@ -299,17 +452,53 @@ typedef struct
 #define WMP_SessionSetDst(p_wmp_session,id) 				(p_wmp_session->dst = id)
 #define WMP_SessionSetID(p_wmp_session,i) 					(p_wmp_session->id = i)
 
-WMPSHARED_EXPORT extern wmp_session_t *allocate_wmp_session();
+/* **********************************************************************************************
+ *	Create wmp_session_t instance.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_t *create_wmp_session();
 
-WMPSHARED_EXPORT extern void deallocate_wmp_session(wmp_session_t **p_wmp_session);
+/* **********************************************************************************************
+ *	Delete wmp_session_t instance.
+ *
+ *	@param:		p_wmp_session		wmp_session_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_session(wmp_session_t **p_wmp_session);
 
-WMPSHARED_EXPORT extern wmp_session_t *parser_wmp_session(const char *package,uint32_t pack_len);
+/* **********************************************************************************************
+ *	Parser wmp_session_t instance.
+ *
+ *	@param:		package			package buffer.
+ *	@param:		pack_len		package buffer length.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_t *parser_wmp_session(const char *package,uint32_t pack_len);
 
-WMPSHARED_EXPORT extern uint32_t package_wmp_session(char *package,const wmp_session_t *p_wmp_session);
+/* **********************************************************************************************
+ *	Package wmp_session_t instance.
+ *
+ *	@param:		package			package buffer.
+ *	@param:		p_wmp_session	wmp_session_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_session(char *package,const wmp_session_t *p_wmp_session);
 
-WMPSHARED_EXPORT extern void print_wmp_session(const wmp_session_t *p_wmp_session);
+/* **********************************************************************************************
+ *	Print wmp_session_t instance.
+ *
+ *	@param:		p_wmp_session	wmp_session_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_session(const wmp_session_t *p_wmp_session);
 
-WMPSHARED_EXPORT extern wmp_session_t *copy_wmp_session(const wmp_session_t *p_wmp_session);
+/* **********************************************************************************************
+ *	Copy wmp_session_t a new instance.
+ *
+ *	@param:		p_wmp_session	wmp_session_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_session_t *copy_wmp_session(const wmp_session_t *p_wmp_session);
 
 
 #ifdef __cplusplus

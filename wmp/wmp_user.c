@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -19,26 +19,16 @@
 		return NULL;
 
 
-/* ***********************************************************************************
- * Allocate wmp_user_add_t.
- *
- * @retval:	p_wmp_user_add		wmp_user_add_t pointer.
- *
- * ***********************************************************************************/
-wmp_user_add_t *allocate_wmp_user_add()
+/* Create wmp_user_add_t instance. */
+wmp_user_add_t *create_wmp_user_add()
 {
 	wmp_user_add_t *p_wmp_user_add = (wmp_user_add_t *)malloc(sizeof(wmp_user_add_t));
 	memset(p_wmp_user_add,0,sizeof(wmp_user_add_t));
 	return p_wmp_user_add;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_user_add_t.
- *
- * @param:	p_wmp_user_add		wmp_user_add_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_user_add(wmp_user_add_t **p_wmp_user_add)
+/* Delete wmp_user_add_t instance. */
+void delete_wmp_user_add(wmp_user_add_t **p_wmp_user_add)
 {
 	if(p_wmp_user_add && (*p_wmp_user_add))
 	{
@@ -47,42 +37,26 @@ void deallocate_wmp_user_add(wmp_user_add_t **p_wmp_user_add)
 	}
 }
 
-/* ***********************************************************************************
- * Copy wmp_user_add_t new instance.
- *
- * @param:	p_wmp_user_add		wmp_user_add_t pointer.
- * @retval: c_wmp_user_add      The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_user_add_t *copy_wmp_user_add(wmp_user_add_t *p_wmp_user_add)
+/* Copy a new wmp_user_add_t instance. */
+wmp_user_add_t *copy_wmp_user_add(const wmp_user_add_t *p_wmp_user_add)
 {
-    wmp_user_add_t *c_wmp_user_add = allocate_wmp_user_add();
+    wmp_user_add_t *c_wmp_user_add = create_wmp_user_add();
 
     memcpy(c_wmp_user_add,p_wmp_user_add,sizeof(wmp_user_add_t));
 
     return c_wmp_user_add;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_user_del_t.
- *
- * @retval:	p_wmp_user_del		wmp_user_del_t pointer.
- *
- * ***********************************************************************************/
-wmp_user_del_t *allocate_wmp_user_del()
+/* Create wmp_user_del_t instance. */
+wmp_user_del_t *create_wmp_user_del()
 {
 	wmp_user_del_t *p_wmp_user_del = (wmp_user_del_t *)malloc(sizeof(wmp_user_del_t));
 	memset(p_wmp_user_del,0,sizeof(wmp_user_del_t));
 	return p_wmp_user_del;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_user_del_t.
- *
- * @param:	p_wmp_user_del		wmp_user_del_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_user_del(wmp_user_del_t **p_wmp_user_del)
+/* Delete wmp_user_del_t instance. */
+void delete_wmp_user_del(wmp_user_del_t **p_wmp_user_del)
 {
 	if(p_wmp_user_del && (*p_wmp_user_del))
 	{
@@ -91,31 +65,18 @@ void deallocate_wmp_user_del(wmp_user_del_t **p_wmp_user_del)
 	}	
 }
 
-/* ***********************************************************************************
- * Copy wmp_user_del_t new instance.
- *
- * @param:	p_wmp_user_del		wmp_user_del_t pointer.
- * @retval: c_wmp_user_del      The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_user_del_t *copy_wmp_user_del(wmp_user_del_t *p_wmp_user_del)
+/* Copy a new wmp_user_del_t instance. */
+wmp_user_del_t *copy_wmp_user_del(const wmp_user_del_t *p_wmp_user_del)
 {
-    wmp_user_del_t *c_wmp_user_del = allocate_wmp_user_del();
+    wmp_user_del_t *c_wmp_user_del = create_wmp_user_del();
 
     memcpy(c_wmp_user_del,p_wmp_user_del,sizeof(wmp_user_del_t));
 
     return c_wmp_user_del;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_user_msg_t.
- *
- * @param:	msg_len				wmp_user_msg_t message length.
- *
- * @retval:	p_wmp_user_msg		wmp_user_msg_t pointer.
- *
- * ***********************************************************************************/
-wmp_user_msg_t *allocate_wmp_user_msg(uint32_t msg_len)
+/* Create wmp_user_msg_t instance. */
+wmp_user_msg_t *create_wmp_user_msg(uint32_t msg_len)
 {
 	wmp_user_msg_t *p_wmp_user_msg = (wmp_user_msg_t *)malloc(sizeof(wmp_user_msg_t));
 	memset(p_wmp_user_msg,0,sizeof(wmp_user_msg_t));
@@ -128,13 +89,8 @@ wmp_user_msg_t *allocate_wmp_user_msg(uint32_t msg_len)
 	return p_wmp_user_msg;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_user_msg_t.
- *
- * @param:	p_wmp_user_msg		wmp_user_msg_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_user_msg(wmp_user_msg_t **p_wmp_user_msg)
+/* Delete wmp_user_msg_t instance. */
+void delete_wmp_user_msg(wmp_user_msg_t **p_wmp_user_msg)
 {
 	if(p_wmp_user_msg && (*p_wmp_user_msg) && (*p_wmp_user_msg)->msg)
 	{
@@ -151,13 +107,7 @@ void deallocate_wmp_user_msg(wmp_user_msg_t **p_wmp_user_msg)
 	}
 }
 
-/* ***********************************************************************************
- * Set wmp_user_msg_t message length.
- *
- * @param:	p_wmp_user_msg		wmp_user_msg_t pointer.
- * @param:	msg_len				wmp_user_msg_t message length.
- *
- * ***********************************************************************************/
+/* Set wmp_user_msg_t message length. */
 void set_wmp_user_msg_len(wmp_user_msg_t *p_wmp_user_msg,uint32_t msg_len)
 {
 	if(!p_wmp_user_msg || !msg_len)
@@ -171,16 +121,10 @@ void set_wmp_user_msg_len(wmp_user_msg_t *p_wmp_user_msg,uint32_t msg_len)
 	p_wmp_user_msg->msg_len = msg_len;
 }
 
-/* ***********************************************************************************
- * Copy wmp_user_msg_t new instance.
- *
- * @param:	p_wmp_user_msg		wmp_user_msg_t pointer.
- * @retval: c_wmp_user_msg      The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_user_msg_t *copy_wmp_user_msg(wmp_user_msg_t *p_wmp_user_msg)
+/* Copy a new wmp_user_msg_t instance. */
+wmp_user_msg_t *copy_wmp_user_msg(const wmp_user_msg_t *p_wmp_user_msg)
 {
-    wmp_user_msg_t *c_wmp_user_msg = allocate_wmp_user_msg(p_wmp_user_msg->msg_len);
+    wmp_user_msg_t *c_wmp_user_msg = create_wmp_user_msg(p_wmp_user_msg->msg_len);
 
     c_wmp_user_msg->attr = p_wmp_user_msg->attr;
     memcpy(c_wmp_user_msg->msg,p_wmp_user_msg->msg,p_wmp_user_msg->msg_len);
@@ -188,15 +132,8 @@ wmp_user_msg_t *copy_wmp_user_msg(wmp_user_msg_t *p_wmp_user_msg)
     return c_wmp_user_msg;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_user_set_t.
- *
- * @param:	property_num			wmp_user_set_t message length.
- *
- * @retval:	p_wmp_user_msg			wmp_user_set_t pointer.
- *
- * ***********************************************************************************/
-wmp_user_set_t *allocate_wmp_user_set(uint16_t property_num)
+/* Create wmp_user_set_t instance. */
+wmp_user_set_t *create_wmp_user_set(uint16_t property_num)
 {
 	wmp_user_set_t *p_wmp_user_set = (wmp_user_set_t *)malloc(sizeof(wmp_user_set_t));
 	memset(p_wmp_user_set,0,sizeof(wmp_user_set_t));
@@ -210,13 +147,8 @@ wmp_user_set_t *allocate_wmp_user_set(uint16_t property_num)
 }
 
 
-/* ***********************************************************************************
- * Deallocate wmp_user_set_t.
- *
- * @param:	p_wmp_user_set		wmp_user_set_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_user_set(wmp_user_set_t **p_wmp_user_set)
+/* Delete wmp_user_set_t instance. */
+void delete_wmp_user_set(wmp_user_set_t **p_wmp_user_set)
 {
 	if(p_wmp_user_set && (*p_wmp_user_set) && (*p_wmp_user_set)->property_list)
 	{
@@ -233,12 +165,7 @@ void deallocate_wmp_user_set(wmp_user_set_t **p_wmp_user_set)
 	}
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_user_set_t.
- *
- * @param:	p_wmp_user_set		wmp_user_set_t pointer.
- *
- * ***********************************************************************************/
+/* Set wmp_user_set_t property number. */
 void set_wmp_user_set_property_num(wmp_user_set_t *p_wmp_user_set,uint32_t property_num)
 {
 	if(!p_wmp_user_set || !property_num)
@@ -253,16 +180,10 @@ void set_wmp_user_set_property_num(wmp_user_set_t *p_wmp_user_set,uint32_t prope
 }
 
 
-/* ***********************************************************************************
- * Copy wmp_user_set_t a new instance.
- *
- * @param:	p_wmp_user_set		wmp_user_set_t pointer.
- * @retval: c_wmp_user_set      The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_user_set_t *copy_wmp_user_set(wmp_user_set_t *p_wmp_user_set)
+/* Copy a new wmp_user_set_t instance. */
+wmp_user_set_t *copy_wmp_user_set(const wmp_user_set_t *p_wmp_user_set)
 {
-    wmp_user_set_t *c_wmp_user_set = allocate_wmp_user_set(p_wmp_user_set->property_num);
+    wmp_user_set_t *c_wmp_user_set = create_wmp_user_set(p_wmp_user_set->property_num);
 
     c_wmp_user_set->attr = p_wmp_user_set->attr;
     memcpy(c_wmp_user_set->property_list,p_wmp_user_set->property_list,\
@@ -271,13 +192,8 @@ wmp_user_set_t *copy_wmp_user_set(wmp_user_set_t *p_wmp_user_set)
     return c_wmp_user_set;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_user_friend_t.
- *
- * @retval:	p_wmp_user_friend				wmp_user_friend_t pointer.
- *
- * ***********************************************************************************/
-wmp_user_friend_t *allocate_wmp_user_friend(uint16_t friend_num)
+/* Create wmp_user_friend_t instance. */
+wmp_user_friend_t *create_wmp_user_friend(uint16_t friend_num)
 {
 	wmp_user_friend_t *p_wmp_user_friend = (wmp_user_friend_t *)malloc(sizeof(wmp_user_friend_t));
 	memset(p_wmp_user_friend,0,sizeof(wmp_user_friend_t));
@@ -289,13 +205,8 @@ wmp_user_friend_t *allocate_wmp_user_friend(uint16_t friend_num)
 	return p_wmp_user_friend;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_user_friend_t.
- *
- * @retval:	p_wmp_user				wmp_user_friend_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_user_friend(wmp_user_friend_t **p_wmp_user_friend)
+/* Delete wmp_user_set_t instance. */
+void delete_wmp_user_friend(wmp_user_friend_t **p_wmp_user_friend)
 {
     if((*p_wmp_user_friend))
     {
@@ -309,13 +220,7 @@ void deallocate_wmp_user_friend(wmp_user_friend_t **p_wmp_user_friend)
     }
 }
 
-/* ***********************************************************************************
- * Set wmp_user_friend_t friend numbers.
- *
- * @param:	p_wmp_user_friend				wmp_user_friend_t pointer.
- * @param:	friend_num						friend numbers.
- *
- * ***********************************************************************************/
+/* Set wmp_user_set_t property number. */
 void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_user_friend,uint16_t friend_num)
 {
     if(p_wmp_user_friend->friend_list)
@@ -326,16 +231,10 @@ void set_wmp_user_friend_num(wmp_user_friend_t *p_wmp_user_friend,uint16_t frien
     memset(p_wmp_user_friend->friend_list,0,friend_num * sizeof(uint32_t));
 }
 
-/* ***********************************************************************************
- * Copy wmp_user_friend_t a new instance.
- *
- * @param:	p_wmp_user_friend				wmp_user_friend_t pointer.
- * @retval: c_wmp_user_friend               The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_user_friend_t *copy_wmp_user_friend(wmp_user_friend_t *p_wmp_user_friend)
+/* Copy a new wmp_user_set_t instance. */
+wmp_user_friend_t *copy_wmp_user_friend(const wmp_user_friend_t *p_wmp_user_friend)
 {
-    wmp_user_friend_t *c_wmp_user_friend = allocate_wmp_user_friend(p_wmp_user_friend->friend_num);
+    wmp_user_friend_t *c_wmp_user_friend = create_wmp_user_friend(p_wmp_user_friend->friend_num);
 
     c_wmp_user_friend->attr = p_wmp_user_friend->attr;
     c_wmp_user_friend->team_num = p_wmp_user_friend->team_num;
@@ -348,11 +247,8 @@ wmp_user_friend_t *copy_wmp_user_friend(wmp_user_friend_t *p_wmp_user_friend)
 }
 
 
-/* ***********************************************************************************
- * Allocate wmp_user_find_t.
- *
- * ***********************************************************************************/
-wmp_user_find_t *allocate_wmp_user_find(uint32_t result_num)
+/* Create wmp_user_fetch_t instance. */
+wmp_user_find_t *create_wmp_user_find(uint32_t result_num)
 {
     wmp_user_find_t *p_wmp_user_find = (wmp_user_find_t *)malloc(sizeof(wmp_user_find_t));
     memset(p_wmp_user_find,0,sizeof(wmp_user_find_t));
@@ -365,13 +261,8 @@ wmp_user_find_t *allocate_wmp_user_find(uint32_t result_num)
     return p_wmp_user_find;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_user_find_t.
- *
- * @param:  p_wmp_user_find
- *
- * ***********************************************************************************/
-void deallocate_wmp_user_find(wmp_user_find_t **p_wmp_user_find)
+/* Delete wmp_user_fetch_t instance. */
+void delete_wmp_user_find(wmp_user_find_t **p_wmp_user_find)
 {
     if((*p_wmp_user_find))
     {
@@ -385,7 +276,7 @@ void deallocate_wmp_user_find(wmp_user_find_t **p_wmp_user_find)
     }
 }
 
-/* Set wmp_user_find_t result list number structure. */
+/* Set wmp_user_fetch_t result list number. */
 void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,uint32_t result_num)
 {
     if(p_wmp_user_find->result_list)
@@ -401,16 +292,10 @@ void set_wmp_user_find(wmp_user_find_t *p_wmp_user_find,uint32_t result_num)
     }
 }
 
-/* ***********************************************************************************
- * Copy wmp_user_fetch_t a new instance.
- *
- * @param:  p_wmp_user_find             pointer of instance need to copy.
- * @retval:	p_wmp_user                  The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_user_find_t *copy_wmp_user_find(wmp_user_find_t *p_wmp_user_find)
+/* Copy a new wmp_user_fetch_t instance. */
+wmp_user_find_t *copy_wmp_user_find(const wmp_user_find_t *p_wmp_user_find)
 {
-    wmp_user_find_t *c_wmp_user_find = allocate_wmp_user_find(p_wmp_user_find->result_num);
+    wmp_user_find_t *c_wmp_user_find = create_wmp_user_find(p_wmp_user_find->result_num);
 
     c_wmp_user_find->attr = p_wmp_user_find->attr;
     c_wmp_user_find->condition = p_wmp_user_find->condition;
@@ -430,14 +315,8 @@ wmp_user_find_t *copy_wmp_user_find(wmp_user_find_t *p_wmp_user_find)
     return c_wmp_user_find;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_user_fetch_t.
- *
- * @param:  property_num            property number
- * @retval:	p_wmp_user				wmp_user_t pointer.
- *
- * ***********************************************************************************/
-wmp_user_fetch_t *allocate_wmp_user_fetch(uint16_t property_num)
+/* Create wmp_user_fetch_t instance. */
+wmp_user_fetch_t *create_wmp_user_fetch(uint16_t property_num)
 {
     wmp_user_fetch_t *p_wmp_user_fetch = (wmp_user_fetch_t *)malloc(sizeof(wmp_user_fetch_t));
     memset(p_wmp_user_fetch,0,sizeof(wmp_user_fetch_t));
@@ -450,14 +329,8 @@ wmp_user_fetch_t *allocate_wmp_user_fetch(uint16_t property_num)
     return p_wmp_user_fetch;
 }
 
-
-/* ***********************************************************************************
- * Deallocate wmp_user_fetch_t.
- *
- * @param:	p_wmp_user_fetch            wmp_user_fetch_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_user_fetch(wmp_user_fetch_t **p_wmp_user_fetch)
+/* Delete wmp_user_fetch_t instance. */
+void delete_wmp_user_fetch(wmp_user_fetch_t **p_wmp_user_fetch)
 {
     if((*p_wmp_user_fetch))
     {
@@ -471,13 +344,7 @@ void deallocate_wmp_user_fetch(wmp_user_fetch_t **p_wmp_user_fetch)
     }
 }
 
-/* ***********************************************************************************
- * Set wmp_user_fetch_t property number.
- *
- * @param:	p_wmp_user_fetch            wmp_user_fetch_t pointer.
- * @param:	property_num                wmp_user_fetch_t property number.
- *
- * ***********************************************************************************/
+/* Set wmp_user_fetch_t properties number. */
 void set_wmp_user_fetch_property_num(wmp_user_fetch_t *p_wmp_user_fetch,uint16_t property_num)
 {
     if(p_wmp_user_fetch)
@@ -495,16 +362,10 @@ void set_wmp_user_fetch_property_num(wmp_user_fetch_t *p_wmp_user_fetch,uint16_t
     }
 }
 
-/* ***********************************************************************************
- * Copy wmp_user_fetch_t a new instance.
- *
- * @param:	p_wmp_user_fetch            wmp_user_fetch_t pointer.
- * @retval: c_wmp_user_fetch            The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_user_fetch_t *copy_wmp_user_fetch(wmp_user_fetch_t *p_wmp_user_fetch)
+/* Copy a new wmp_user_fetch_tinstance. */
+wmp_user_fetch_t *copy_wmp_user_fetch(const wmp_user_fetch_t *p_wmp_user_fetch)
 {
-    wmp_user_fetch_t *c_wmp_user_fetch = allocate_wmp_user_fetch(p_wmp_user_fetch->property_num);
+    wmp_user_fetch_t *c_wmp_user_fetch = create_wmp_user_fetch(p_wmp_user_fetch->property_num);
 
     c_wmp_user_fetch->attr = p_wmp_user_fetch->attr;
     memcpy(c_wmp_user_fetch->properties,p_wmp_user_fetch->properties,\
@@ -514,13 +375,8 @@ wmp_user_fetch_t *copy_wmp_user_fetch(wmp_user_fetch_t *p_wmp_user_fetch)
 }
 
 
-/* ***********************************************************************************
- * Allocate wmp_user_t.
- *
- * @retval:	p_wmp_user				wmp_user_t pointer.
- *
- * ***********************************************************************************/
-wmp_user_t *allocate_wmp_user()
+/* Create wmp_user_t instance. */
+wmp_user_t *create_wmp_user()
 {
 	wmp_user_t *p_wmp_user = (wmp_user_t *)malloc(sizeof(wmp_user_t));
 	memset(p_wmp_user,0,sizeof(wmp_user_t));
@@ -528,38 +384,33 @@ wmp_user_t *allocate_wmp_user()
 }
 
 
-/* ***********************************************************************************
- * Deallocate wmp_user_t.
- *
- * @param:	p_wmp_user				wmp_user_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_user(wmp_user_t **p_wmp_user)
+/* Delete wmp_user_t instance. */
+void delete_wmp_user(wmp_user_t **p_wmp_user)
 {
 	if(p_wmp_user && (*p_wmp_user) && (*p_wmp_user)->param)
 	{
 		switch((*p_wmp_user)->id)	
 		{
 			case WMP_USER_ADD_ID:
-				deallocate_wmp_user_add((wmp_user_add_t **)&((*p_wmp_user)->param));
+                delete_wmp_user_add((wmp_user_add_t **)&((*p_wmp_user)->param));
 				break;
 			case WMP_USER_DEL_ID:
-				deallocate_wmp_user_del((wmp_user_del_t **)&((*p_wmp_user)->param));
+                delete_wmp_user_del((wmp_user_del_t **)&((*p_wmp_user)->param));
 				break;
 			case WMP_USER_SET_ID:
-				deallocate_wmp_user_set((wmp_user_set_t **)&((*p_wmp_user)->param));
+                delete_wmp_user_set((wmp_user_set_t **)&((*p_wmp_user)->param));
 				break;
 			case WMP_USER_MSG_ID:
-				deallocate_wmp_user_msg((wmp_user_msg_t **)&((*p_wmp_user)->param));
+                delete_wmp_user_msg((wmp_user_msg_t **)&((*p_wmp_user)->param));
 				break;
             case WMP_USER_FRIEND_ID:
-                deallocate_wmp_user_friend((wmp_user_friend_t **)&((*p_wmp_user)->param));
+                delete_wmp_user_friend((wmp_user_friend_t **)&((*p_wmp_user)->param));
                 break;
             case WMP_USER_FIND_ID:
-                deallocate_wmp_user_find((wmp_user_find_t **)&((*p_wmp_user)->param));
+                delete_wmp_user_find((wmp_user_find_t **)&((*p_wmp_user)->param));
                 break;
             case WMP_USER_FETCH_ID:
-                deallocate_wmp_user_fetch((wmp_user_fetch_t **)&((*p_wmp_user)->param));
+                delete_wmp_user_fetch((wmp_user_fetch_t **)&((*p_wmp_user)->param));
                 break;
             default:
                 break;
@@ -600,7 +451,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
     switch(p_wmp_user->id)
 	{
 		case WMP_USER_ADD_ID:
-			p_wmp_user_add = allocate_wmp_user_add();
+            p_wmp_user_add = create_wmp_user_add();
 			p_wmp_user->param = (uint8_t *)p_wmp_user_add;
 			p_wmp_user_add->attr = ntohs(*(uint16_t *)(package+index));
 			index+=2;
@@ -613,13 +464,13 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
 			}
 			break;
 		case WMP_USER_DEL_ID:
-			p_wmp_user_del = allocate_wmp_user_del();
+            p_wmp_user_del = create_wmp_user_del();
 			p_wmp_user->param = (uint8_t *)p_wmp_user_del;
 			p_wmp_user_del->attr = ntohs(*(uint16_t *)(package+index));
 			index+=2;
 			break;
 		case WMP_USER_SET_ID:
-			p_wmp_user_set = allocate_wmp_user_set(0);
+            p_wmp_user_set = create_wmp_user_set(0);
 			p_wmp_user->param = (uint8_t *)p_wmp_user_set;
 			p_wmp_user_set->attr = ntohs(*(uint16_t *)(package+index));
 			index+=2;
@@ -641,7 +492,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
 
 			break;
 		case WMP_USER_MSG_ID:
-			p_wmp_user_msg = allocate_wmp_user_msg(0);
+            p_wmp_user_msg = create_wmp_user_msg(0);
 			p_wmp_user->param = (uint8_t *)p_wmp_user_msg;
 			p_wmp_user_msg->attr = ntohs(*(uint16_t *)(package+index));
 			index+=2;
@@ -655,7 +506,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
 			}
             break;
         case WMP_USER_FRIEND_ID:
-            p_wmp_user_friend = allocate_wmp_user_friend(0);
+            p_wmp_user_friend = create_wmp_user_friend(0);
             p_wmp_user->param = (uint8_t *)p_wmp_user_friend;
             p_wmp_user_friend->attr = ntohs(*(uint16_t *)(package+index));
             index+=2;
@@ -688,7 +539,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
             }
             break;
         case WMP_USER_FIND_ID:
-            p_wmp_user_find = allocate_wmp_user_find(0);
+            p_wmp_user_find = create_wmp_user_find(0);
             p_wmp_user->param = (uint8_t *)p_wmp_user_find;
             p_wmp_user_find->attr = ntohs(*(uint16_t *)(package+index));
             index+=2;
@@ -754,7 +605,7 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
             }
             break;
         case WMP_USER_FETCH_ID:
-            p_wmp_user_fetch = allocate_wmp_user_fetch(0);
+            p_wmp_user_fetch = create_wmp_user_fetch(0);
             p_wmp_user->param = (uint8_t *)p_wmp_user_fetch;
             p_wmp_user_fetch->attr = ntohs(*(uint16_t *)(package+index));
             index+=2;
@@ -771,20 +622,12 @@ static uint32_t parser_wmp_user_parameter(const char *package,uint32_t pack_lem,
             }
             break;
 		default:
-			return 0;
+            return 0;
 	}
 	return index;
 }
 
-/* ***********************************************************************************
- * Parser wmp_user_t.
- *
- * @param:	package				protocol package buffer.
- * @param:	pack_len			protocol package buffer length.
- *
- * @retval:	p_wmp_user			wmp_user_t pointer.
- *
- * ***********************************************************************************/
+/* Parser wmp_user_t. */
 wmp_user_t *parser_wmp_user(const char *package,uint32_t pack_len)
 {
 	if(!package || pack_len < WMP_USER_MIN_LENGTH)
@@ -796,7 +639,7 @@ wmp_user_t *parser_wmp_user(const char *package,uint32_t pack_len)
 	}
 
 	uint32_t index = 0;
-	wmp_user_t *p_wmp_user = allocate_wmp_user();
+    wmp_user_t *p_wmp_user = create_wmp_user();
 
 	p_wmp_user->src = ntohl(*(uint32_t *)(package+index));
 	index+=4;
@@ -813,7 +656,7 @@ wmp_user_t *parser_wmp_user(const char *package,uint32_t pack_len)
 #ifdef WMP_DEBUG
 		printf("[WMP] parser wmp_user_t parameter failed.\n");
 #endif
-        deallocate_wmp_user(&p_wmp_user);
+        delete_wmp_user(&p_wmp_user);
         return NULL;
 	}
 	return p_wmp_user;
@@ -997,15 +840,7 @@ static uint32_t package_wmp_user_parameter(char *package,const wmp_user_t *p_wmp
 	return index;
 }
 
-/* ***********************************************************************************
- * Package wmp_user_t.
- *
- * @param:	package				protocol package buffer.
- * @param:	p_wmp_user			protocol package buffer length.
- *
- * @retval:	index				wmp_user_t protocol package length.
- *
- * ***********************************************************************************/
+/* Package wmp_user_t. */
 uint32_t package_wmp_user(char *package,const wmp_user_t *p_wmp_user)
 {
 	if(!package || !p_wmp_user)
@@ -1031,12 +866,7 @@ uint32_t package_wmp_user(char *package,const wmp_user_t *p_wmp_user)
 	return index;
 }
 
-/* ***********************************************************************************
- * Print wmp_user_t.
- *
- * @param:	p_wmp_user			wmp_user_t pointer.
- *
- * ***********************************************************************************/
+/* Print wmp_user_t. */
 void print_wmp_user(const wmp_user_t *p_wmp_user)
 {
 	if(!p_wmp_user)
@@ -1047,7 +877,7 @@ void print_wmp_user(const wmp_user_t *p_wmp_user)
 		return ;
 	}
 
-	printf("***************************WM-user Protocol Start**********************\n");
+    printf("********************************wm_user_start********************************\n");
 
     printf("src:%d;dst:%d;id:%d;",p_wmp_user->src,p_wmp_user->dst,p_wmp_user->id);
 
@@ -1118,20 +948,14 @@ void print_wmp_user(const wmp_user_t *p_wmp_user)
 			break;
 	}
 
-	printf("***************************WM-user Protocol End***********************\n");
+    printf("*********************************wm_user_end*********************************\n");
 }
 
 
-/* ***********************************************************************************
- * Copy wmp_user_t a new instance.
- *
- * @param:	p_wmp_user			wmp_user_t pointer.
- * @retval: c_wmp_user          The pointer of new instance.
- *
- * ***********************************************************************************/
+/* Copy a new wmp_user_t instance. */
 wmp_user_t *copy_wmp_user(const wmp_user_t *p_wmp_user)
 {
-    wmp_user_t *c_wmp_user = allocate_wmp_user();
+    wmp_user_t *c_wmp_user = create_wmp_user();
 
     c_wmp_user->src = p_wmp_user->src;
     c_wmp_user->dst = p_wmp_user->dst;
@@ -1161,7 +985,7 @@ wmp_user_t *copy_wmp_user(const wmp_user_t *p_wmp_user)
         c_wmp_user->param = copy_wmp_user_fetch((wmp_user_fetch_t *)(p_wmp_user->param));
         break;
     default:
-        return 0;
+        return NULL;
     }
 
     return c_wmp_user;

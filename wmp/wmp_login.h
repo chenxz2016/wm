@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,9 +12,7 @@
 #ifndef WMP_LOGIN_H_
 #define WMP_LOGIN_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -25,11 +23,11 @@ extern "C"
 
 
 /* *********************************************************************************************
- * Walking Message protocol login.
- * @attr			Walking Message login attribute.
- * @result			Walking Message login result.
- * @user_id			Walking Message login user id.
- * @password		Walking Message login password.
+ * wmp_login_t structure.
+ * @attr                    wmp_login_t attribute.
+ * @result                  wmp_login_t result.
+ * @user_id                 wmp_login_t user id.
+ * @password                wmp_login_t password.
  *
  * **********************************************************************************************/
 typedef struct
@@ -70,23 +68,55 @@ typedef struct
 
 #define WMP_LoginSetUserID(p_wmp_login,id)			(p_wmp_login->user_id = id);
 
-/* Allocate wmp_login_t. */
-WMPSHARED_EXPORT extern wmp_login_t *allocate_wmp_login();
+/* ***********************************************************************************
+ * Create a new wmp_login_t instance.
+ *
+ * @param:	p_wmp_login	wmp_login_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_login_t *create_wmp_login();
 
-/* Deallocate wmp_login_t. */
-WMPSHARED_EXPORT extern void deallocate_wmp_login(wmp_login_t **p_wmp_login);
+/* ***********************************************************************************
+ * Delete wmp_login_t instance.
+ *
+ * @param:	p_wmp_login		The pointer of wmp_login_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_login(wmp_login_t **p_wmp_login);
 
-/* Parser wmp_login_t package. */
-WMPSHARED_EXPORT extern wmp_login_t *parser_wmp_login(const char *package,uint32_t pack_len);
+/* ***********************************************************************************
+ * Parser wmp_login_t package.
+ *
+ * @param:	package			Package buffer.
+ * @param:	pack_len		Package buffer length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_login_t *parser_wmp_login(const char *package,uint32_t pack_len);
 
-/* Package wmp_login_t package. */
-WMPSHARED_EXPORT extern uint32_t package_wmp_login(char *package,const wmp_login_t *p_wmp_login);
+/* ***********************************************************************************
+ * Package wmp_login_t package.
+ *
+ * @param:	package			Package buffer.
+ * @param:	p_wmp_login		wmp_login_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_login(char *package,const wmp_login_t *p_wmp_login);
 
-/* Print wmp_login_t. */
-WMPSHARED_EXPORT extern void print_wmp_login(wmp_login_t *p_wmp_login);
+/* ***********************************************************************************
+ * Print wmp_login_t package.
+ *
+ * @param:	p_wmp_login		wmp_login_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_login(const wmp_login_t *p_wmp_login);
 
-/* Copy wmp_login_t. */
-WMPSHARED_EXPORT extern wmp_login_t *copy_wmp_login(wmp_login_t *p_wmp_login);
+/* ***********************************************************************************
+ * Copy wmp_login_t a new instance.
+ *
+ * @param:	p_wmp_login		wmp_login_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_login_t *copy_wmp_login(const wmp_login_t *p_wmp_login);
 
 
 
@@ -97,13 +127,13 @@ WMPSHARED_EXPORT extern wmp_login_t *copy_wmp_login(wmp_login_t *p_wmp_login);
 #define WMP_LOGIN_KEY_PRIVATE                   2
 
 /* *********************************************************************************************
- * Walking Message protocol login key.
- * @attr			Walking Message login attribute.
- * @result			Walking Message login result.
- * @user_id			Walking Message login user id.
- * @type			Walking Message login type.
- * @key_len 		Walking Message login key length.
- * @key      		Walking Message login key.
+ * wmp_login_key_t structure.
+ * @attr                    wmp_login_key_t attribute.
+ * @result                  wmp_login_key_t result.
+ * @user_id                 wmp_login_key_t user id.
+ * @type                    wmp_login_key_t type.
+ * @key_len                 wmp_login_key_t key length.
+ * @key                     wmp_login_key_t login key.
  *
  * **********************************************************************************************/
 typedef struct
@@ -117,23 +147,55 @@ typedef struct
 }wmp_login_key_t;
 
 
-/* Allocate wmp_login_key_t. */
-WMPSHARED_EXPORT extern wmp_login_key_t *allocate_wmp_login_key();
+/* ***********************************************************************************
+ * Create wmp_login_key_t instance.
+ *
+ * @retval:	p_wmp_login_key		wmp_login_key_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_login_key_t *create_wmp_login_key();
 
-/* Deallocate wmp_login_key_t. */
-WMPSHARED_EXPORT extern void deallocate_wmp_login_key(wmp_login_key_t **p_wmp_login_key);
+/* ***********************************************************************************
+ * Delete wmp_login_key_t package.
+ *
+ * @param:	p_wmp_login_key		wmp_login_key_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_login_key(wmp_login_key_t **p_wmp_login_key);
 
-/* Parser wmp_login_key_t package. */
-WMPSHARED_EXPORT extern wmp_login_key_t *parser_wmp_login_key(const char *package,uint32_t pack_len);
+/* ***********************************************************************************
+ * Parser wmp_login_key_t package.
+ *
+ * @param:	package		raw package.
+ * @param:	pack_len	package length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_login_key_t *parser_wmp_login_key(const char *package,uint32_t pack_len);
 
-/* Package wmp_login_key_t package. */
-WMPSHARED_EXPORT extern uint32_t package_wmp_login_key(char *package,const wmp_login_key_t *p_wmp_login_key);
+/* ***********************************************************************************
+ * Package wmp_login_key_t package.
+ *
+ * @param:	package		package.
+ * @param:	p_wmp_login_key	 wm_login_key_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_login_key(char *package,const wmp_login_key_t *p_wmp_login_key);
 
-/* Print wmp_login_key_t. */
-WMPSHARED_EXPORT extern void print_wmp_login_key(wmp_login_key_t *p_wmp_login_key);
+/* ***********************************************************************************
+ * Parser wmp_login_key_t package.
+ *
+ * @param:	p_wmp_login_key	 wm_login_key_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_login_key(const wmp_login_key_t *p_wmp_login_key);
 
-/* Copy wmp_login_key_t a new instance. */
-WMPSHARED_EXPORT extern wmp_login_key_t *copy_wmp_login_key(wmp_login_key_t *p_wmp_login_key);
+/* ***********************************************************************************
+ * Copy wmp_login_key_t a new instance.
+ *
+ * @param:	p_wmp_login_key	 wm_login_key_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_login_key_t *copy_wmp_login_key(const wmp_login_key_t *p_wmp_login_key);
 
 
 #ifdef __cplusplus
@@ -141,4 +203,3 @@ WMPSHARED_EXPORT extern wmp_login_key_t *copy_wmp_login_key(wmp_login_key_t *p_w
 #endif
 
 #endif
-

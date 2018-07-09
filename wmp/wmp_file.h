@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,9 +12,7 @@
 #ifndef WMP_FILE_H_
 #define WMP_FILE_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -23,15 +21,16 @@ extern "C"
 
 
 /* *********************************************************************************************
- * Walking Message protocol file.
- * @attr			Walking Message file operation attribute.
- * @result			Walking Message file operation result.
- * @src				Walking Message file operation source id.
- * @dst				Walking Message file operation destination id.
- * @block			Walking Message file operation block numbers.
- * @sequence		Walking Message file operation current sequence.
- * @data_len		Walking Message file operation current block data length.
- * @data			Walking Message file operation current block data.
+ * wmp_file_t structure.
+ *
+ * @attr                    wmp_file_t attribute.
+ * @result                  wmp_file_t result.
+ * @src                     wmp_file_t source id.
+ * @dst                     wmp_file_t destination id.
+ * @block                   wmp_file_t block numbers.
+ * @sequence                wmp_file_t current sequence.
+ * @data_len                wmp_file_t current block data length.
+ * @data                    wmp_file_t current block data.
  *
  * **********************************************************************************************/
 typedef struct
@@ -102,27 +101,71 @@ typedef struct
  	p_wmp_file->data_len = len;\
 	memcpy(p_wmp_file->data,data,len);
 
-/* Allocate wmp_file_t.  */
-WMPSHARED_EXPORT extern wmp_file_t *allocate_wmp_file(uint32_t data_len);
 
-/* Deallocate wmp_file_t.  */
-WMPSHARED_EXPORT extern void deallocate_wmp_file(wmp_file_t **p_wmp_file);
+/* ***********************************************************************************
+ * Create wmp_file_t instance.
+ *
+ * @param:	data_len        wmp_file_t file block data length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_file_t *create_wmp_file(uint32_t data_len);
 
-/* Parser wmp_file_t protocol.  */
-WMPSHARED_EXPORT extern wmp_file_t *parser_wmp_file(const char *package,uint32_t pack_len);
 
-/* Package wmp_file_t protocol.  */
-WMPSHARED_EXPORT extern uint32_t package_wmp_file(char *package,const wmp_file_t *p_wmp_file);
+/* ***********************************************************************************
+ * Delete wmp_file_t instance.
+ *
+ * @param:	p_wmp_file      wmp_file_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_file(wmp_file_t **p_wmp_file);
 
-/* Set wmp_file_t current file block data length.  */
-WMPSHARED_EXPORT extern void set_wmp_file_data_len(wmp_file_t *p_wmp_file,uint32_t data_len);
 
-/* Print wmp_file_t. */
-WMPSHARED_EXPORT extern void print_wmp_file(const wmp_file_t *p_wmp_file);
+/* ***********************************************************************************
+ * Parser package as wmp_file_t.
+ *
+ * @param:	package         wmp_file_t package.
+ * @param:	pack_len        wmp_file_t package length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_file_t *parser_wmp_file(const char *package,uint32_t pack_len);
 
-/* Print wmp_file_t. */
-WMPSHARED_EXPORT extern wmp_file_t *copy_wmp_file(const wmp_file_t *p_wmp_file);
 
+/* ***********************************************************************************
+ * Package wmp_file_t package.
+ *
+ * @param:	package         wmp_file_t package.
+ * @param:	p_wmp_file      wmp_file_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_file(char *package,const wmp_file_t *p_wmp_file);
+
+
+/* ***********************************************************************************
+ * Set wmp_file_t block data length.
+ *
+ * @param:	p_wmp_file      wmp_file_t pointer.
+ * @param:	file_len        wmp_file_t block data length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_file_data_len(wmp_file_t *p_wmp_file,uint32_t data_len);
+
+
+/* ***********************************************************************************
+ * Print wmp_file_t.
+ *
+ * @param:	p_wmp_file      wmp_file_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_file(const wmp_file_t *p_wmp_file);
+
+
+/* ***********************************************************************************
+ * Copy a new wmp_file_t instance.
+ *
+ * @param:	p_wmp_file      wmp_file_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_file_t *copy_wmp_file(const wmp_file_t *p_wmp_file);
 
 
 #ifdef __cplusplus

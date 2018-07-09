@@ -29,7 +29,6 @@ QMAKE_LFLAGS_DEBUG = /DEBUG /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib /NOD
 SOURCES += \
     protocol_crypt.c \
     protocol_error.c \
-    protocol_package.c \
     wm_protocol.c \
     wmp_beat_heart.c \
     wmp_file.c \
@@ -41,11 +40,10 @@ SOURCES += \
     wmp_sound.c \
     wmp_user.c \
     wmp_video.c \
-    crc32.c
+    crc32.c \
+    wm_package.c
 
 HEADERS += wm_protocol.h\
-        wmp_global.h \
-    protocol_package.h \
     wmp_beat_heart.h \
     wmp_file.h \
     wmp_group.h \
@@ -56,10 +54,11 @@ HEADERS += wm_protocol.h\
     wmp_sound.h \
     wmp_user.h \
     wmp_video.h \
-    wmp_qt.h \
     protocol_crypt.h \
     protocol_def.h \
-    crc32.h
+    crc32.h \
+    wmp_cfg.h \
+    wm_package.h
 
 unix {
     target.path = /usr/lib

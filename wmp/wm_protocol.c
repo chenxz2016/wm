@@ -4,26 +4,26 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
 
-#include"protocol_def.h"
 #include"wm_protocol.h"
 #include<malloc.h>
 #include<string.h>
+#include"protocol_def.h"
 
-#include "wmp_beat_heart.h"
-#include "wmp_file.h"
-#include "wmp_group.h"
-#include "wmp_login.h"
-#include "wmp_message.h"
-#include "wmp_register.h"
-#include "wmp_session.h"
-#include "wmp_sound.h"
-#include "wmp_user.h"
-#include "wmp_video.h"
+#include"wmp_beat_heart.h"
+#include"wmp_file.h"
+#include"wmp_group.h"
+#include"wmp_login.h"
+#include"wmp_message.h"
+#include"wmp_register.h"
+#include"wmp_session.h"
+#include"wmp_sound.h"
+#include"wmp_user.h"
+#include"wmp_video.h"
 
 #define WMP_CheckLen(index,delt,len) \
 	if((index+delt)>len) \
@@ -32,21 +32,12 @@
 #define WMP_CheckPackLen(index,delt,len,p_wm) \
 	if((index+delt)>len) \
 	{\
-		deallocate_wmp(&p_wm);\
+        delete_wmp(&p_wm);\
 		return NULL;\
 	}
 
-
-/* **********************************************************************************************
- *	Allocate a wm_protocol_t structure.
- *
- *	@param:		param_num		wm_protocol_t parameter numbers.
- *	@retval:	p_wm			The pointer to wm_protocol_t structure.
- *
- *	If param_num is 0, p_wm will not assign any wm_parameter_t.
- *
- * **********************************************************************************************/
-wm_protocol_t *allocate_wmp(uint16_t param_num)
+/* Create a wm_protocol_t instance. */
+wm_protocol_t *create_wmp(uint16_t param_num)
 {
 	wm_protocol_t *p_wm = (wm_protocol_t *)malloc(sizeof(wm_protocol_t));
 	memset(p_wm,0,sizeof(wm_protocol_t));
@@ -63,13 +54,8 @@ wm_protocol_t *allocate_wmp(uint16_t param_num)
 }
 
 
-/* **********************************************************************************************
- *	Free a wm_protocol_t structure.
- *
- *	@param:		p_wm			The pointer of the pointer to wm_protocol_t structure.
- *
- * **********************************************************************************************/
-void deallocate_wmp(wm_protocol_t **p_wm)
+/* Delete wm_protocol_t instance. */
+void delete_wmp(wm_protocol_t **p_wm)
 {
 	/* If p_wm contains parameters. */
 	if(p_wm && (*p_wm) && (*p_wm)->body.param)
@@ -102,14 +88,7 @@ void deallocate_wmp(wm_protocol_t **p_wm)
 	}
 }
 
-
-/* **********************************************************************************************
- *	Set wm_body_t parameter numbers.
- *
- *	@param:		p_wm_body		The pointer to wm_body_t structure.
- *	@param:		param_num		Parameter numbers.
- *
- * **********************************************************************************************/
+/* Set wm_body_t parameter number. */
 void set_wmp_body_param_num(wm_body_t *p_wm_body,uint16_t num)
 {
 	/* Check parameters. */
@@ -138,38 +117,15 @@ void set_wmp_body_param_num(wm_body_t *p_wm_body,uint16_t num)
 }
 
 /* **********************************************************************************************
- *	Set wm_parameter_t data length.
+ * Check wm_package for wm_protocol head and tail.
  *
- *	@param:		p_wm_param		The pointer to wm_parameter_t structure.
- *	@param:		len				Parameter data length.
- *
- * **********************************************************************************************/
-void set_wmp_param_len(wm_parameter_t *p_wm_param,uint16_t len)
-{
-	/* Check parameters. */
-	if(!p_wm_param || !len)
-		return ;
-
-	/* Free parameter data. */
-	if(p_wm_param->data)
-		free(p_wm_param->data);
-
-	/* Reallocate parameter data. */
-	p_wm_param->length = len;
-	p_wm_param->data = (char *)malloc(len);
-	memset(p_wm_param->data,0,len);
-}
-
-/* **********************************************************************************************
- *	Check protocol_package for wm_protocol head and tail.
- *
- *	@param:		package		The pointer to wm_parameter_t structure.
+ * @param:  package                 The pointer to wm_parameter_t structure.
  *	
- *	@retval: WMP_PARSER_SUCCESS		protocol_package head and tail is compatible for wm_protocol.
- *	@retval: WMP_PARSER_FAILED		protocol_package head and tail is not compatible for wm_protocol.
+ * @retval: WMP_PARSER_SUCCESS		wm_package head and tail is compatible for wm_protocol_t.
+ *          WMP_PARSER_FAILED		wm_package head and tail is not compatible for wm_protocol_t.
  *
  * **********************************************************************************************/
-static int check_head_tail(const protocol_package *package)
+static int check_head_tail(const wm_package *package)
 {
 	if(*(uint8_t *)package->data==WMP_HEAD_ID && *(uint8_t *)(package->data+package->length-1)==WMP_TAIL_ID)
 		return WMP_PARSER_SUCCESS;
@@ -177,14 +133,14 @@ static int check_head_tail(const protocol_package *package)
 }
 
 /* **********************************************************************************************
- *	Parser wm_base_t.
+ * Parser wm_base_t.
  *
- *	@param:		package		Raw package data.
- *	@param:		pack_len	Raw package data length.
- *	@param:		p_wm_base	The pointer to wm_base_t structure.
+ * @param:  package                 Raw package data.
+ * @param:  pack_len                Raw package data length.
+ * @param:  p_wm_base               The pointer to wm_base_t structure.
  *	
- *	@retval: WMP_PARSER_SUCCESS		parser success.
- *	@retval: WMP_PARSER_FAILED		parser failed.
+ * @retval: WMP_PARSER_SUCCESS		parser success.
+ *          WMP_PARSER_FAILED		parser failed.
  *
  * **********************************************************************************************/
 static int parser_wmp_base(const char *package,uint32_t pack_len,wm_base_t *p_base)
@@ -213,14 +169,14 @@ static int parser_wmp_base(const char *package,uint32_t pack_len,wm_base_t *p_ba
 }
 
 /* **********************************************************************************************
- *	Parser wm_body_t.
+ * Parser wm_body_t.
  *
- *	@param:		package		Raw package data.
- *	@param:		pack_len	Raw package data length.
- *	@param:		p_wm_body	The pointer to wm_body_t structure.
+ * @param:  package             Raw package data.
+ * @param:  pack_len            Raw package data length.
+ * @param:  p_wm_body           The pointer to wm_body_t structure.
  *	
- *	@retval: WMP_PARSER_SUCCESS		parser success.
- *	@retval: WMP_PARSER_FAILED		parser failed.
+ * @retval: WMP_PARSER_SUCCESS	parser success.
+ *          WMP_PARSER_FAILED	parser failed.
  *
  * **********************************************************************************************/
 static int parser_wmp_body(const char *package,uint32_t pack_len,wm_body_t *p_wm_body)
@@ -254,67 +210,67 @@ static int parser_wmp_body(const char *package,uint32_t pack_len,wm_body_t *p_wm
         case WMP_PROTO_LOGIN_KEY_ID:
         {
             wmp_login_key_t *key = parser_wmp_login_key(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)key;
+            p_wm_body->param[i].data = key;
             break;
         }
         case WMP_PROTO_LOGIN_ID:
         {
             wmp_login_t *login = parser_wmp_login(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)login;
+            p_wm_body->param[i].data = login;
             break;
         }
         case WMP_PROTO_BH_ID:
         {
             wmp_beat_heart_t *bh = parser_wmp_beat_heart(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)bh;
+            p_wm_body->param[i].data = bh;
             break;
         }
         case WMP_PROTO_FILE_ID:
         {
             wmp_file_t *file = parser_wmp_file(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)file;
+            p_wm_body->param[i].data = file;
             break;
         }
         case WMP_PROTO_GROUP_ID:
         {
             wmp_group_t *group = parser_wmp_group(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)group;
+            p_wm_body->param[i].data = group;
             break;
         }
         case WMP_PROTO_MSG_ID:
         {
             wmp_message_t *msg = parser_wmp_message(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)msg;
+            p_wm_body->param[i].data = msg;
             break;
         }
         case WMP_PROTO_REGISTER_ID:
         {
             wmp_register_t *reg = parser_wmp_register(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)reg;
+            p_wm_body->param[i].data = reg;
             break;
         }
         case WMP_PROTO_SESSION_ID:
         {
             wmp_session_t *session = parser_wmp_session(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)session;
+            p_wm_body->param[i].data = session;
             break;
         }
         case WMP_PROTO_SOUND_ID:
         {
             wmp_sound_t *sound = parser_wmp_sound(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)sound;
+            p_wm_body->param[i].data = sound;
             break;
         }
         case WMP_PROTO_VIDEO_ID:
         {
             wmp_video_t *video = parser_wmp_video(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)video;
+            p_wm_body->param[i].data = video;
             break;
         }
         case WMP_PROTO_USER_ID:
         {
             wmp_user_t *user = parser_wmp_user(package+index,pack_len-index);
-            p_wm_body->param[i].data = (char *)user;
+            p_wm_body->param[i].data = user;
             break;
         }
         default:
@@ -325,19 +281,11 @@ static int parser_wmp_body(const char *package,uint32_t pack_len,wm_body_t *p_wm
 	return WMP_PARSER_SUCCESS;
 }
 
-/* **********************************************************************************************
- *	Parser wm_protocol_t.
- *
- *	@param:		package		The pointer to protocol_package.
- *	@param:		key			Encrypt key.
- *	@param:		key_len		Encrypt key length.
- *	
- *	@retval:	p_wm		Parsered wm_protocol_t pointer.
- *	@retval:	NULL		Parser failed.
- *
- * **********************************************************************************************/
-wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const uint16_t key_len)
+/* Parser wm_package as wm_protocol_t. */
+wm_protocol_t *parser_wmp(const wm_package *package,const char *key,const uint16_t key_len)
 {
+    (void)key;
+    (void)key_len;
 	if(check_head_tail(package)==WMP_PARSER_FAILED)
 	{
 #ifdef WMP_DEBUG
@@ -347,7 +295,7 @@ wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const 
 	}
 
 	uint32_t index = 0;
-	wm_protocol_t *p_wm = allocate_wmp(0);
+    wm_protocol_t *p_wm = create_wmp(0);
 
 	/* Check length for head, sequence, crc_check, attr and length. */
 	WMP_CheckPackLen(index,WMP_BASE_INDEX,package->length,p_wm)
@@ -371,7 +319,7 @@ wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const 
 #ifdef WMP_DEBUG
 			printf("CRC32 check failed,check crc32:%d, real crc32:%d\n",crc32,p_wm->crc_check);
 #endif
-			deallocate_wmp(&p_wm);
+            delete_wmp(&p_wm);
 			return NULL;
 		}
 	}
@@ -382,7 +330,7 @@ wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const 
 #ifdef WMP_DEBUG
 		printf("Parser base failed.\n");
 #endif
-		deallocate_wmp(&p_wm);
+        delete_wmp(&p_wm);
 		return NULL;
 	}
 
@@ -394,7 +342,7 @@ wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const 
 #ifdef WMP_DEBUG
 		printf("Parser body failed.\n");
 #endif
-		deallocate_wmp(&p_wm);
+        delete_wmp(&p_wm);
 		return NULL;
 	}
 	p_wm->tail = *(uint8_t *)(package->data+package->length-1);
@@ -402,12 +350,12 @@ wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const 
 }
 
 /* **********************************************************************************************
- *	Package wm_base_t.
+ * Package wm_base_t.
  *
- *	@param:		package		The buffer to write.
- *	@param:		p_wm_base	The pointer to wm_base_t.
+ * @param:  package             The buffer to write.
+ * @param:  p_wm_base           The pointer of wm_base_t.
  *	
- *	@retval:	index		The index of writing wm_base_t, it should be WMP_BASE_LENGTH.
+ * @retval:	index               The index of writing wm_base_t, it should be WMP_BASE_LENGTH.
  *
  * **********************************************************************************************/
 static uint32_t package_wmp_base(char *package,const wm_base_t *p_wm_base)
@@ -439,12 +387,12 @@ static uint32_t package_wmp_base(char *package,const wm_base_t *p_wm_base)
 }
 
 /* **********************************************************************************************
- *	Package wm_body_t.
+ * Package wm_body_t.
  *
- *	@param:		package		The buffer to write.
- *	@param:		p_wm_body	The pointer to wm_body_t.
+ * @param:	package             The buffer to write.
+ * @param:	p_wm_body           The pointer to wm_body_t.
  *	
- *	@retval:	index		The index of writing wm_body_t.
+ * @retval:	index               The index of writing wm_body_t.
  *
  * **********************************************************************************************/
 static uint32_t package_wmp_body(char *package,const wm_body_t *p_wm_body)
@@ -543,17 +491,8 @@ static uint32_t package_wmp_body(char *package,const wm_body_t *p_wm_body)
 	return index;
 }
 
-/* **********************************************************************************************
- *	Package wm_protocol_t.
- *
- *	@param:		p_wm		The pointer to wm_protocol_t.
- *	@param:		key			Encrypt key.
- *	@param:		key_len		Encrypt key length.
- *	
- *	@retval:	pp			The pointer to protocol_package.
- *
- * **********************************************************************************************/
-protocol_package *package_wmp(const wm_protocol_t *p_wm,const char *key,const uint16_t key_len)
+/* Package wm_protocol_t as wm_package. */
+wm_package *package_wmp(const wm_protocol_t *p_wm,const char *key,const uint16_t key_len)
 {
     char buffer[5*1024]="";
 	uint32_t index = 0;
@@ -590,15 +529,15 @@ protocol_package *package_wmp(const wm_protocol_t *p_wm,const char *key,const ui
 	}
 	*len_ptr = htonl(index);
 
-	protocol_package *package = allocate_package(index);
+    wm_package *package = create_wm_package(index);
 	memcpy(package->data,buffer,index);
 	return package;
 }
 
 /* **********************************************************************************************
- *	Print wm_base_t.
+ * Print wm_base_t.
  *
- *	@param:		p_wm_base	The pointer to wm_base_t.
+ * @param:	p_wm_base           The pointer of wm_base_t.
  *
  * **********************************************************************************************/
 static void print_wmp_base(const wm_base_t *p_wm_base)
@@ -610,9 +549,9 @@ static void print_wmp_base(const wm_base_t *p_wm_base)
 }
 
 /* **********************************************************************************************
- *	Print wm_body_t.
+ * Print wm_body_t.
  *
- *	@param:		p_wm_body	The pointer to wm_body_t.
+ * @param:	p_wm_body           The pointer of wm_body_t.
  *
  * **********************************************************************************************/
 static void print_wmp_body(const wm_body_t *p_wm_body)
@@ -627,17 +566,12 @@ static void print_wmp_body(const wm_body_t *p_wm_body)
 	}
 }
 
-/* **********************************************************************************************
- *	Print wm_protocol_t.
- *
- *	@param:		p_wm		The pointer to wm_protocol_t.
- *
- * **********************************************************************************************/
+/* print wm_protocol_t function. */
 void print_wmp(const wm_protocol_t *p_wm)
 {
 	if(!p_wm)
 		return ;
-	printf("**********************************wmp start********************************\n");
+    printf("******************************wm_package_start******************************\n");
 
 	printf("head:%02x;tail:%02x;sequence:%d;attr:%d;length:%d;\n",\
 			p_wm->head,p_wm->tail,p_wm->sequence,p_wm->attr,p_wm->length);
@@ -645,20 +579,13 @@ void print_wmp(const wm_protocol_t *p_wm)
 	print_wmp_base(&p_wm->base);
 	print_wmp_body(&p_wm->body);
 
-	printf("***********************************wmp end*********************************\n");
+    printf("*******************************wm_package_end*******************************\n");
 }
 
-
-/* **********************************************************************************************
- *	Copy wm_protocol_t a new instance.
- *
- *	@param:		p_wm		The pointer to wm_protocol_t.
- *  @retval:    c_wm        The pointer to new wm_protocol_t instance.
- *
- * **********************************************************************************************/
+/* Copy a wm_protocol_t instance. */
 wm_protocol_t * copy_wmp(const wm_protocol_t *p_wm)
 {
-    wm_protocol_t *c_wm = allocate_wmp(p_wm->body.param_num);
+    wm_protocol_t *c_wm = create_wmp(p_wm->body.param_num);
     c_wm->head = p_wm->head;
     c_wm->sequence = p_wm->sequence;
     c_wm->crc_check = p_wm->crc_check;

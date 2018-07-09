@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,15 +12,25 @@
 #ifndef WMP_MESSAGE_H_
 #define WMP_MESSAGE_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
+
+/* *********************************************************************************************
+ * wmp_message_t structure.
+ *
+ * @attr                    wmp_message_t attribute.
+ * @result                  wmp_message_t result.
+ * @src                     wmp_message_t result.
+ * @dst                     wmp_message_t result.
+ * @msg_len                 wmp_message_t user id.
+ * @msg                     wmp_message_t password.
+ *
+ * **********************************************************************************************/
 typedef struct
 {
 	uint8_t attr;
@@ -50,18 +60,62 @@ typedef struct
 #define WMP_MsgSetSrc(p_wmp_msg,id) 					(p_wmp_msg->src = id)
 #define WMP_MsgSetDst(p_wmp_msg,id) 					(p_wmp_msg->dst = id)
 
-WMPSHARED_EXPORT extern wmp_message_t *allocate_wmp_message();
+/* ***********************************************************************************
+ * Create wmp_message_t instance.
+ *
+ * @param:	msg_len     	 wmp_message_t message length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_message_t *create_wmp_message(uint32_t msg_len);
 
-WMPSHARED_EXPORT extern void deallocate_wmp_message(wmp_message_t **p_wmp_msg);
+/* ***********************************************************************************
+ * Delete wmp_message_t instance.
+ *
+ * @param:	p_wmp_login_key	 The pointer of wmp_message_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_message(wmp_message_t **p_wmp_msg);
 
-WMPSHARED_EXPORT extern wmp_message_t *parser_wmp_message(const char *package,uint32_t pack_len);
+/* ***********************************************************************************
+ * Parser wmp_message_t.
+ *
+ * @param:	p_wmp_login_key	 The pointer of wmp_message_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_message_t *parser_wmp_message(const char *package,uint32_t pack_len);
 
-WMPSHARED_EXPORT extern uint32_t package_wmp_message(char *package,wmp_message_t *p_wmp_msg);
+/* ***********************************************************************************
+ * Package wmp_message_t.
+ *
+ * @param:	p_wmp_login_key	 The pointer of wmp_message_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_message(char *package,const wmp_message_t *p_wmp_msg);
 
-WMPSHARED_EXPORT extern void set_wmp_message_len(wmp_message_t *p_wmp_msg,uint32_t msg_len);
+/* ***********************************************************************************
+ * Set wmp_message_t message length.
+ *
+ * @param:	p_wmp_login_key	 The pointer of wmp_message_t pointer.
+ * @param:  msg_len          Message length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_message_len(wmp_message_t *p_wmp_msg,uint32_t msg_len);
 
-WMPSHARED_EXPORT extern wmp_message_t *copy_wmp_message(wmp_message_t *p_wmp_msg);
+/* ***********************************************************************************
+ * Set wmp_message_t message length.
+ *
+ * @param:	p_wmp_login_key	 The pointer of wmp_message_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_message(const wmp_message_t *p_wmp_msg);
 
+/* ***********************************************************************************
+ * Copy a new wmp_message_t instance.
+ *
+ * @param:	p_wmp_login_key	 The pointer of wmp_message_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_message_t *copy_wmp_message(const wmp_message_t *p_wmp_msg);
 
 #ifdef __cplusplus
 }

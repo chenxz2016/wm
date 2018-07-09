@@ -4,29 +4,23 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
 
-#include"protocol_def.h"
-#include"wmp_sound.h"
 #include<malloc.h>
 #include<string.h>
+
+#include"protocol_def.h"
+#include"wmp_sound.h"
 
 #define WMP_SoundLenCheck(index,delt,len) \
 	if((index+delt)>len) \
 		return NULL;
 
-/* ***********************************************************************************
- * Allocate wmp_sound_t.
- *
- * @param:	sound_len		wmp_sound_t sound data length.
- *
- * @retval:	p_wmp_sound		wmp_sound_t pointer.
- *
- * ***********************************************************************************/
-wmp_sound_t *allocate_wmp_sound(uint32_t sound_len)
+/* Create wmp_sound_t instance. */
+wmp_sound_t *create_wmp_sound(uint32_t sound_len)
 {
 	wmp_sound_t *p_wmp_sound = (wmp_sound_t *)malloc(sizeof(wmp_sound_t));
 	memset(p_wmp_sound,0,sizeof(wmp_sound_t));
@@ -39,13 +33,8 @@ wmp_sound_t *allocate_wmp_sound(uint32_t sound_len)
 	return p_wmp_sound;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_sound_t.
- *
- * @param:	p_wmp_sound		The pointer of wmp_sound_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_sound(wmp_sound_t **p_wmp_sound)
+/* Delete wmp_sound_t. */
+void delete_wmp_sound(wmp_sound_t **p_wmp_sound)
 {
 	if(p_wmp_sound && (*p_wmp_sound) && (*p_wmp_sound)->sound)
 	{
@@ -63,22 +52,14 @@ void deallocate_wmp_sound(wmp_sound_t **p_wmp_sound)
 }
 
 
-/* ***********************************************************************************
- * Parser wmp_sound_t.
- *
- * @param:	package			package buffer.
- * @param:	pack_len		package buffer length.
- *
- * @retval:	p_wmp_sound		wmp_sound_t pointer.
- *
- * ***********************************************************************************/
+/* Parser wmp_sound_t. */
 wmp_sound_t *parser_wmp_sound(const char *package,uint32_t pack_len)
 {
 	uint32_t index = 0;
 	
 	WMP_SoundLenCheck(index,14,pack_len)
 	
-	wmp_sound_t *p_wmp_sound = allocate_wmp_sound(0);
+    wmp_sound_t *p_wmp_sound = create_wmp_sound(0);
 	
     p_wmp_sound->attr = *(uint8_t *)(package+index);
 	index+=sizeof(p_wmp_sound->attr);
@@ -101,15 +82,7 @@ wmp_sound_t *parser_wmp_sound(const char *package,uint32_t pack_len)
 	return p_wmp_sound;
 }
 
-/* ***********************************************************************************
- * Package wmp_sound_t.
- *
- * @param:	package			package buffer.
- * @param:	p_wmp_sound		wmp_sound_t pointer.
- *
- * @retval:	index			wmp_sound_t protocol package length.
- *
- * ***********************************************************************************/
+/* Package wmp_sound_t. */
 uint32_t package_wmp_sound(char *package,const wmp_sound_t *p_wmp_sound)
 {
 	uint32_t index = 0;
@@ -128,13 +101,7 @@ uint32_t package_wmp_sound(char *package,const wmp_sound_t *p_wmp_sound)
 	return index;
 }
 
-/* ***********************************************************************************
- * Set wmp_sound_t sound data length.
- *
- * @param:	p_wmp_sound		wmp_sound_t pointer.
- * @param:	pack_len		sound data length.
- *
- * ***********************************************************************************/
+/* Set wmp_sound_t sound data length. */
 void set_wmp_sound_len(wmp_sound_t *p_wmp_sound,uint32_t sound_len)
 {
 	if(!p_wmp_sound || sound_len)
@@ -148,16 +115,30 @@ void set_wmp_sound_len(wmp_sound_t *p_wmp_sound,uint32_t sound_len)
 	memset(p_wmp_sound->sound,0,sound_len);
 }
 
-/* ***********************************************************************************
- * Copy wmp_sound_t a new instance.
- *
- * @param:	p_wmp_sound		wmp_sound_t pointer.
- * @retval: c_wmp_sound     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_sound_t *copy_wmp_sound(wmp_sound_t *p_wmp_sound)
+/* Print wmp_sound_t. */
+void print_wmp_sound(const wmp_sound_t *p_wmp_sound)
 {
-    wmp_sound_t *c_wmp_sound = allocate_wmp_sound(p_wmp_sound->sound_len);
+    if(!p_wmp_sound)
+    {
+#ifdef WMP_DEBUG
+        printf("wmp_sound_t is null.\n");
+#endif
+        return ;
+    }
+    printf("********************************wm_sound_start********************************\n");
+    printf("attr:%d;result:%d;src:%d;dst:%d;sound_len:%d;",p_wmp_sound->attr,p_wmp_sound->result,\
+           p_wmp_sound->src,p_wmp_sound->dst,p_wmp_sound->sound_len);
+    printf("sound data:\n");
+    for(uint32_t i=0;i<p_wmp_sound->sound_len;i++)
+        printf("%02x ",p_wmp_sound->sound[i]);
+    printf("\n");
+    printf("********************************wm_sound_start********************************\n");
+}
+
+/* Copy a new wmp_sound_t instance. */
+wmp_sound_t *copy_wmp_sound(const wmp_sound_t *p_wmp_sound)
+{
+    wmp_sound_t *c_wmp_sound = create_wmp_sound(p_wmp_sound->sound_len);
 
     c_wmp_sound->attr = p_wmp_sound->attr;
     c_wmp_sound->result = p_wmp_sound->result;

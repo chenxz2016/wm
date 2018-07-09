@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,16 +12,13 @@
 #ifndef WM_PROTOCOL_H_
 #define WM_PROTOCOL_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
+#include "wm_package.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
-#include "protocol_package.h"
 
 #define WMP_PROTO_LOGIN_KEY_ID					0
 #define WMP_PROTO_LOGIN_ID						1
@@ -36,14 +33,14 @@ extern "C"
 #define WMP_PROTO_USER_ID						10
 
 /* **********************************************************************************************
- *	wm_base_t structure.
+ * wm_base_t structure.
  *
- *	@proto_type:		protocol type.
- *	@src:				source sender id.
- *	@dst:				destination receive id.
- *	@device:			device name, 24 byte.
- *	@time:				send time.
- *	@version:			protocol version, 10 byte.
+ * @proto_type:             protocol type.
+ * @src:                    source sender id.
+ * @dst:                    destination receive id.
+ * @device:                 device name, 24 byte.
+ * @time:                   send time.
+ * @version:                protocol version, 10 byte.
  *
  * **********************************************************************************************/
 typedef struct
@@ -63,10 +60,10 @@ typedef struct
 /* **********************************************************************************************
  *	wm_parameter_t structure.
  *
- *	@attr:				parameter attribue.
- *	@main_id:			parameter list main id.
- *	@length:			parameter data length.
- *	@data:				parameter data.
+ *	@attr:                  wm_parameter_t attribue.
+ *	@main_id:               wm_parameter_t list main id.
+ *	@length:                wm_parameter_t data length.
+ *	@data:                  wm_parameter_t data.
  *
  * **********************************************************************************************/
 typedef struct
@@ -80,8 +77,8 @@ typedef struct
 /* **********************************************************************************************
  *	wm_body_t structure.
  *
- *	@param_num:			parameter list num.
- *	@param:				parameter list pointer.
+ *	@param_num:             parameter list number.
+ *	@param:                 parameter list pointer.
  *
  * **********************************************************************************************/
 typedef struct
@@ -93,14 +90,14 @@ typedef struct
 /* **********************************************************************************************
  *	wm_protocol_t structure.
  *
- *	@head:				wm_protocol head flag.
- *	@sequence:			wm_protocol sequence.
- *	@crc_check:			wm_protocol crc32 check code.
- *	@attr:				wm_protocol attribute.
- *	@length:			wm_protocol package length.
- *	@base:				wm_protocol wm_base_t.
- *	@body:				wm_protocol wm_body_t.
- *	@tail:				wm_protocol tail flag.
+ *	@head:                  wm_protocol head flag.
+ *	@sequence:              wm_protocol sequence.
+ *	@crc_check:             wm_protocol crc32 check code.
+ *	@attr:                  wm_protocol attribute.
+ *	@length:                wm_protocol package length.
+ *	@base:                  wm_protocol wm_base_t.
+ *	@body:                  wm_protocol wm_body_t.
+ *	@tail:                  wm_protocol tail flag.
  *
  * **********************************************************************************************/
 typedef struct
@@ -119,17 +116,33 @@ typedef struct
 /* The marco of index from head to start of wm_base_t. */
 #define WMP_BASE_INDEX								17
 
-/* wm_protocol_t allocate. */
-WMPSHARED_EXPORT extern wm_protocol_t *allocate_wmp(uint16_t param_num);
+/* **********************************************************************************************
+ * Create a wm_protocol_t instance.
+ *
+ * @param:  param_num		wm_protocol_t parameter numbers.
+ *
+ *	If param_num is 0, p_wm will not assign any wm_parameter_t.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wm_protocol_t *create_wmp(uint16_t param_num);
 
-/* wm_protocol_t deallocate. */
-WMPSHARED_EXPORT extern void deallocate_wmp(wm_protocol_t **p_wm);
+/* **********************************************************************************************
+ * Delete wm_protocol_t instance.
+ *
+ * @param:  p_wm			The pointer of wm_protocol_t pointer.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp(wm_protocol_t **p_wm);
 
-/* Set wm_body_t parameter numbers. */
-WMPSHARED_EXPORT extern void set_wmp_body_param_num(wm_body_t *p_wm_body,uint16_t num);
+/* **********************************************************************************************
+ * Set wm_body_t parameter number.
+ *
+ * @param:  p_wm_body		The pointer to wm_body_t structure.
+ * @param:  param_num		Parameter numbers.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_body_param_num(wm_body_t *p_wm_body,uint16_t num);
 
-/* Set wm_parameter_t parameter data length. */
-WMPSHARED_EXPORT extern void set_wmp_param_len(wm_parameter_t *p_wm_param,uint16_t len);
 
 /* wm_protocol_t crypt attribute marco */
 #define WMP_CRYPT_ENABLE_FLAG						1
@@ -237,17 +250,45 @@ WMPSHARED_EXPORT extern void set_wmp_param_len(wm_parameter_t *p_wm_param,uint16
 #define WMP_NETWORK_5G								5
 #define WMP_NETWORK_WIFI							6
 
-/* wm_protocol_t parser function. */
-WMPSHARED_EXPORT extern wm_protocol_t *parser_wmp(const protocol_package *package,const char *key,const uint16_t key_len);
 
-/* wm_protocol_t package function. */
-WMPSHARED_EXPORT extern protocol_package *package_wmp(const wm_protocol_t *p_wm,const char *key,const uint16_t key_len);
+/* **********************************************************************************************
+ * Parser wm_package as wm_protocol_t.
+ *
+ * @param:  package         The pointer to protocol_package.
+ * @param:  key             Encrypt key.
+ * @param:  key_len         Encrypt key length.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wm_protocol_t *parser_wmp(const wm_package *package,const char *key,const uint16_t key_len);
 
-/* print wm_protocol_t function. */
-WMPSHARED_EXPORT extern void print_wmp(const wm_protocol_t *p_wm);
 
-/* copy wm_protocol_t structure. */
-WMPSHARED_EXPORT extern wm_protocol_t * copy_wmp(const wm_protocol_t *p_wm);
+/* **********************************************************************************************
+ * Package wm_protocol_t as wm_package.
+ *
+ * @param:	p_wm            The pointer to wm_protocol_t.
+ * @param:	key             Encrypt key.
+ * @param:	key_len         Encrypt key length.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wm_package *package_wmp(const wm_protocol_t *p_wm,const char *key,const uint16_t key_len);
+
+
+/* **********************************************************************************************
+ * Print wm_protocol_t.
+ *
+ * @param:	p_wm            The pointer of wm_protocol_t.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp(const wm_protocol_t *p_wm);
+
+
+/* **********************************************************************************************
+ * Copy a new wm_protocol_t instance.
+ *
+ * @param:	p_wm            The pointer to wm_protocol_t.
+ *
+ * **********************************************************************************************/
+WMP_EXPORT WMP_EXTERN wm_protocol_t * copy_wmp(const wm_protocol_t *p_wm);
 
 
 #ifdef __cplusplus

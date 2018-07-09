@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz,chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,9 +12,7 @@
 #ifndef WMP_SOUND_H_
 #define WMP_SOUND_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -22,13 +20,13 @@ extern "C"
 #endif
 
 /* *********************************************************************************************
- * Walking Message protocol sound.
- * @attr			Walking Message sound attribute.
- * @result			Walking Message sound result.
- * @src				Walking Message sound source id.
- * @dst				Walking Message sound destination id.
- * @sound_len		Walking Message sound data length.
- * @sound			Walking Message sound data.
+ * wmp_sound_t structure.
+ * @attr			wmp_sound_t attribute.
+ * @result			wmp_sound_t result.
+ * @src				wmp_sound_t source id.
+ * @dst				wmp_sound_t destination id.
+ * @sound_len		wmp_sound_t data length.
+ * @sound			wmp_sound_t data.
  *
  * **********************************************************************************************/
 typedef struct
@@ -61,17 +59,66 @@ typedef struct
 #define WMP_SoundSetDst(p_wmp_sound,id) 				(p_wmp_msg->dst = id)
 
 
-WMPSHARED_EXPORT extern wmp_sound_t *allocate_wmp_sound(uint32_t sound_len);
+/* ***********************************************************************************
+ * Create wmp_sound_t instance.
+ *
+ * @param:	sound_len		wmp_sound_t sound data length.
+ *
+ * @retval:	p_wmp_sound		wmp_sound_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_sound_t *create_wmp_sound(uint32_t sound_len);
 
-WMPSHARED_EXPORT extern void deallocate_wmp_sound(wmp_sound_t **p_wmp_sound);
+/* ***********************************************************************************
+ * Delete wmp_sound_t.
+ *
+ * @param:	p_wmp_sound		The pointer of wmp_sound_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_sound(wmp_sound_t **p_wmp_sound);
 
-WMPSHARED_EXPORT extern wmp_sound_t *parser_wmp_sound(const char *package,uint32_t pack_len);
+/* ***********************************************************************************
+ * Parser wmp_sound_t.
+ *
+ * @param:	package			package buffer.
+ * @param:	pack_len		package buffer length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_sound_t *parser_wmp_sound(const char *package,uint32_t pack_len);
 
-WMPSHARED_EXPORT extern uint32_t package_wmp_sound(char *package,const wmp_sound_t *p_wmp_sound);
+/* ***********************************************************************************
+ * Package wmp_sound_t.
+ *
+ * @param:	package			package buffer.
+ * @param:	p_wmp_sound		wmp_sound_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_sound(char *package,const wmp_sound_t *p_wmp_sound);
 
-WMPSHARED_EXPORT extern void set_wmp_sound_len(wmp_sound_t *p_wmp_sound,uint32_t msg_len);
+/* ***********************************************************************************
+ * Set wmp_sound_t sound data length.
+ *
+ * @param:	p_wmp_sound		wmp_sound_t pointer.
+ * @param:	pack_len		sound data length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_sound_len(wmp_sound_t *p_wmp_sound,uint32_t msg_len);
 
-WMPSHARED_EXPORT extern wmp_sound_t *copy_wmp_sound(wmp_sound_t *p_wmp_sound);
+/* ***********************************************************************************
+ * Print wmp_sound_t.
+ *
+ * @param:	p_wmp_sound		wmp_sound_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_sound(const wmp_sound_t *p_wmp_sound);
+
+/* ***********************************************************************************
+ * Copy a new wmp_sound_t instance.
+ *
+ * @param:	p_wmp_sound		wmp_sound_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_sound_t *copy_wmp_sound(const wmp_sound_t *p_wmp_sound);
 
 
 #ifdef __cplusplus

@@ -12,9 +12,7 @@
 #ifndef PROTOCOL_DEF_H_
 #define PROTOCOL_DEF_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -23,7 +21,7 @@ extern "C"
 
 #include<stdio.h>
 
-#ifdef WIN_OS
+#if defined(WIN_OS) || defined(WIN32)
 	#include<Winsock2.h>
     #include<winsock.h>
     #pragma comment(lib,"ws2_32.lib")
@@ -33,7 +31,7 @@ extern "C"
 	#include<inttypes.h>
 #endif
 
-#include"protocol_package.h"
+#include"wm_package.h"
 #include"crc32.h"
 
 #ifdef SERVER_PROTO

@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -14,26 +14,18 @@
 #include<malloc.h>
 #include<string.h>
 
-/* ***********************************************************************************
- * Allocate wmp_login_t.
- *
- * @param:	p_wmp_login	wmp_login_t pointer.
- *
- * ***********************************************************************************/
-wmp_login_t *allocate_wmp_login()
+
+/* Create wmp_login_t instance. */
+wmp_login_t *create_wmp_login()
 {
 	wmp_login_t *p_wmp_login = (wmp_login_t *)malloc(sizeof(wmp_login_t));
 	memset(p_wmp_login,0,sizeof(wmp_login_t));
 	return p_wmp_login;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_login_t.
- *
- * @param:	p_wmp_login		The pointer of wmp_login_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_login(wmp_login_t **p_wmp_login)
+
+/* Delete wmp_login_t instance. */
+void delete_wmp_login(wmp_login_t **p_wmp_login)
 {
 	if(p_wmp_login && (*p_wmp_login))
 	{
@@ -42,15 +34,7 @@ void deallocate_wmp_login(wmp_login_t **p_wmp_login)
 	}
 }
 
-/* ***********************************************************************************
- * Parser wmp_login_t package.
- *
- * @param:	package			Package buffer.
- * @param:	pack_len		Package buffer length.
- *
- * @retval:	p_wmp_login		wmp_login_t pointer.
- *
- * ***********************************************************************************/
+/* Parser wmp_login_t. */
 wmp_login_t *parser_wmp_login(const char *package,uint32_t pack_len)
 {
 	if(!package || pack_len<WMP_LOGIN_LENGTH)
@@ -62,7 +46,7 @@ wmp_login_t *parser_wmp_login(const char *package,uint32_t pack_len)
 	}
 	
 	uint32_t index = 0;
-	wmp_login_t *p_wmp_login = allocate_wmp_login();
+    wmp_login_t *p_wmp_login = create_wmp_login();
 	
 	p_wmp_login->attr = *(uint8_t *)(package+index);
 	index+=sizeof(p_wmp_login->attr);
@@ -88,15 +72,7 @@ wmp_login_t *parser_wmp_login(const char *package,uint32_t pack_len)
 }
 
 
-/* ***********************************************************************************
- * Package wmp_login_t package.
- *
- * @param:	package			Package buffer.
- * @param:	p_wmp_login		wmp_login_t pointer.
- *
- * @param:	index			wmp_login_t package length.
- *
- * ***********************************************************************************/
+/* Package wmp_login_t. */
 uint32_t package_wmp_login(char *package,const wmp_login_t *p_wmp_login)
 {
 	uint32_t index = 0;
@@ -122,13 +98,8 @@ uint32_t package_wmp_login(char *package,const wmp_login_t *p_wmp_login)
 	return index;
 }
 
-/* ***********************************************************************************
- * Print wmp_login_t package.
- *
- * @param:	p_wmp_login		wmp_login_t pointer.
- *
- * ***********************************************************************************/
-void print_wmp_login(wmp_login_t *p_wmp_login)
+/* Print wmp_login_t. */
+void print_wmp_login(const wmp_login_t *p_wmp_login)
 {
 	if(!p_wmp_login)
 	{
@@ -138,35 +109,26 @@ void print_wmp_login(wmp_login_t *p_wmp_login)
 		return ;
 	}
 
-	printf("***************************WM-login Protocol Start**********************\n");
+    printf("********************************wm_login_start********************************\n");
 	printf("attr:%d;result:%d;user_id:%d;pwd_len:%d;password:%s\n",p_wmp_login->attr,\
 			p_wmp_login->result,p_wmp_login->user_id,p_wmp_login->pwd_len,p_wmp_login->password);
-	printf("***************************WM-login Protocol End************************\n");
+    printf("*********************************wm_login_end**********************************\n");
 }
 
-/* ***********************************************************************************
- * Copy wmp_login_t a new instance.
- *
- * @param:	p_wmp_login		wmp_login_t pointer.
- * @retval  c_wmp_login     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_login_t *copy_wmp_login(wmp_login_t *p_wmp_login)
+
+/* Copy a new wmp_login_t instance. */
+wmp_login_t *copy_wmp_login(const wmp_login_t *p_wmp_login)
 {
-    wmp_login_t *c_wmp_login = allocate_wmp_login();
+    wmp_login_t *c_wmp_login = create_wmp_login();
 
     memcpy(c_wmp_login,p_wmp_login,sizeof(wmp_login_t));
 
     return c_wmp_login;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_login_key_t package.
- *
- * @retval:	p_wmp_login_key		wmp_login_key_t pointer.
- *
- * ***********************************************************************************/
-wmp_login_key_t *allocate_wmp_login_key()
+
+/* Create wmp_login_key_t instance. */
+wmp_login_key_t *create_wmp_login_key()
 {
     wmp_login_key_t *p_wmp_login_key = (wmp_login_key_t *)malloc(sizeof(wmp_login_key_t));
     memset(p_wmp_login_key,0,sizeof(wmp_login_key_t));
@@ -174,13 +136,8 @@ wmp_login_key_t *allocate_wmp_login_key()
 }
 
 
-/* ***********************************************************************************
- * Deallocate wmp_login_key_t package.
- *
- * @param:	p_wmp_login_key		wmp_login_key_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_login_key(wmp_login_key_t **p_wmp_login_key)
+/* Delete wmp_login_key_t instance. */
+void delete_wmp_login_key(wmp_login_key_t **p_wmp_login_key)
 {
     if(p_wmp_login_key && (*p_wmp_login_key))
     {
@@ -189,15 +146,7 @@ void deallocate_wmp_login_key(wmp_login_key_t **p_wmp_login_key)
     }
 }
 
-/* ***********************************************************************************
- * Parser wmp_login_key_t package.
- *
- * @param:	package		raw package.
- * @param:	pack_len	package length.
- *
- * @retval: p_wm_login_key wm_login_key_t pointer.
- *
- * ***********************************************************************************/
+/* Parser wmp_login_key_t. */
 wmp_login_key_t *parser_wmp_login_key(const char *package,uint32_t pack_len)
 {
     if(!package || pack_len<WMP_LOGIN_LENGTH)
@@ -209,7 +158,7 @@ wmp_login_key_t *parser_wmp_login_key(const char *package,uint32_t pack_len)
     }
 
     uint32_t index = 0;
-    wmp_login_key_t *p_wmp_login_key = allocate_wmp_login_key();
+    wmp_login_key_t *p_wmp_login_key = create_wmp_login_key();
 
     p_wmp_login_key->attr = *(uint8_t *)(package+index);
     index+=sizeof(p_wmp_login_key->attr);
@@ -235,15 +184,8 @@ wmp_login_key_t *parser_wmp_login_key(const char *package,uint32_t pack_len)
     return p_wmp_login_key;
 }
 
-/* ***********************************************************************************
- * Package wmp_login_key_t package.
- *
- * @param:	package		package.
- * @param:	p_wmp_login_key	 wm_login_key_t pointer.
- *
- * @retval: index       package length.
- *
- * ***********************************************************************************/
+
+/* Package wmp_login_key_t. */
 uint32_t package_wmp_login_key(char *package,const wmp_login_key_t *p_wmp_login_key)
 {
     uint32_t index = 0;
@@ -271,13 +213,9 @@ uint32_t package_wmp_login_key(char *package,const wmp_login_key_t *p_wmp_login_
     return index;
 }
 
-/* ***********************************************************************************
- * Parser wmp_login_key_t package.
- *
- * @param:	p_wmp_login_key	 wm_login_key_t pointer.
- *
- * ***********************************************************************************/
-void print_wmp_login_key(wmp_login_key_t *p_wmp_login_key)
+
+/* Print wmp_login_key_t. */
+void print_wmp_login_key(const wmp_login_key_t *p_wmp_login_key)
 {
     if(!p_wmp_login_key)
     {
@@ -287,7 +225,7 @@ void print_wmp_login_key(wmp_login_key_t *p_wmp_login_key)
         return ;
     }
 
-    printf("***************************WM-login key Protocol Start**********************\n");
+    printf("******************************wm_login_key_start******************************\n");
     printf("attr:%d;type:%d;result:%d;user_id:%d;key_len:%d\n",p_wmp_login_key->attr,\
            p_wmp_login_key->type,p_wmp_login_key->result,p_wmp_login_key->user_id,\
            p_wmp_login_key->key_len);
@@ -296,19 +234,14 @@ void print_wmp_login_key(wmp_login_key_t *p_wmp_login_key)
         printf("%c ",p_wmp_login_key->key[i]);
 
     printf("\n");
-    printf("***************************WM-login Protocol End************************\n");
+    printf("*******************************wm_login_key_end*******************************\n");
 }
 
-/* ***********************************************************************************
- * Copy wmp_login_key_t a new instance.
- *
- * @param:	p_wmp_login_key	 wm_login_key_t pointer.
- * @retval  c_wmp_login_key  The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_login_key_t *copy_wmp_login_key(wmp_login_key_t *p_wmp_login_key)
+
+/* Copy a new wmp_login_key_t instance. */
+wmp_login_key_t *copy_wmp_login_key(const wmp_login_key_t *p_wmp_login_key)
 {
-    wmp_login_key_t *c_wmp_login_key = allocate_wmp_login_key();
+    wmp_login_key_t *c_wmp_login_key = create_wmp_login_key();
 
     memcpy(c_wmp_login_key,p_wmp_login_key,sizeof(wmp_login_key_t));
 

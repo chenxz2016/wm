@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,9 +12,7 @@
 #ifndef WMP_GROUP_H_
 #define WMP_GROUP_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -23,25 +21,25 @@ extern "C"
 
 
 /* *********************************************************************************************
- * Walking Message protocol group.
- * @attr			Walking Message group property attribute.
- * @data_len		Walking Message group property data length.
- * @data			Walking Message group property data.
+ * wmp_group_property_t structure.
+ * @attr			wmp_group_property_t attribute.
+ * @data_len		wmp_group_property_t data length.
+ * @data			wmp_group_property_t property data.
  *
  * **********************************************************************************************/
 typedef struct
 {
 	uint16_t id;
 	uint8_t data_len;
-	char data[256];
+    char data[255];
 }wmp_group_property_t;
 
 
 /* *********************************************************************************************
- * Walking Message protocol group create.
- * @attr			Walking Message group create attribute.
- * @group_id		Walking Message group create group id.
- * @result			Walking Message group create group result.
+ * wmp_group_cet_t structure.
+ * @attr			wmp_group_cet_t attribute.
+ * @group_id		wmp_group_cet_t id.
+ * @result			wmp_group_cet_t result.
  *
  * **********************************************************************************************/
 typedef struct
@@ -51,21 +49,34 @@ typedef struct
 	uint8_t result;
 }wmp_group_cet_t;
 
-/* Create wmp_group_cet_t structure. */
-WMPSHARED_EXPORT extern wmp_group_cet_t *allocate_wmp_group_cet();
 
-/* Delete wmp_group_cet_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_cet(wmp_group_cet_t **p_wmp_group_cet);
+/* ***********************************************************************************
+ * Create wmp_group_cet_t instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_cet_t *create_wmp_group_cet();
 
-/* Copy wmp_group_cet_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_cet_t *copy_wmp_group_cet(wmp_group_cet_t *p_wmp_group_cet);
+/* ***********************************************************************************
+ * Delete wmp_group_cet_t instance.
+ *
+ * @param:	p_wmp_group_cet		The pointer of wmp_group_cet_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_cet(wmp_group_cet_t **p_wmp_group_cet);
 
+/* ***********************************************************************************
+ * Copy a new wmp_group_cet_t instance.
+ *
+ * @param:	p_wmp_group_cet		wmp_group_cet_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_cet_t *copy_wmp_group_cet(const wmp_group_cet_t *p_wmp_group_cet);
 
 /* *********************************************************************************************
- * Walking Message protocol group dissolve.
- * @attr			Walking Message group dissolve attribute.
- * @group_id		Walking Message group dissolve group id.
- * @result			Walking Message group dissolve group result.
+ * wmp_group_dsv_t structure.
+ * @attr			wmp_group_dsv_t attribute.
+ * @group_id		wmp_group_dsv_t id.
+ * @result			wmp_group_dsv_t result.
  *
  * **********************************************************************************************/
 typedef struct
@@ -75,23 +86,37 @@ typedef struct
 	uint8_t result;
 }wmp_group_dsv_t;
 
-/* Create wmp_group_dsv_t structure. */
-WMPSHARED_EXPORT extern wmp_group_dsv_t *allocate_wmp_group_dsv();
 
-/* Delete wmp_group_dsv_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_dsv(wmp_group_dsv_t **p_wmp_group_dsv);
+/* ***********************************************************************************
+ * Create wmp_group_dsv_t instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_dsv_t *create_wmp_group_dsv();
 
-/* Copy wmp_group_dsv_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_dsv_t *copy_wmp_group_dsv(wmp_group_dsv_t *p_wmp_group_dsv);
+/* ***********************************************************************************
+ * Delete wmp_group_dsv_t instance.
+ *
+ * @param:	p_wmp_group_dsv		The pointer of wmp_group_dsv_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_dsv(wmp_group_dsv_t **p_wmp_group_dsv);
+
+/* ***********************************************************************************
+ * Copy a new wmp_group_dsv_t instance.
+ *
+ * @param:	p_wmp_group_dsv		wmp_group_dsv_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_dsv_t *copy_wmp_group_dsv(const wmp_group_dsv_t *p_wmp_group_dsv);
 
 
 /* *********************************************************************************************
- * Walking Message protocol group join.
- * @attr			Walking Message group join group attribute.
- * @group_id		Walking Message group join group id.
- * @result			Walking Message group join group result.
- * @msg_len			Walking Message group join group message length.
- * @msg				Walking Message group join group message.
+ * wmp_group_jon_t structure.
+ * @attr			wmp_group_jon_t attribute.
+ * @group_id		wmp_group_jon_t id.
+ * @result			wmp_group_jon_t result.
+ * @msg_len			wmp_group_jon_t length.
+ * @msg				wmp_group_jon_t message.
  *
  * **********************************************************************************************/
 typedef struct
@@ -103,21 +128,35 @@ typedef struct
 	char msg[256];
 }wmp_group_jon_t;
 
-/* Create wmp_group_jon_t structure. */
-WMPSHARED_EXPORT extern wmp_group_jon_t *allocate_wmp_group_jon();
 
-/* Delete wmp_group_jon_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_jon(wmp_group_jon_t **p_wmp_group_jon);
+/* ***********************************************************************************
+ * Create wmp_group_jon_t instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_jon_t *create_wmp_group_jon();
 
-/* Copy wmp_group_jon_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_jon_t *copy_wmp_group_jon(wmp_group_jon_t *p_wmp_group_jon);
+/* ***********************************************************************************
+ * Delete wmp_group_jon_t instance.
+ *
+ * @param:	p_wmp_group_jon		wmp_group_jon_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_jon(wmp_group_jon_t **p_wmp_group_jon);
+
+/* ***********************************************************************************
+ * Copy a new wmp_group_jon_t instance.
+ *
+ * @param:	p_wmp_group_jon		wmp_group_jon_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_jon_t *copy_wmp_group_jon(const wmp_group_jon_t *p_wmp_group_jon);
 
 
 /* *********************************************************************************************
- * Walking Message protocol group exit.
- * @attr			Walking Message group exit group attribute.
- * @group_id		Walking Message group exit group id.
- * @result			Walking Message group exit group result.
+ * wmp_group_ext_t structure.
+ * @attr			wmp_group_ext_t attribute.
+ * @group_id		wmp_group_ext_t id.
+ * @result			wmp_group_ext_t result.
  *
  * **********************************************************************************************/
 typedef struct
@@ -127,20 +166,33 @@ typedef struct
 	uint8_t result;
 }wmp_group_ext_t;
 
-/* Create wmp_group_ext_t structure. */
-WMPSHARED_EXPORT extern wmp_group_ext_t *allocate_wmp_group_ext();
+/* ***********************************************************************************
+ * Create wmp_group_ext_t instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_ext_t *create_wmp_group_ext();
 
-/* Delete wmp_group_ext_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_ext(wmp_group_ext_t **p_wmp_group_ext);
+/* ***********************************************************************************
+ * Delete wmp_group_ext_t instance.
+ *
+ * @param:	p_wmp_group_ext		wmp_group_ext_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_ext(wmp_group_ext_t **p_wmp_group_ext);
 
-/* Copy wmp_group_ext_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_ext_t *copy_wmp_group_ext(wmp_group_ext_t *p_wmp_group_ext);
+/* ***********************************************************************************
+ * Copy a new wmp_group_set_t instance.
+ *
+ * @param:	p_wmp_group_set		wmp_group_set_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_ext_t *copy_wmp_group_ext(const wmp_group_ext_t *p_wmp_group_ext);
 
 
 /* *********************************************************************************************
- * Walking Message protocol group set property.
- * @attr			Walking Message group set property attribute.
- * @properties		Walking Message group property.
+ * wmp_group_set_property_t structure.
+ * @property_num                wmp_group_set_property_t property number.
+ * @properties                  wmp_group_set_property_t property list.
  *
  * **********************************************************************************************/
 typedef struct
@@ -150,11 +202,11 @@ typedef struct
 }wmp_group_set_property_t;
 
 /* *********************************************************************************************
- * Walking Message protocol group set.
- * @attr			Walking Message group set attribute.
- * @group_id		Walking Message group id.
- * @result			Walking Message group set result.
- * @property		Walking Message group property.
+ * wmp_group_set_t structure.
+ * @attr			wmp_group_set_t attribute.
+ * @group_id		wmp_group_set_t id.
+ * @result			wmp_group_set_t result.
+ * @property		wmp_group_set_t property.
  *
  * **********************************************************************************************/
 typedef struct
@@ -165,26 +217,47 @@ typedef struct
 	wmp_group_set_property_t property;
 }wmp_group_set_t;
 
-/* Create wmp_group_set_t structure. */
-WMPSHARED_EXPORT extern wmp_group_set_t *allocate_wmp_group_set(uint16_t num);
+/* ***********************************************************************************
+ * Create a new wmp_group_set_t instance.
+ *
+ * @param:	num					wmp_group_set_t property numbers.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_set_t *create_wmp_group_set(uint16_t num);
 
-/* Delete wmp_group_set_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_set(wmp_group_set_t **p_wmp_group_set);
+/* ***********************************************************************************
+ * Delete wmp_group_set_t instance.
+ *
+ * @param:	p_wmp_group_set		wmp_group_set_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_set(wmp_group_set_t **p_wmp_group_set);
 
-/* Set wmp_group_set_t property numbers. */
-WMPSHARED_EXPORT extern void set_wmp_group_property_num(wmp_group_set_t *p_wmp_group_set,uint16_t num);
+/* ***********************************************************************************
+ * Set wmp_group_set_t property numbers.
+ *
+ * @param:	num					wmp_group_set_t property numbers.
+ * @param:	p_wmp_group_set		wmp_group_set_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_group_property_num(wmp_group_set_t *p_wmp_group_set,uint16_t num);
 
-/* Copy wmp_group_set_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_set_t *copy_wmp_group_set(wmp_group_set_t *p_wmp_group_set);
+/* ***********************************************************************************
+ * Copy a new wmp_group_set_t instance.
+ *
+ * @param:	p_wmp_group_set		wmp_group_set_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_set_t *copy_wmp_group_set(const wmp_group_set_t *p_wmp_group_set);
 
 
 /* *********************************************************************************************
- * Walking Message protocol group message.
- * @attr			Walking Message group message attribute.
- * @group_id		Walking Message group message group id.
- * @result			Walking Message group message result.
- * @msg_len			Walking Message group message length.
- * @msg				Walking Message group message.
+ * wmp_group_msg_t structure.
+ * @attr			wmp_group_msg_t attribute.
+ * @group_id		wmp_group_msg_t id.
+ * @result			wmp_group_msg_t result.
+ * @msg_len			wmp_group_msg_t length.
+ * @msg				wmp_group_msg_t message.
  *
  * **********************************************************************************************/
 typedef struct
@@ -196,28 +269,49 @@ typedef struct
 	char *msg;
 }wmp_group_msg_t;
 
-/* Create wmp_group_msg_t structure. */
-WMPSHARED_EXPORT extern wmp_group_msg_t *allocate_wmp_group_msg(uint16_t msg_len);
+/* ***********************************************************************************
+ * Create wmp_group_msg_t instance.
+ *
+ * @param:	msg_len				wmp_group_msg_t message length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_msg_t *create_wmp_group_msg(uint16_t msg_len);
 
-/* Delete wmp_group_msg_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_msg(wmp_group_msg_t **p_wmp_group_msg);
+/* ***********************************************************************************
+ * Delete wmp_group_msg_t instance.
+ *
+ * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_msg(wmp_group_msg_t **p_wmp_group_msg);
 
-/* Set wmp_group_msg_t length. */
-WMPSHARED_EXPORT extern void set_wmp_group_msg_len(wmp_group_msg_t *p_wmp_group_msg,uint16_t msg_len);
+/* ***********************************************************************************
+ * Set wmp_group_msg_t property numbers.
+ *
+ * @param:	msg_len				wmp_group_msg_t message length.
+ * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_group_msg_len(wmp_group_msg_t *p_wmp_group_msg,uint16_t msg_len);
 
-/* Copy wmp_group_msg_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_msg_t *copy_wmp_group_msg(wmp_group_msg_t *p_wmp_group_msg);
+/* ***********************************************************************************
+ * Copy a new wmp_group_msg_t instance.
+ *
+ * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_msg_t *copy_wmp_group_msg(const wmp_group_msg_t *p_wmp_group_msg);
 
 
 /* *********************************************************************************************
- * Walking Message protocol group file.
- * @attr			Walking Message group file attribute.
- * @group_id		Walking Message group file block.
- * @sequence		Walking Message group file current sequence.
- * @filename_len	Walking Message group file filename length.
- * @filename		Walking Message group file filename.
- * @file_len		Walking Message group file file length.
- * @file			Walking Message group file file data.
+ * wmp_group_fle_t structure.
+ * @attr			wmp_group_fle_t attribute.
+ * @group_id		wmp_group_fle_t block.
+ * @sequence		wmp_group_fle_t current sequence.
+ * @filename_len	wmp_group_fle_t filename length.
+ * @filename		wmp_group_fle_t filename.
+ * @file_len		wmp_group_fle_t file length.
+ * @file			wmp_group_fle_t file data.
  *
  * **********************************************************************************************/
 typedef struct
@@ -231,24 +325,47 @@ typedef struct
 	char *file;
 }wmp_group_fle_t;
 
-/* Create wmp_group_fle_t structure. */
-WMPSHARED_EXPORT extern wmp_group_fle_t *allocate_wmp_group_fle(uint16_t file_len);
 
-/* Delete wmp_group_fle_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_fle(wmp_group_fle_t **p_wmp_group_fle);
+/* ***********************************************************************************
+ * Create wmp_group_fle_t instance.
+ *
+ * @param:	file_len			wmp_group_fle_t current file block length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_fle_t *create_wmp_group_fle(uint16_t file_len);
 
-/* Set wmp_group_fle_t structure. */
-WMPSHARED_EXPORT extern void set_wmp_group_fle_len(wmp_group_fle_t *p_wmp_group_fle,uint16_t file_len);
+/* ***********************************************************************************
+ * Delete wmp_group_msg_t.
+ *
+ * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_fle(wmp_group_fle_t **p_wmp_group_fle);
 
-/* Copy wmp_group_fle_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_fle_t *copy_wmp_group_fle(wmp_group_fle_t *p_wmp_group_fle);
+/* ***********************************************************************************
+ * Set wmp_group_fle_t property numbers.
+ *
+ * @param:	file_len			wmp_group_fle_t current file block length.
+ * @param:	p_wmp_group_fle		wmp_group_fle_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_group_fle_len(wmp_group_fle_t *p_wmp_group_fle,uint16_t file_len);
+
+/* ***********************************************************************************
+ * Copy a new wmp_group_fle_t instance.
+ *
+ * @param:	p_wmp_group_fle		wmp_group_fle_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_fle_t *copy_wmp_group_fle(const wmp_group_fle_t *p_wmp_group_fle);
 
 
 /* *********************************************************************************************
- * Walking Message protocol group notice.
- * @attr			Walking Message group notice attribute.
- * @notice_len		Walking Message group notice length.
- * @notice			Walking Message group notice.
+ * wmp_group_ntc_t structure.
+ * @attr			wmp_group_ntc_t attribute.
+ * @group_id        wmp_group_ntc_t group id.
+ * @notice_len		wmp_group_ntc_t notice length.
+ * @notice			wmp_group_ntc_t notice.
  *
  * **********************************************************************************************/
 typedef struct
@@ -259,24 +376,46 @@ typedef struct
 	char *notice;
 }wmp_group_ntc_t;
 
-/* Create wmp_group_ntc_t structure. */
-WMPSHARED_EXPORT extern wmp_group_ntc_t *allocate_wmp_group_ntc(uint16_t notice_len);
 
-/* Delete wmp_group_ntc_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_ntc(wmp_group_ntc_t **p_wmp_group_ntc);
+/* ***********************************************************************************
+ * Create wmp_group_ntc_t instance.
+ *
+ * @param:	notice_len			wmp_group_ntc_t notice length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_ntc_t *create_wmp_group_ntc(uint16_t notice_len);
 
-/* Set wmp_group_ntc_t notice length. */
-WMPSHARED_EXPORT extern void set_wmp_group_ntc_len(wmp_group_ntc_t *p_wmp_group_ntc,uint16_t notice_len);
+/* ***********************************************************************************
+ * Delete wmp_group_ntc_t instance.
+ *
+ * @param:	p_wmp_group_ntc		wmp_group_ntc_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_ntc(wmp_group_ntc_t **p_wmp_group_ntc);
 
-/* Copy wmp_group_ntc_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_ntc_t *copy_wmp_group_ntc(wmp_group_ntc_t *p_wmp_group_ntc);
+/* ***********************************************************************************
+ * Set wmp_group_ntc_t property numbers.
+ *
+ * @param:	notice_len              wmp_group_ntc_t notice length.
+ * @param:	p_wmp_group_ntc         wmp_group_ntc_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_group_ntc_len(wmp_group_ntc_t *p_wmp_group_ntc,uint16_t notice_len);
+
+/* ***********************************************************************************
+ * Copy a new wmp_group_ntc_t instance.
+ *
+ * @param:	p_wmp_group_ntc         wmp_group_ntc_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_ntc_t *copy_wmp_group_ntc(const wmp_group_ntc_t *p_wmp_group_ntc);
 
 
 /* *********************************************************************************************
- * Walking Message protocol group invite.
- * @attr			Walking Message group invite attribute.
- * @group_id		Walking Message group invite group id.
- * @invite_id		Walking Message group invite id.
+ * wmp_group_ivt_t structure.
+ * @attr                            wmp_group_ivt_t attribute.
+ * @group_id                        wmp_group_ivt_t group id.
+ * @invite_id                       wmp_group_ivt_t invite id.
  *
  * **********************************************************************************************/
 typedef struct
@@ -286,23 +425,36 @@ typedef struct
 	uint32_t invite_id;
 }wmp_group_ivt_t;
 
-/* Create wmp_group_ivt_t structure. */
-WMPSHARED_EXPORT extern wmp_group_ivt_t *allocate_wmp_group_ivt();
+/* ***********************************************************************************
+ * Create wmp_group_ivt_t instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_ivt_t *create_wmp_group_ivt();
 
-/* Delete wmp_group_ivt_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_ivt(wmp_group_ivt_t **p_wmp_group_ivt);
+/* ***********************************************************************************
+ * Delete wmp_group_ivt_t instance.
+ *
+ * @param:	p_wmp_group_ivt         wmp_group_ivt_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_ivt(wmp_group_ivt_t **p_wmp_group_ivt);
 
-/* Copy wmp_group_ivt_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_ivt_t * copy_wmp_group_ivt(wmp_group_ivt_t *p_wmp_group_ivt);
+/* ***********************************************************************************
+ * Copy a new wmp_group_ivt_t instance.
+ *
+ * @param:	p_wmp_group_ivt         wmp_group_ivt_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_ivt_t *copy_wmp_group_ivt(const wmp_group_ivt_t *p_wmp_group_ivt);
 
 
 
 /* *********************************************************************************************
- * Walking Message protocol group list.
- * @attr			Walking Message group list attribute.
- * @user_id         Walking Message group list user id.
- * @group_num       Walking Message group list number.
- * @group_list		Walking Message group list.
+ * wmp_group_list_t structure.
+ * @attr                            wmp_group_list_t attribute.
+ * @user_id                         wmp_group_list_t user id.
+ * @group_num                       wmp_group_list_t list number.
+ * @group_list                      wmp_group_list_t list.
  *
  * **********************************************************************************************/
 typedef struct
@@ -317,27 +469,48 @@ typedef struct
 #define WMP_GROUP_LIST_REQ                  0x00
 #define WMP_GROUP_LIST_RSP                  0x01
 
-/* Create wmp_group_fetch_t structure. */
-WMPSHARED_EXPORT extern wmp_group_list_t *allocate_wmp_group_list(uint16_t group_num);
+/* ***********************************************************************************
+ * Create wmp_group_list_t instance.
+ *
+ * @param:	group_num               wmp_group_fetch_t group number.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_list_t *create_wmp_group_list(uint16_t group_num);
 
-/* Delete wmp_group_list_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_list(wmp_group_list_t **p_wmp_group_list);
+/* ***********************************************************************************
+ * Delete wmp_group_list_t instance.
+ *
+ * @param:	wmp_group_list_t		wmp_group_list_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_list(wmp_group_list_t **p_wmp_group_list);
 
-/* Set wmp_group_list_t group number. */
-WMPSHARED_EXPORT extern void set_wmp_group_list_num(wmp_group_list_t *p_wmp_group_list,uint16_t group_num);
+/* ***********************************************************************************
+ * Set wmp_group_list_t group_list.
+ *
+ * @param:	wmp_group_list_t		wmp_group_list_t pointer.
+ * @param:  group_num               wmp_group_list_t group number.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_group_list_num(wmp_group_list_t *p_wmp_group_list,uint16_t group_num);
 
-/* Copy wmp_group_list_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_list_t * copy_wmp_group_list(const wmp_group_list_t *p_wmp_group_list);
+/* ***********************************************************************************
+ * Copy a new wmp_group_list_t instance.
+ *
+ * @param:	p_wmp_group_list		wmp_group_list_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_list_t * copy_wmp_group_list(const wmp_group_list_t *p_wmp_group_list);
 
 
 
 
 /* *********************************************************************************************
- * Walking Message protocol group fetch.
- * @attr			Walking Message group fetch attribute.
- * @user_id         Walking Message group fetch group id.
- * @group_num       Walking Message group fetch property number.
- * @group_list		Walking Message group fetch property list.
+ * wmp_group_fetch_t structure.
+ * @attr                            wmp_group_fetch_t attribute.
+ * @user_id                         wmp_group_fetch_t group id.
+ * @group_num                       wmp_group_fetch_t property number.
+ * @group_list                      wmp_group_fetch_t property list.
  *
  * **********************************************************************************************/
 typedef struct
@@ -352,27 +525,48 @@ typedef struct
 #define WMP_GROUP_FETCH_REQ                 0x00
 #define WMP_GROUP_FETCH_RSP                 0x01
 
-/* Create wmp_group_fetch_t structure. */
-WMPSHARED_EXPORT extern wmp_group_fetch_t *allocate_wmp_group_fetch(uint16_t property_num);
+/* ***********************************************************************************
+ * Create wmp_group_fetch_t instance.
+ *
+ * @param:	property_num    		property number of wmp_group_fetch_t.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_fetch_t *create_wmp_group_fetch(uint16_t property_num);
 
-/* Delete wmp_group_fetch_t structure. */
-WMPSHARED_EXPORT extern void deallocate_wmp_group_fetch(wmp_group_fetch_t **p_wmp_group_fetch);
+/* ***********************************************************************************
+ * Delete wmp_group_fetch_t instance.
+ *
+ * @param:	wmp_group_fetch_t		wmp_group_fetch_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group_fetch(wmp_group_fetch_t **p_wmp_group_fetch);
 
-/* Set wmp_group_fetch_t group number. */
-WMPSHARED_EXPORT extern void set_wmp_group_fetch_num(wmp_group_fetch_t *p_wmp_group_fetch,uint16_t property_num);
+/* ***********************************************************************************
+ * Set wmp_group_fetch_t property number.
+ *
+ * @param:	wmp_group_fetch_t		wmp_group_fetch_t pointer.
+ * @param:  property_num            property number.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wmp_group_fetch_num(wmp_group_fetch_t *p_wmp_group_fetch,uint16_t property_num);
 
-/* Copy wmp_group_fetch_t a new instance. */
-WMPSHARED_EXPORT extern wmp_group_fetch_t * copy_wmp_group_fetch(const wmp_group_fetch_t *p_wmp_group_fetch);
+/* ***********************************************************************************
+ * Copy a new wmp_group_fetch_t instance.
+ *
+ * @param:	p_wmp_group_fetch		wmp_group_fetch_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_fetch_t * copy_wmp_group_fetch(const wmp_group_fetch_t *p_wmp_group_fetch);
 
 
 
 /* *********************************************************************************************
- * Walking Message protocol group.
- * @attr			Walking Message group attribute.
- * @src				Walking Message group source id.
- * @dst				Walking Message group destination id.
- * @id				Walking Message group parameter id.
- * @param			Walking Message group parameter.
+ * wmp_group_t structure.
+ * @attr                            wmp_group_t attribute.
+ * @src                             wmp_group_t source id.
+ * @dst                             wmp_group_t destination id.
+ * @id                              wmp_group_t parameter id.
+ * @param                           wmp_group_t parameter.
  *
  * **********************************************************************************************/
 typedef struct
@@ -409,17 +603,53 @@ typedef struct
 #define WMP_GroupSetDst(p_wmp_group,id) 					(p_wmp_group->dst = id)
 #define WMP_GroupSetID(p_wmp_group,i) 						(p_wmp_group->id = i)
 
-WMPSHARED_EXPORT extern wmp_group_t *allocate_wmp_group();
+/* ***********************************************************************************
+ * Create a wmp_group_t instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_t *create_wmp_group();
 
-WMPSHARED_EXPORT extern void deallocate_wmp_group(wmp_group_t **p_wmp_group);
+/* ***********************************************************************************
+ * Delete wmp_group_t instance.
+ *
+ * @param:	p_wmp_group             wmp_group_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_group(wmp_group_t **p_wmp_group);
 
-WMPSHARED_EXPORT extern wmp_group_t *parser_wmp_group(const char *package,uint32_t pack_len);
+/* ***********************************************************************************
+ * Parser wmp_group_t.
+ *
+ * @param:	package                 protocol package.
+ * @param:	pack_len                protocol package length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_t *parser_wmp_group(const char *package,uint32_t pack_len);
 
-WMPSHARED_EXPORT extern uint32_t package_wmp_group(char *package,wmp_group_t *p_wmp_group);
+/* ***********************************************************************************
+ * Package wmp_group_t.
+ *
+ * @param:	p_wmp_group             wmp_group_t pointer.
+ * @param:	package                 protocol package.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_group(char *package,const wmp_group_t *p_wmp_group);
 
-WMPSHARED_EXPORT extern void print_wmp_group(const wmp_group_t *p_wmp_group);
+/* ***********************************************************************************
+ * Print wmp_group_t.
+ *
+ * @param:	p_wmp_group             wmp_group_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_group(const wmp_group_t *p_wmp_group);
 
-WMPSHARED_EXPORT extern wmp_group_t *copy_wmp_group(const wmp_group_t *p_wmp_group);
+/* ***********************************************************************************
+ * Copy a new wmp_group_t instance.
+ *
+ * @param:	p_wmp_group             wmp_group_t pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_group_t *copy_wmp_group(const wmp_group_t *p_wmp_group);
 
 
 #ifdef __cplusplus

@@ -1,52 +1,82 @@
 /* ************************************************************************
- *       Filename:  protocol_package.h
+ *       Filename:  wm_package.h
  *    Description:  
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
 
-#ifndef PROTOCOL_PACKAGE_H_
-#define PROTOCOL_PACKAGE_H_
+#ifndef WM_PACKAGE_H_
+#define WM_PACKAGE_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
+/* ***********************************************************************************
+ * wm_package structure.
+ *
+ * @data:                   wm_package data.
+ * @length:                 wm_package data length.
+ *
+ * ***********************************************************************************/
 typedef struct
 {
 	char *data;
 	uint32_t length;
-}protocol_package;
+}wm_package;
 
 
-/* Allocate protocol_package. */
-WMPSHARED_EXPORT extern protocol_package* allocate_package(uint32_t length);
+/* ***********************************************************************************
+ * Create wm_package instance.
+ *
+ * @param:	length      wm_package data length.
+ * @retval:	package     The pointer of wm_package instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wm_package* create_wm_package(uint32_t length);
 
-/* Deallocate protocol_package. */
-WMPSHARED_EXPORT extern void deallocate_package(protocol_package **pckage);
+/* ***********************************************************************************
+ * Delete wm_package instance.
+ *
+ * @param:	package		The pointer of wm package pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wm_package(wm_package **package);
 
-/* Set protocol_package data length. */
-WMPSHARED_EXPORT extern void set_package_length(protocol_package *package,uint32_t length);
+/* ***********************************************************************************
+ * Set wm_package data length and realloc memory and clear it as 0.
+ *
+ * @param:	package		The pointer of wm package pointer.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void set_wm_package_length(wm_package *package,uint32_t length);
 
-/* Print protocol_package. */
-WMPSHARED_EXPORT extern void print_protocol_package(protocol_package *package);
+/* ***********************************************************************************
+ * Print wm_package.
+ *
+ * @param:	package		print wm_package data.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wm_package(const wm_package *package);
 
-/* Print buffer. */
-WMPSHARED_EXPORT extern void print_buffer(const char *buffer,uint32_t len);
+/* ***********************************************************************************
+ * Print buffer.
+ *
+ * @param:	buffer		buffer need to print.
+ * @param:	len			buffer length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_buffer(const char *buffer,uint32_t len);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-
-

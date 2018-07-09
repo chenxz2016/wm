@@ -12,18 +12,17 @@
 #ifndef CRC32_H_
 #define CRC32_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
+#include "wm_package.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-WMPSHARED_EXPORT extern uint32_t crc32_check_package(protocol_package *package);
+WMP_EXPORT WMP_EXTERN uint32_t crc32_check_package(const wm_package *package);
 
-WMPSHARED_EXPORT extern uint32_t crc32_check_char_buffer(const char *buffer,uint32_t len);
+WMP_EXPORT WMP_EXTERN uint32_t crc32_check_char_buffer(const char *buffer,uint32_t len);
 
 #ifdef __cplusplus
 }

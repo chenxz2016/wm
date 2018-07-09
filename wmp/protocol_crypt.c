@@ -95,11 +95,11 @@ int generate_ecc_key(char *pub_key,unsigned long *pub_key_len,char *pri_key,\
 	return P_CRYPT_SUCCESS;
 }
 
-void ecc_encrypt_protocol(protocol_package *src,protocol_package *dst,const char *pub_key,uint16_t key_len)
+void ecc_encrypt_protocol(const wm_package *src,wm_package *dst,const char *pub_key,uint16_t key_len)
 {}
 
 
-void ecc_decrypt_protocol(protocol_package *src,protocol_package *dst,const char *pri_key,uint16_t key_len)
+void ecc_decrypt_protocol(const wm_package *src,wm_package *dst,const char *pri_key,uint16_t key_len)
 {}
 
 

@@ -4,27 +4,23 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
 
-#include"protocol_def.h"
-#include"wmp_file.h"
 #include<malloc.h>
 #include<string.h>
+#include"protocol_def.h"
+#include"wmp_file.h"
+
 
 #define WMP_FileLenCheck(index,delt,len) \
 	if((index+delt)>len) \
 		return NULL;
 
-/* ***********************************************************************************
- * Allocate wmp_file_t.
- *
- * @param:	file_len	wmp_file_t file block data length.
- *
- * ***********************************************************************************/
-wmp_file_t *allocate_wmp_file(uint32_t file_len)
+/* Create wmp_file_t instance. */
+wmp_file_t *create_wmp_file(uint32_t file_len)
 {
 	wmp_file_t *p_wmp_file = (wmp_file_t *)malloc(sizeof(wmp_file_t));
 	memset(p_wmp_file,0,sizeof(wmp_file_t));
@@ -37,13 +33,8 @@ wmp_file_t *allocate_wmp_file(uint32_t file_len)
 	return p_wmp_file;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_file_t.
- *
- * @param:	p_wmp_file	wmp_file_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_file(wmp_file_t **p_wmp_file)
+/* Delete wmp_file_t.  */
+void delete_wmp_file(wmp_file_t **p_wmp_file)
 {
 	if(p_wmp_file && (*p_wmp_file) && (*p_wmp_file)->data)
 	{
@@ -61,21 +52,13 @@ void deallocate_wmp_file(wmp_file_t **p_wmp_file)
 }
 
 
-/* ***********************************************************************************
- * Parser wmp_file_t package.
- *
- * @param:	package		wmp_file_t package.
- * @param:	pack_len	wmp_file_t package length.
- *
- * @retval:	p_wmp_file	wmp_file_t pointer.
- *
- * ***********************************************************************************/
+/* Parser package as wmp_file_t.  */
 wmp_file_t *parser_wmp_file(const char *package,uint32_t pack_len)
 {
 	uint32_t index = 0;
 	WMP_FileLenCheck(index,14,pack_len)
 	
-	wmp_file_t *p_wmp_file = allocate_wmp_file(0);
+    wmp_file_t *p_wmp_file = create_wmp_file(0);
 	
 	*(uint8_t *)(package+index) = p_wmp_file->attr;
 	index+=sizeof(p_wmp_file->attr);
@@ -131,15 +114,7 @@ wmp_file_t *parser_wmp_file(const char *package,uint32_t pack_len)
 	return p_wmp_file;
 }
 
-/* ***********************************************************************************
- * Package wmp_file_t package.
- *
- * @param:	package		wmp_file_t package.
- * @param:	p_wmp_file	wmp_file_t pointer.
- *
- * @retval:	index		Length of wmp_file_t package
- *
- * ***********************************************************************************/
+/* Package wmp_file_t as package.  */
 uint32_t package_wmp_file(char *package,const wmp_file_t *p_wmp_file)
 {
 	uint32_t index = 0;
@@ -199,13 +174,7 @@ uint32_t package_wmp_file(char *package,const wmp_file_t *p_wmp_file)
 	return index;
 }
 
-/* ***********************************************************************************
- * Set wmp_file_t block data length.
- *
- * @param:	p_wmp_file	wmp_file_t pointer.
- * @param:	file_len	wmp_file_t block data length.
- *
- * ***********************************************************************************/
+/* Set wmp_file_t current file block data length.  */
 void set_wmp_file_data_len(wmp_file_t *p_wmp_file,uint32_t file_len)
 {
 	if(!p_wmp_file || !file_len)
@@ -219,13 +188,7 @@ void set_wmp_file_data_len(wmp_file_t *p_wmp_file,uint32_t file_len)
 	memset(p_wmp_file->data,0,file_len);
 }
 
-
-/* ***********************************************************************************
- * Print wmp_file_t.
- *
- * @param:	p_wmp_file	wmp_file_t pointer.
- *
- * ***********************************************************************************/
+/* Print wmp_file_t. */
 void print_wmp_file(const wmp_file_t *p_wmp_file)
 {
 	if(!p_wmp_file)
@@ -235,31 +198,22 @@ void print_wmp_file(const wmp_file_t *p_wmp_file)
 #endif
 		return ;
 	}
-	printf("***************************WM-file Protocol Start**********************\n");
+    printf("********************************wm_file_start********************************\n");
 	printf("attr:%d;src:%d;dst:%d;block:%d;sequence:%d;data_len:%d;data:",p_wmp_file->attr,\
 			p_wmp_file->src,p_wmp_file->dst,p_wmp_file->block,p_wmp_file->sequence,\
 			p_wmp_file->data_len);
 
 	for(uint32_t i=0;i<p_wmp_file->data_len;i++)
-	{
 		printf("%02x ",p_wmp_file->data[i]);
-	}
 	printf("\n");
 
-	printf("***************************WM-file Protocol End************************\n");
+    printf("*********************************wm_file_end*********************************\n");
 }
 
-
-/* ***********************************************************************************
- * Copy wmp_file_t a new instance.
- *
- * @param:	p_wmp_file	wmp_file_t pointer.
- * @retval  c_wmp_file  The pointer of new instance.
- *
- * ***********************************************************************************/
+/* Copy a new wmp_file_t instance. */
 wmp_file_t *copy_wmp_file(const wmp_file_t *p_wmp_file)
 {
-    wmp_file_t *c_wmp_file = allocate_wmp_file(p_wmp_file->data_len);
+    wmp_file_t *c_wmp_file = create_wmp_file(p_wmp_file->data_len);
     memcpy(c_wmp_file,p_wmp_file,sizeof(wmp_file_t));
     memcpy(c_wmp_file->data,p_wmp_file->data,p_wmp_file->data_len);
     return c_wmp_file;

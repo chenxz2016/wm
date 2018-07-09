@@ -4,7 +4,7 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
@@ -12,9 +12,7 @@
 #ifndef WMP_BEAT_HEART_H_
 #define WMP_BEAT_HEART_H_
 
-#ifdef WMP_QT
-#include "wmp_qt.h"
-#endif
+#include "wmp_cfg.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -23,10 +21,11 @@ extern "C"
 
 
 /* *********************************************************************************************
- * Walking Message protocol beat heart.
- * @attr			Walking Message beat heart attr.
- * @user_id			Walking Message beat heart user id.
- * @flag			Walking Message beat heart flag.
+ * wm_beat_heart_t structure.
+ *
+ * @attr                wm_beat_heart_t attr.
+ * @user_id             wm_beat_heart_t user id.
+ * @flag                wm_beat_heart_t flag.
  *
  * **********************************************************************************************/
 typedef struct
@@ -52,17 +51,53 @@ typedef struct
 #define WMP_BeatHeartSetUserID(p_wmp_bh,id)             (p_wmp_bh->user_id = id)
 #define WMP_BeatHeartSetFlag(p_wmp_bh,f)                (p_wmp_bh->flag = f)
 
-WMPSHARED_EXPORT extern wmp_beat_heart_t *allocate_wmp_beat_heart();
+/* ***********************************************************************************
+ * Create a wmp_beat_heart_t instance.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_beat_heart_t *create_wmp_beat_heart();
 
-WMPSHARED_EXPORT extern void deallocate_wmp_beat_heart(wmp_beat_heart_t **p_wmp_bh);
+/* ***********************************************************************************
+ * Delete wmp_beat_heart_t instance.
+ *
+ * @param:	p_wmp_bh            The pointer of wmp_beat_heart_t.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void delete_wmp_beat_heart(wmp_beat_heart_t **p_wmp_bh);
 
-WMPSHARED_EXPORT extern wmp_beat_heart_t *parser_wmp_beat_heart(const char *package,uint32_t pack_len);
+/* ***********************************************************************************
+ * Parser package as wmp_beat_heart_t.
+ *
+ * @param:	package		package buffer.
+ * @param:	pack_len	package length.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_beat_heart_t *parser_wmp_beat_heart(const char *package,uint32_t pack_len);
 
-WMPSHARED_EXPORT extern uint32_t package_wmp_beat_heart(char *package,const wmp_beat_heart_t *p_wmp_bh);
+/* ***********************************************************************************
+ * Package wmp_beat_heart_t as package.
+ *
+ * @param:	package		package buffer.
+ * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN uint32_t package_wmp_beat_heart(char *package,const wmp_beat_heart_t *p_wmp_bh);
 
-WMPSHARED_EXPORT extern void print_wmp_beat_heart(const wmp_beat_heart_t *p_wmp_bh);
+/* ***********************************************************************************
+ * Print wmp_beat_heart_t.
+ *
+ * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN void print_wmp_beat_heart(const wmp_beat_heart_t *p_wmp_bh);
 
-WMPSHARED_EXPORT extern wmp_beat_heart_t *copy_wmp_beat_heart(wmp_beat_heart_t *p_wmp_bh);
+/* ***********************************************************************************
+ * Copy a new wmp_beat_heart_t instance.
+ *
+ * @param:	p_wmp_bh	The pointer of wmp_beat_heart_t.
+ *
+ * ***********************************************************************************/
+WMP_EXPORT WMP_EXTERN wmp_beat_heart_t *copy_wmp_beat_heart(wmp_beat_heart_t *p_wmp_bh);
 
 
 #ifdef __cplusplus

@@ -4,15 +4,17 @@
  *        Version:  1.0
  *        Created:  2017/07/08 10:13:30
  *       Revision:  none
- *       Compiler:  msvc
+ *       Compiler:  msvc/gcc
  *         Author:  YOUR NAME (xz.chen), 
  *        Company:  
  * ************************************************************************/
 
-#include"protocol_def.h"
-#include"wmp_group.h"
 #include<malloc.h>
 #include<string.h>
+
+#include"protocol_def.h"
+#include"wmp_group.h"
+
 
 #define WMP_GroupParamLenCheck(index,delt,len) \
 	if((index+delt)>len) \
@@ -23,26 +25,17 @@
 		return WMP_GROUP_PARSER_FAILED;
 
 
-/* ***********************************************************************************
- * Allocate wmp_group_cet_t.
- *
- * @retval:	p_wmp_group_cet		wmp_group_cet_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_cet_t *allocate_wmp_group_cet()
+
+/* Create wmp_group_cet_t instance. */
+wmp_group_cet_t *create_wmp_group_cet()
 {
 	wmp_group_cet_t *p_wmp_group_cet = (wmp_group_cet_t *)malloc(sizeof(wmp_group_cet_t));
 	memset(p_wmp_group_cet,0,sizeof(wmp_group_cet_t));
 	return p_wmp_group_cet;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_cet_t.
- *
- * @param:	p_wmp_group_cet		wmp_group_cet_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_cet(wmp_group_cet_t **p_wmp_group_cet)
+/* Delete wmp_group_cet_t structure. */
+void delete_wmp_group_cet(wmp_group_cet_t **p_wmp_group_cet)
 {
 	if(p_wmp_group_cet && (*p_wmp_group_cet))
 	{
@@ -51,43 +44,27 @@ void deallocate_wmp_group_cet(wmp_group_cet_t **p_wmp_group_cet)
 	}
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_cet_t a new instance.
- *
- * @param:	p_wmp_group_cet		wmp_group_cet_t pointer.
- * @retval  c_wmp_group_cet     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_cet_t *copy_wmp_group_cet(wmp_group_cet_t *p_wmp_group_cet)
+/* Copy a new wmp_group_cet_t instance. */
+wmp_group_cet_t *copy_wmp_group_cet(const wmp_group_cet_t *p_wmp_group_cet)
 {
-    wmp_group_cet_t *c_wmp_group_cet = allocate_wmp_group_cet();
+    wmp_group_cet_t *c_wmp_group_cet = create_wmp_group_cet();
 
     memcpy(c_wmp_group_cet,p_wmp_group_cet,sizeof(wmp_group_cet_t));
 
     return c_wmp_group_cet;
 }
 
-
-/* ***********************************************************************************
- * Allocate wmp_group_dsv_t.
- *
- * @retval:	p_wmp_group_dsv		wmp_group_dsv_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_dsv_t *allocate_wmp_group_dsv()
+/* Create wmp_group_dsv_t instance. */
+wmp_group_dsv_t *create_wmp_group_dsv()
 {
 	wmp_group_dsv_t *p_wmp_group_dsv = (wmp_group_dsv_t *)malloc(sizeof(wmp_group_dsv_t));
 	memset(p_wmp_group_dsv,0,sizeof(wmp_group_dsv_t));
 	return p_wmp_group_dsv;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_dsv_t.
- *
- * @param:	p_wmp_group_dsv		wmp_group_dsv_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_dsv(wmp_group_dsv_t **p_wmp_group_dsv)
+
+/* Delete wmp_group_dsv_t instance. */
+void delete_wmp_group_dsv(wmp_group_dsv_t **p_wmp_group_dsv)
 {
 	if(p_wmp_group_dsv && (*p_wmp_group_dsv))
 	{
@@ -96,42 +73,27 @@ void deallocate_wmp_group_dsv(wmp_group_dsv_t **p_wmp_group_dsv)
 	}
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_dsv_t a new instance.
- *
- * @param:	p_wmp_group_dsv		wmp_group_dsv_t pointer.
- * @retval  c_wmp_group_dsv     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_dsv_t *copy_wmp_group_dsv(wmp_group_dsv_t *p_wmp_group_dsv)
+/* Copy a new wmp_group_dsv_t instance. */
+wmp_group_dsv_t *copy_wmp_group_dsv(const wmp_group_dsv_t *p_wmp_group_dsv)
 {
-    wmp_group_dsv_t *c_wmp_group_dsv = allocate_wmp_group_dsv();
+    wmp_group_dsv_t *c_wmp_group_dsv = create_wmp_group_dsv();
 
     memcpy(c_wmp_group_dsv,p_wmp_group_dsv,sizeof(wmp_group_dsv_t));
 
     return c_wmp_group_dsv;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_group_jon_t.
- *
- * @retval:	p_wmp_group_jon		wmp_group_jon_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_jon_t *allocate_wmp_group_jon()
+/* Create wmp_group_jon_t instance. */
+wmp_group_jon_t *create_wmp_group_jon()
 {
 	wmp_group_jon_t *p_wmp_group_jon = (wmp_group_jon_t *)malloc(sizeof(wmp_group_jon_t));
 	memset(p_wmp_group_jon,0,sizeof(wmp_group_jon_t));
 	return p_wmp_group_jon;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_jon_t.
- *
- * @param:	p_wmp_group_jon		wmp_group_jon_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_jon(wmp_group_jon_t **p_wmp_group_jon)
+
+/* Delete wmp_group_jon_t instance. */
+void delete_wmp_group_jon(wmp_group_jon_t **p_wmp_group_jon)
 {
 	if(p_wmp_group_jon && (*p_wmp_group_jon))
 	{
@@ -140,42 +102,27 @@ void deallocate_wmp_group_jon(wmp_group_jon_t **p_wmp_group_jon)
 	}
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_jon_t a new instance.
- *
- * @param:	p_wmp_group_jon		wmp_group_jon_t pointer.
- * @retval  c_wmp_group_jon     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_jon_t *copy_wmp_group_jon(wmp_group_jon_t *p_wmp_group_jon)
+/* Copy a new wmp_group_jon_t instance. */
+wmp_group_jon_t *copy_wmp_group_jon(const wmp_group_jon_t *p_wmp_group_jon)
 {
-    wmp_group_jon_t *c_wmp_group_jon = allocate_wmp_group_jon();
+    wmp_group_jon_t *c_wmp_group_jon = create_wmp_group_jon();
 
     memcpy(c_wmp_group_jon,p_wmp_group_jon,sizeof(wmp_group_jon_t));
 
     return c_wmp_group_jon;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_group_ext_t.
- *
- * @retval:	p_wmp_group_ext		wmp_group_ext_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_ext_t *allocate_wmp_group_ext()
+
+/* Create wmp_group_ext_t instance. */
+wmp_group_ext_t *create_wmp_group_ext()
 {
 	wmp_group_ext_t *p_wmp_group_ext = (wmp_group_ext_t *)malloc(sizeof(wmp_group_ext_t));
 	memset(p_wmp_group_ext,0,sizeof(wmp_group_ext_t));
 	return p_wmp_group_ext;	
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_ext_t.
- *
- * @param:	p_wmp_group_ext		wmp_group_ext_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_ext(wmp_group_ext_t **p_wmp_group_ext)
+/* Delete wmp_group_ext_t instance. */
+void delete_wmp_group_ext(wmp_group_ext_t **p_wmp_group_ext)
 {
 	if(p_wmp_group_ext && (*p_wmp_group_ext))
 	{
@@ -184,31 +131,19 @@ void deallocate_wmp_group_ext(wmp_group_ext_t **p_wmp_group_ext)
 	}
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_set_t a new instance.
- *
- * @param:	p_wmp_group_set		wmp_group_set_t pointer.
- * @retval  c_wmp_group_set     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_ext_t *copy_wmp_group_ext(wmp_group_ext_t *p_wmp_group_ext)
+/* Copy a new wmp_group_ext_t instance. */
+wmp_group_ext_t *copy_wmp_group_ext(const wmp_group_ext_t *p_wmp_group_ext)
 {
-    wmp_group_ext_t *c_wmp_group_ext = allocate_wmp_group_ext();
+    wmp_group_ext_t *c_wmp_group_ext = create_wmp_group_ext();
 
     memcpy(c_wmp_group_ext,p_wmp_group_ext,sizeof(wmp_group_ext_t));
 
     return c_wmp_group_ext;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_group_set_t.
- *
- * @param:	num					wmp_group_set_t property numbers.
- *
- * @retval:	p_wmp_group_set		wmp_group_set_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_set_t *allocate_wmp_group_set(uint16_t num)
+
+/* Create wmp_group_set_t instance. */
+wmp_group_set_t *create_wmp_group_set(uint16_t num)
 {
 	wmp_group_set_t *p_wmp_group_set = (wmp_group_set_t *)malloc(sizeof(wmp_group_set_t));
 	memset(p_wmp_group_set,0,sizeof(wmp_group_set_t));
@@ -221,13 +156,9 @@ wmp_group_set_t *allocate_wmp_group_set(uint16_t num)
 	return p_wmp_group_set;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_set_t.
- *
- * @param:	p_wmp_group_set		wmp_group_set_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_set(wmp_group_set_t **p_wmp_group_set)
+
+/* Delete wmp_group_set_t instance. */
+void delete_wmp_group_set(wmp_group_set_t **p_wmp_group_set)
 {
 	if(p_wmp_group_set && (*p_wmp_group_set) && (*p_wmp_group_set)->property.properties)
 	{
@@ -244,13 +175,8 @@ void deallocate_wmp_group_set(wmp_group_set_t **p_wmp_group_set)
 	}
 }
 
-/* ***********************************************************************************
- * Set wmp_group_set_t property numbers.
- *
- * @param:	num					wmp_group_set_t property numbers.
- * @param:	p_wmp_group_set		wmp_group_set_t pointer.
- *
- * ***********************************************************************************/
+
+/* Set wmp_group_set_t property numbers. */
 void set_wmp_group_property_num(wmp_group_set_t *p_wmp_group_set,uint16_t num)
 {
 	if(!num || !p_wmp_group_set)
@@ -264,16 +190,11 @@ void set_wmp_group_property_num(wmp_group_set_t *p_wmp_group_set,uint16_t num)
 	memset(p_wmp_group_set->property.properties,0,sizeof(wmp_group_property_t)*num);
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_set_t a new instance.
- *
- * @param:	p_wmp_group_set		wmp_group_set_t pointer.
- * @retval  c_wmp_group_set     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_set_t *copy_wmp_group_set(wmp_group_set_t *p_wmp_group_set)
+
+/* Copy a new wmp_group_set_t instance. */
+wmp_group_set_t *copy_wmp_group_set(const wmp_group_set_t *p_wmp_group_set)
 {
-    wmp_group_set_t *c_wmp_group_set = allocate_wmp_group_set(p_wmp_group_set->property.property_num);
+    wmp_group_set_t *c_wmp_group_set = create_wmp_group_set(p_wmp_group_set->property.property_num);
 
     c_wmp_group_set->attr = p_wmp_group_set->attr;
     c_wmp_group_set->group_id = p_wmp_group_set->group_id;
@@ -285,15 +206,9 @@ wmp_group_set_t *copy_wmp_group_set(wmp_group_set_t *p_wmp_group_set)
 }
 
 
-/* ***********************************************************************************
- * Allocate wmp_group_msg_t.
- *
- * @param:	msg_len				wmp_group_msg_t message length.
- *
- * @retval:	p_wmp_group_msg		wmp_group_msg_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_msg_t *allocate_wmp_group_msg(uint16_t msg_len)
+
+/* Create wmp_group_msg_t instance. */
+wmp_group_msg_t *create_wmp_group_msg(uint16_t msg_len)
 {
 	wmp_group_msg_t *p_wmp_group_msg = (wmp_group_msg_t *)malloc(sizeof(wmp_group_msg_t));
 	memset(p_wmp_group_msg,0,sizeof(wmp_group_msg_t));
@@ -306,13 +221,9 @@ wmp_group_msg_t *allocate_wmp_group_msg(uint16_t msg_len)
 	return p_wmp_group_msg;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_msg_t.
- *
- * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_msg(wmp_group_msg_t **p_wmp_group_msg)
+
+/* Delete wmp_group_msg_t structure. */
+void delete_wmp_group_msg(wmp_group_msg_t **p_wmp_group_msg)
 {
 	if(p_wmp_group_msg && (*p_wmp_group_msg) && (*p_wmp_group_msg)->msg)
 	{
@@ -329,13 +240,8 @@ void deallocate_wmp_group_msg(wmp_group_msg_t **p_wmp_group_msg)
 	}
 }
 
-/* ***********************************************************************************
- * Set wmp_group_msg_t property numbers.
- *
- * @param:	msg_len				wmp_group_msg_t message length.
- * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
- *
- * ***********************************************************************************/
+
+/* Set wmp_group_msg_t length. */
 void set_wmp_group_msg_len(wmp_group_msg_t *p_wmp_group_msg,uint16_t msg_len)
 {
 	if(!msg_len || !p_wmp_group_msg)
@@ -349,16 +255,11 @@ void set_wmp_group_msg_len(wmp_group_msg_t *p_wmp_group_msg,uint16_t msg_len)
 	p_wmp_group_msg->msg_len = msg_len;
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_msg_t a new instance.
- *
- * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
- * @retval  c_wmp_group_msg     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_msg_t *copy_wmp_group_msg(wmp_group_msg_t *p_wmp_group_msg)
+
+/* Copy a new wmp_group_msg_t instance. */
+wmp_group_msg_t *copy_wmp_group_msg(const wmp_group_msg_t *p_wmp_group_msg)
 {
-    wmp_group_msg_t *c_wmp_group_msg = allocate_wmp_group_msg(p_wmp_group_msg->msg_len);
+    wmp_group_msg_t *c_wmp_group_msg = create_wmp_group_msg(p_wmp_group_msg->msg_len);
 
     c_wmp_group_msg->attr = p_wmp_group_msg->attr;
     c_wmp_group_msg->group_id = p_wmp_group_msg->group_id;
@@ -369,15 +270,9 @@ wmp_group_msg_t *copy_wmp_group_msg(wmp_group_msg_t *p_wmp_group_msg)
     return c_wmp_group_msg;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_group_fle_t.
- *
- * @param:	file_len			wmp_group_fle_t current file block length.
- *
- * @retval:	p_wmp_group_fle		wmp_group_fle_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_fle_t *allocate_wmp_group_fle(uint16_t file_len)
+
+/* Create wmp_group_fle_t instance. */
+wmp_group_fle_t *create_wmp_group_fle(uint16_t file_len)
 {
 	wmp_group_fle_t *p_wmp_group_fle = (wmp_group_fle_t *)malloc(sizeof(wmp_group_fle_t));
 	memset(p_wmp_group_fle,0,sizeof(wmp_group_fle_t));
@@ -390,13 +285,9 @@ wmp_group_fle_t *allocate_wmp_group_fle(uint16_t file_len)
 	return p_wmp_group_fle;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_msg_t.
- *
- * @param:	p_wmp_group_msg		wmp_group_msg_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_fle(wmp_group_fle_t **p_wmp_group_fle)
+
+/* Delete wmp_group_fle_t. */
+void delete_wmp_group_fle(wmp_group_fle_t **p_wmp_group_fle)
 {
 	if(p_wmp_group_fle && (*p_wmp_group_fle))
 	{
@@ -405,13 +296,8 @@ void deallocate_wmp_group_fle(wmp_group_fle_t **p_wmp_group_fle)
 	}
 }
 
-/* ***********************************************************************************
- * Set wmp_group_fle_t property numbers.
- *
- * @param:	file_len			wmp_group_fle_t current file block length.
- * @param:	p_wmp_group_fle		wmp_group_fle_t pointer.
- *
- * ***********************************************************************************/
+
+/* Set wmp_group_fle_t structure. */
 void set_wmp_group_fle_len(wmp_group_fle_t *p_wmp_group_fle,uint16_t file_len)
 {
 	if(!file_len || !p_wmp_group_fle)
@@ -425,16 +311,11 @@ void set_wmp_group_fle_len(wmp_group_fle_t *p_wmp_group_fle,uint16_t file_len)
 	p_wmp_group_fle->file_len = file_len;
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_fle_t a new instance.
- *
- * @param:	p_wmp_group_fle		wmp_group_fle_t pointer.
- * @retval  c_wmp_group_fle     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_fle_t *copy_wmp_group_fle(wmp_group_fle_t *p_wmp_group_fle)
+
+/* Copy a new wmp_group_fle_t instance. */
+wmp_group_fle_t *copy_wmp_group_fle(const wmp_group_fle_t *p_wmp_group_fle)
 {
-    wmp_group_fle_t *c_wmp_group_fle = allocate_wmp_group_fle(p_wmp_group_fle->file_len);
+    wmp_group_fle_t *c_wmp_group_fle = create_wmp_group_fle(p_wmp_group_fle->file_len);
 
     c_wmp_group_fle->attr = p_wmp_group_fle->attr;
     c_wmp_group_fle->block = p_wmp_group_fle->block;
@@ -447,15 +328,9 @@ wmp_group_fle_t *copy_wmp_group_fle(wmp_group_fle_t *p_wmp_group_fle)
     return c_wmp_group_fle;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_group_ntc_t.
- *
- * @param:	notice_len			wmp_group_ntc_t notice length.
- *
- * @retval:	p_wmp_group_ntc		wmp_group_ntc_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_ntc_t *allocate_wmp_group_ntc(uint16_t notice_len)
+
+/* Create wmp_group_ntc_t instance. */
+wmp_group_ntc_t *create_wmp_group_ntc(uint16_t notice_len)
 {
 	wmp_group_ntc_t *p_wmp_group_ntc = (wmp_group_ntc_t *)malloc(sizeof(wmp_group_ntc_t));
 	memset(p_wmp_group_ntc,0,sizeof(wmp_group_ntc_t));
@@ -468,13 +343,9 @@ wmp_group_ntc_t *allocate_wmp_group_ntc(uint16_t notice_len)
 	return p_wmp_group_ntc;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_ntc_t.
- *
- * @param:	p_wmp_group_ntc		wmp_group_ntc_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_ntc(wmp_group_ntc_t **p_wmp_group_ntc)
+
+/* Delete wmp_group_ntc_t instance. */
+void delete_wmp_group_ntc(wmp_group_ntc_t **p_wmp_group_ntc)
 {
 	if(p_wmp_group_ntc && (*p_wmp_group_ntc) && (*p_wmp_group_ntc)->notice)
 	{
@@ -491,13 +362,8 @@ void deallocate_wmp_group_ntc(wmp_group_ntc_t **p_wmp_group_ntc)
 	}
 }
 
-/* ***********************************************************************************
- * Set wmp_group_ntc_t property numbers.
- *
- * @param:	notice_len			wmp_group_ntc_t notice length.
- * @param:	p_wmp_group_ntc		wmp_group_ntc_t pointer.
- *
- * ***********************************************************************************/
+
+/* Set wmp_group_ntc_t notice length. */
 void set_wmp_group_ntc_len(wmp_group_ntc_t *p_wmp_group_ntc,uint16_t notice_len)
 {
 	if(!notice_len || !p_wmp_group_ntc)
@@ -511,16 +377,11 @@ void set_wmp_group_ntc_len(wmp_group_ntc_t *p_wmp_group_ntc,uint16_t notice_len)
 	p_wmp_group_ntc->notice_len = notice_len;
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_ntc_t a new instance.
- *
- * @param:	p_wmp_group_ntc		wmp_group_ntc_t pointer.
- * @retval  c_wmp_group_ntc     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_ntc_t *copy_wmp_group_ntc(wmp_group_ntc_t *p_wmp_group_ntc)
+
+/* Copy a new wmp_group_ntc_t instance. */
+wmp_group_ntc_t *copy_wmp_group_ntc(const wmp_group_ntc_t *p_wmp_group_ntc)
 {
-    wmp_group_ntc_t *c_wmp_group_ntc = allocate_wmp_group_ntc(p_wmp_group_ntc->notice_len);
+    wmp_group_ntc_t *c_wmp_group_ntc = create_wmp_group_ntc(p_wmp_group_ntc->notice_len);
 
     c_wmp_group_ntc->attr = p_wmp_group_ntc->attr;
     c_wmp_group_ntc->group_id = p_wmp_group_ntc->group_id;
@@ -530,26 +391,18 @@ wmp_group_ntc_t *copy_wmp_group_ntc(wmp_group_ntc_t *p_wmp_group_ntc)
     return c_wmp_group_ntc;
 }
 
-/* ***********************************************************************************
- * Allocate wmp_group_ivt_t.
- *
- * @retval:	p_wmp_group_ivt		wmp_group_ivt_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_ivt_t *allocate_wmp_group_ivt()
+
+/* Create wmp_group_ivt_t instance. */
+wmp_group_ivt_t *create_wmp_group_ivt()
 {
 	wmp_group_ivt_t *p_wmp_group_ivt = (wmp_group_ivt_t *)malloc(sizeof(wmp_group_ivt_t));
 	memset(p_wmp_group_ivt,0,sizeof(wmp_group_ivt_t));
 	return p_wmp_group_ivt;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_ivt_t.
- *
- * @param:	p_wmp_group_ivt		wmp_group_ivt_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_ivt(wmp_group_ivt_t **p_wmp_group_ivt)
+
+/* Delete wmp_group_ivt_t instance. */
+void delete_wmp_group_ivt(wmp_group_ivt_t **p_wmp_group_ivt)
 {
 	if(p_wmp_group_ivt && (*p_wmp_group_ivt))
 	{
@@ -558,29 +411,19 @@ void deallocate_wmp_group_ivt(wmp_group_ivt_t **p_wmp_group_ivt)
 	}
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_ivt_t.
- *
- * @param:	p_wmp_group_ivt		wmp_group_ivt_t pointer.
- * @retval  c_wmp_group_ivt     The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_ivt_t * copy_wmp_group_ivt(wmp_group_ivt_t *p_wmp_group_ivt)
+
+/* Copy a new wmp_group_ivt_t instance. */
+wmp_group_ivt_t * copy_wmp_group_ivt(const wmp_group_ivt_t *p_wmp_group_ivt)
 {
-    wmp_group_ivt_t *c_wmp_group_ivt = allocate_wmp_group_ivt();
+    wmp_group_ivt_t *c_wmp_group_ivt = create_wmp_group_ivt();
     memcpy(c_wmp_group_ivt,p_wmp_group_ivt,sizeof(wmp_group_ivt_t));
     return c_wmp_group_ivt;
 }
 
 
-/* ***********************************************************************************
- * Allocate wmp_group_list_t.
- *
- * @param:	group_num               wmp_group_fetch_t group number.
- * @retval  wmp_group_list_t        The pointer of wmp_group_list_t.
- *
- * ***********************************************************************************/
-wmp_group_list_t *allocate_wmp_group_list(uint16_t group_num)
+
+/* Create wmp_group_fetch_t structure. */
+wmp_group_list_t *create_wmp_group_list(uint16_t group_num)
 {
     wmp_group_list_t *p_wmp_group_list = (wmp_group_list_t *)malloc(sizeof(wmp_group_list_t));
 
@@ -594,13 +437,9 @@ wmp_group_list_t *allocate_wmp_group_list(uint16_t group_num)
     return p_wmp_group_list;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_list_t.
- *
- * @param:	wmp_group_list_t		wmp_group_list_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_list(wmp_group_list_t **p_wmp_group_list)
+
+/* Delete wmp_group_list_t instance. */
+void delete_wmp_group_list(wmp_group_list_t **p_wmp_group_list)
 {
     if((*p_wmp_group_list))
     {
@@ -614,13 +453,8 @@ void deallocate_wmp_group_list(wmp_group_list_t **p_wmp_group_list)
     }
 }
 
-/* ***********************************************************************************
- * Set wmp_group_list_t group_list.
- *
- * @param:	wmp_group_list_t		wmp_group_list_t pointer.
- * @param:  group_num               wmp_group_list_t group number.
- *
- * ***********************************************************************************/
+
+/* Set wmp_group_list_t group number. */
 void set_wmp_group_list_num(wmp_group_list_t *p_wmp_group_list,uint16_t group_num)
 {
     if(p_wmp_group_list)
@@ -635,16 +469,11 @@ void set_wmp_group_list_num(wmp_group_list_t *p_wmp_group_list,uint16_t group_nu
 }
 
 
-/* ***********************************************************************************
- * Copy wmp_group_list_t a new instance.
- *
- * @param:	p_wmp_group_list		wmp_group_list_t pointer.
- * @retval  c_wmp_group_list        The pointer of new instance.
- *
- * ***********************************************************************************/
+
+/* Copy a new wmp_group_list_t instance. */
 wmp_group_list_t * copy_wmp_group_list(const wmp_group_list_t *p_wmp_group_list)
 {
-    wmp_group_list_t * c_wmp_group_list = allocate_wmp_group_list(p_wmp_group_list->group_num);;
+    wmp_group_list_t * c_wmp_group_list = create_wmp_group_list(p_wmp_group_list->group_num);;
 
     c_wmp_group_list->attr = p_wmp_group_list->attr;
     c_wmp_group_list->user_id = p_wmp_group_list->user_id;
@@ -656,14 +485,9 @@ wmp_group_list_t * copy_wmp_group_list(const wmp_group_list_t *p_wmp_group_list)
 }
 
 
-/* ***********************************************************************************
- * Allocate wmp_group_fetch_t structre.
- *
- * @param:	property_num    		property number of wmp_group_fetch_t.
- * @retval  p_wmp_group_fetch       The pointer of new instance.
- *
- * ***********************************************************************************/
-wmp_group_fetch_t *allocate_wmp_group_fetch(uint16_t property_num)
+
+/* Create wmp_group_fetch_t structure. */
+wmp_group_fetch_t *create_wmp_group_fetch(uint16_t property_num)
 {
     wmp_group_fetch_t *p_wmp_group_fetch = (wmp_group_fetch_t *)malloc(property_num * sizeof(wmp_group_fetch_t));
     memset(p_wmp_group_fetch,0,sizeof(wmp_group_fetch_t));
@@ -677,13 +501,9 @@ wmp_group_fetch_t *allocate_wmp_group_fetch(uint16_t property_num)
     return p_wmp_group_fetch;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_fetch_t.
- *
- * @param:	wmp_group_fetch_t		wmp_group_fetch_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group_fetch(wmp_group_fetch_t **p_wmp_group_fetch)
+
+/* Delete wmp_group_fetch_t structure. */
+void delete_wmp_group_fetch(wmp_group_fetch_t **p_wmp_group_fetch)
 {
     if((*p_wmp_group_fetch))
     {
@@ -697,13 +517,8 @@ void deallocate_wmp_group_fetch(wmp_group_fetch_t **p_wmp_group_fetch)
     }
 }
 
-/* ***********************************************************************************
- * Set wmp_group_fetch_t property number.
- *
- * @param:	wmp_group_fetch_t		wmp_group_fetch_t pointer.
- * @param:  property_num            property number.
- *
- * ***********************************************************************************/
+
+/* Set wmp_group_fetch_t group number. */
 void set_wmp_group_fetch_num(wmp_group_fetch_t *p_wmp_group_fetch,uint16_t property_num)
 {
     if(p_wmp_group_fetch)
@@ -719,16 +534,11 @@ void set_wmp_group_fetch_num(wmp_group_fetch_t *p_wmp_group_fetch,uint16_t prope
     }
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_fetch_t a new instance.
- *
- * @param:	p_wmp_group_fetch		wmp_group_fetch_t pointer.
- * @retval  c_wmp_group_fetch       The pointer of new instance.
- *
- * ***********************************************************************************/
+
+/* Copy a new wmp_group_fetch_t instance. */
 wmp_group_fetch_t * copy_wmp_group_fetch(const wmp_group_fetch_t *p_wmp_group_fetch)
 {
-    wmp_group_fetch_t *c_wmp_group_fetch = allocate_wmp_group_fetch(p_wmp_group_fetch->property_num);
+    wmp_group_fetch_t *c_wmp_group_fetch = create_wmp_group_fetch(p_wmp_group_fetch->property_num);
 
     c_wmp_group_fetch->attr = p_wmp_group_fetch->attr;
     c_wmp_group_fetch->group_id = p_wmp_group_fetch->group_id;
@@ -740,60 +550,50 @@ wmp_group_fetch_t * copy_wmp_group_fetch(const wmp_group_fetch_t *p_wmp_group_fe
 }
 
 
-/* ***********************************************************************************
- * Allocate wmp_group_t.
- *
- * @retval:	p_wmp_group		wmp_group_t pointer.
- *
- * ***********************************************************************************/
-wmp_group_t *allocate_wmp_group()
+/* Create wmp_group_t instance. */
+wmp_group_t *create_wmp_group()
 {
 	wmp_group_t *p_wmp_group = (wmp_group_t *)malloc(sizeof(wmp_group_t));
 	memset(p_wmp_group,0,sizeof(wmp_group_t));
 	return p_wmp_group;
 }
 
-/* ***********************************************************************************
- * Deallocate wmp_group_t.
- *
- * @param:	p_wmp_group			wmp_group_t pointer.
- *
- * ***********************************************************************************/
-void deallocate_wmp_group(wmp_group_t **p_wmp_group)
+/* Delete wmp_group_t instance. */
+void delete_wmp_group(wmp_group_t **p_wmp_group)
 {
 	if(p_wmp_group && (*p_wmp_group) && (*p_wmp_group)->param)
 	{
 		switch((*p_wmp_group)->id)
 		{
 			case WMP_GROUP_CET_ID:
-				deallocate_wmp_group_cet((wmp_group_cet_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_cet((wmp_group_cet_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_DSV_ID:
-				deallocate_wmp_group_dsv((wmp_group_dsv_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_dsv((wmp_group_dsv_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_JON_ID:
-				deallocate_wmp_group_jon((wmp_group_jon_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_jon((wmp_group_jon_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_EXT_ID:
-				deallocate_wmp_group_ext((wmp_group_ext_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_ext((wmp_group_ext_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_SET_ID:
-				deallocate_wmp_group_set((wmp_group_set_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_set((wmp_group_set_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_MSG_ID:
-				deallocate_wmp_group_msg((wmp_group_msg_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_msg((wmp_group_msg_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_FLE_ID:
-				deallocate_wmp_group_fle((wmp_group_fle_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_fle((wmp_group_fle_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_NTC_ID:
-				deallocate_wmp_group_ntc((wmp_group_ntc_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_ntc((wmp_group_ntc_t **)&((*p_wmp_group)->param));
 				break;
 			case WMP_GROUP_IVT_ID:
-				deallocate_wmp_group_ivt((wmp_group_ivt_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_ivt((wmp_group_ivt_t **)&((*p_wmp_group)->param));
 				break;
             case WMP_GROUP_FETCH_ID:
-                deallocate_wmp_group_fetch((wmp_group_fetch_t **)&((*p_wmp_group)->param));
+                delete_wmp_group_fetch((wmp_group_fetch_t **)&((*p_wmp_group)->param));
                 break;
             default:
                 break;
@@ -839,7 +639,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 	{
 		case WMP_GROUP_CET_ID:
 			WMP_GroupLenCheck(index,6,pack_len)
-			p_wmp_group_cet = allocate_wmp_group_cet();
+            p_wmp_group_cet = create_wmp_group_cet();
             p_wmp_group->param = p_wmp_group_cet;
 			p_wmp_group_cet->attr = *(uint8_t *)(package+index);
 			index++;
@@ -850,7 +650,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_DSV_ID:
 			WMP_GroupLenCheck(index,10,pack_len)
-			p_wmp_group_dsv = allocate_wmp_group_dsv();
+            p_wmp_group_dsv = create_wmp_group_dsv();
             p_wmp_group->param = p_wmp_group_dsv;
 			p_wmp_group_dsv->attr = *(uint8_t *)(package+index);
 			index++;
@@ -861,7 +661,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_JON_ID:
 			WMP_GroupLenCheck(index,7,pack_len)
-			p_wmp_group_jon = allocate_wmp_group_jon();
+            p_wmp_group_jon = create_wmp_group_jon();
             p_wmp_group->param = p_wmp_group_jon;
 			p_wmp_group_jon->attr = *(uint8_t *)(package+index);
 			index++;
@@ -878,7 +678,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_EXT_ID:
 			WMP_GroupLenCheck(index,6,pack_len)
-			p_wmp_group_ext = allocate_wmp_group_ext();
+            p_wmp_group_ext = create_wmp_group_ext();
             p_wmp_group->param = p_wmp_group_ext;
 			p_wmp_group_ext->attr = *(uint8_t *)(package+index);
 			index++;
@@ -889,7 +689,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_SET_ID:
 			WMP_GroupLenCheck(index,8,pack_len)
-			p_wmp_group_set = allocate_wmp_group_set(0);
+            p_wmp_group_set = create_wmp_group_set(0);
             p_wmp_group->param = p_wmp_group_set;
 			p_wmp_group_set->attr = *(uint8_t *)(package+index);
 			index++;
@@ -915,7 +715,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_MSG_ID:
 			WMP_GroupLenCheck(index,8,pack_len)
-			p_wmp_group_msg = allocate_wmp_group_msg(0);
+            p_wmp_group_msg = create_wmp_group_msg(0);
             p_wmp_group->param = p_wmp_group_msg;
 			p_wmp_group_msg->attr = *(uint8_t *)(package+index);
 			index++;
@@ -931,7 +731,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_FLE_ID:
 			WMP_GroupLenCheck(index,11,pack_len)
-			p_wmp_group_fle = allocate_wmp_group_fle(0);
+            p_wmp_group_fle = create_wmp_group_fle(0);
             p_wmp_group->param = p_wmp_group_fle;
 			p_wmp_group_fle->attr = *(uint8_t *)(package+index);
 			index++;
@@ -951,7 +751,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_NTC_ID:
 			WMP_GroupLenCheck(index,3,pack_len)
-			p_wmp_group_ntc = allocate_wmp_group_ntc(0);
+            p_wmp_group_ntc = create_wmp_group_ntc(0);
             p_wmp_group->param = p_wmp_group_ntc;
 			p_wmp_group_ntc->attr = *(uint8_t *)(package+index);
 			index++;
@@ -966,7 +766,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			break;
 		case WMP_GROUP_IVT_ID:
 			WMP_GroupLenCheck(index,9,pack_len)
-			p_wmp_group_ivt = allocate_wmp_group_ivt();
+            p_wmp_group_ivt = create_wmp_group_ivt();
             p_wmp_group->param = p_wmp_group_ivt;
 			p_wmp_group_ivt->attr = *(uint8_t *)(package+index);
 			index++;
@@ -976,7 +776,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 			index+=4;
 			break;
         case WMP_GROUP_LIST_ID:
-            p_wmp_group_list = allocate_wmp_group_list(0);
+            p_wmp_group_list = create_wmp_group_list(0);
             p_wmp_group->param = p_wmp_group_list;
             p_wmp_group_list->attr = *(uint8_t *)(package+index);
             index++;
@@ -995,7 +795,7 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
             }
             break;
         case WMP_GROUP_FETCH_ID:
-            p_wmp_group_fetch = allocate_wmp_group_fetch(0);
+            p_wmp_group_fetch = create_wmp_group_fetch(0);
             p_wmp_group->param = p_wmp_group_fetch;
             p_wmp_group_fetch->attr = *(uint8_t *)(package+index);
             index++;
@@ -1024,21 +824,13 @@ static int parser_wmp_group_parameter(wmp_group_t *p_wmp_group,const char *packa
 	return WMP_GROUP_PARSER_SUCCESS;
 }
 
-/* ***********************************************************************************
- * Parser wmp_group_t.
- *
- * @param:	package			protocol package.
- * @param:	pack_len		protocol package length.
- *
- * @retval:	p_wmp_group		wmp_group_t pointer.
- *
- * ***********************************************************************************/
+/* Parser wmp_group_t. */
 wmp_group_t *parser_wmp_group(const char *package,uint32_t pack_len)
 {
 	uint32_t index = 0;
 	WMP_GroupParamLenCheck(index,14,pack_len)
 	
-	wmp_group_t *p_wmp_group = allocate_wmp_group();
+    wmp_group_t *p_wmp_group = create_wmp_group();
 	
 	p_wmp_group->src = ntohl(*(uint32_t *)(package+index));
 	index+=sizeof(p_wmp_group->src);
@@ -1052,7 +844,7 @@ wmp_group_t *parser_wmp_group(const char *package,uint32_t pack_len)
     int ret = parser_wmp_group_parameter(p_wmp_group,package+index,pack_len-index);
 	if(ret!=WMP_GROUP_PARSER_SUCCESS)
 	{
-		deallocate_wmp_group(&p_wmp_group);
+        delete_wmp_group(&p_wmp_group);
 		return NULL;
 	}
 	
@@ -1068,7 +860,7 @@ wmp_group_t *parser_wmp_group(const char *package,uint32_t pack_len)
  * @retval:	index			protocol package length.
  *
  * ***********************************************************************************/
-static uint32_t package_wmp_group_parameter(wmp_group_t *p_wmp_group,char *package)
+static uint32_t package_wmp_group_parameter(const wmp_group_t *p_wmp_group,char *package)
 {
 	uint32_t index = 0;
 	wmp_group_ivt_t *p_wmp_group_ivt = NULL;
@@ -1243,16 +1035,8 @@ static uint32_t package_wmp_group_parameter(wmp_group_t *p_wmp_group,char *packa
 	return index;
 }
 
-/* ***********************************************************************************
- * Package wmp_group_t.
- *
- * @param:	p_wmp_group		wmp_group_t pointer.
- * @param:	package			protocol package.
- *
- * @retval:	index			protocol package length.
- *
- * ***********************************************************************************/
-uint32_t package_wmp_group(char *package,wmp_group_t *p_wmp_group)
+/* Package wmp_group_t. */
+uint32_t package_wmp_group(char *package,const wmp_group_t *p_wmp_group)
 {
 	uint32_t index = 0;
 	
@@ -1289,12 +1073,7 @@ static void print_wmp_group_property(const wmp_group_set_property_t *property)
 	}
 }
 
-/* ***********************************************************************************
- * Print wmp_group_t.
- *
- * @param:	p_wmp_group		wmp_group_t pointer.
- *
- * ***********************************************************************************/
+/* Print wmp_group_t. */
 void print_wmp_group(const wmp_group_t *p_wmp_group)
 {
 	if(!p_wmp_group)
@@ -1304,7 +1083,7 @@ void print_wmp_group(const wmp_group_t *p_wmp_group)
 #endif
 		return ;
 	}
-	printf("***************************WM-group Protocol Start**********************\n");
+    printf("********************************wm_group_start********************************\n");
 	printf("src:%d;dst:%d;id:%d;",p_wmp_group->src,p_wmp_group->dst,p_wmp_group->id);
 
 	wmp_group_ivt_t *p_wmp_group_ivt = NULL;
@@ -1457,19 +1236,13 @@ void print_wmp_group(const wmp_group_t *p_wmp_group)
 			break;
 	}
 	
-	printf("***************************WM-group Protocol End***********************\n");
+    printf("*********************************wm_group_end*********************************\n");
 }
 
-/* ***********************************************************************************
- * Copy wmp_group_t a new instance.
- *
- * @param:	p_wmp_group		wmp_group_t pointer.
- * @retval  c_wmp_group     The pointer of new sintance.
- *
- * ***********************************************************************************/
+/* Copy a new wmp_group_t instance. */
 wmp_group_t *copy_wmp_group(const wmp_group_t *p_wmp_group)
 {
-    wmp_group_t *c_wmp_group = allocate_wmp_group();
+    wmp_group_t *c_wmp_group = create_wmp_group();
     memcpy(c_wmp_group,p_wmp_group,sizeof(wmp_group_t));
     switch(p_wmp_group->id)
     {
