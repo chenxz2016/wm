@@ -179,7 +179,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
     }
 	
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
 	proto->head = WMP_HEAD_ID;
     proto->sequence = p_service->protoSequence();
@@ -196,7 +196,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_user_t *user = allocate_wmp_user();
+    wmp_user_t *user = create_wmp_user();
     proto->body.param_num = 1;
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(user);
@@ -209,13 +209,13 @@ bool CSUserProcess::syncSend(const QVariant &data)
     {
     case WMP_USER_ADD_ID:
     {
-        wmp_user_add_t *add = allocate_wmp_user_add();
+        wmp_user_add_t *add = create_wmp_user_add();
         user->param = reinterpret_cast<uint8_t *>(add);
         add->attr = map["attr"].toInt();
         QByteArray message = map["msg"].toByteArray();
         if(message.isEmpty())
         {
-            deallocate_wmp(&proto);
+            delete_wmp(&proto);
             return false;
         }
         add->msg_len = message.length();
@@ -224,7 +224,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
     }
     case WMP_USER_DEL_ID:
     {
-        wmp_user_del_t *del = allocate_wmp_user_del();
+        wmp_user_del_t *del = create_wmp_user_del();
         user->param = reinterpret_cast<uint8_t *>(del);
         del->attr = map["attr"].toInt();
         del->id = map["id"].toInt();
@@ -233,7 +233,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
     case WMP_USER_SET_ID:
     {
         QList<QVariant> list = map["list"].toList();
-        wmp_user_set_t *set = allocate_wmp_user_set(list.count());
+        wmp_user_set_t *set = create_wmp_user_set(list.count());
         user->param = reinterpret_cast<uint8_t *>(set);
         set->attr = map["attr"].toInt();
         for(uint16_t i = 0;i<set->property_num;i++)
@@ -252,11 +252,11 @@ bool CSUserProcess::syncSend(const QVariant &data)
         QByteArray message = map["msg"].toByteArray();
         if(message.isEmpty())
         {
-            deallocate_wmp(&proto);
+            delete_wmp(&proto);
             return false;
         }
 
-        wmp_user_msg_t *msg = allocate_wmp_user_msg(message.length());
+        wmp_user_msg_t *msg = create_wmp_user_msg(message.length());
         user->param = reinterpret_cast<uint8_t *>(msg);
         msg->attr = map["attr"].toInt();
         memcpy(msg->msg,message.data(),message.length());
@@ -264,7 +264,7 @@ bool CSUserProcess::syncSend(const QVariant &data)
     }
 	case WMP_USER_FRIEND_ID:
 	{
-		wmp_user_friend_t *friends = allocate_wmp_user_friend(0);
+        wmp_user_friend_t *friends = create_wmp_user_friend(0);
         user->param = reinterpret_cast<uint8_t *>(friends);
         friends->attr = map["user_friend_attr"].toInt();
         QTimer::singleShot(1000*20,this,SLOT(verifyFriendsNum()));

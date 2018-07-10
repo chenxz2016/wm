@@ -60,7 +60,7 @@ bool CSVideoProcess::syncSend(const QVariant &data)
         return false;
 
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
     proto->base.proto_type = p_service->protoType();
     proto->base.src = p_userID;
@@ -72,7 +72,7 @@ bool CSVideoProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_video_t *video = allocate_wmp_video(stream.length());
+    wmp_video_t *video = create_wmp_video(stream.length());
 
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(video);

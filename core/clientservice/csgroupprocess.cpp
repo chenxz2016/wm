@@ -133,7 +133,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     quint32 id = map["id"].toString().toInt(&ok);
 
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
     proto->head = WMP_HEAD_ID;
     proto->sequence = p_service->protoSequence();
@@ -149,7 +149,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_group_t *group = allocate_wmp_group();
+    wmp_group_t *group = create_wmp_group();
 
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(group);
@@ -162,7 +162,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     {
     case WMP_GROUP_CET_ID:
     {
-        wmp_group_cet_t *cet = allocate_wmp_group_cet();
+        wmp_group_cet_t *cet = create_wmp_group_cet();
         group->param = cet;
         cet->attr = 0;
         cet->group_id = map["group_id"].toInt();
@@ -170,7 +170,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     }
     case WMP_GROUP_DSV_ID:
     {
-        wmp_group_dsv_t *dsv = allocate_wmp_group_dsv();
+        wmp_group_dsv_t *dsv = create_wmp_group_dsv();
         group->param = dsv;
         dsv->attr = 0;
         dsv->group_id = map["group_id"].toInt();
@@ -178,7 +178,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     }
     case WMP_GROUP_JON_ID:
     {
-        wmp_group_jon_t *jon = allocate_wmp_group_jon();
+        wmp_group_jon_t *jon = create_wmp_group_jon();
         group->param = jon;
         jon->attr = 0;
         jon->group_id = map["group_id"].toInt();
@@ -189,7 +189,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     }
     case WMP_GROUP_EXT_ID:
     {
-        wmp_group_ext_t *ext = allocate_wmp_group_ext();
+        wmp_group_ext_t *ext = create_wmp_group_ext();
         group->param = ext;
         ext->attr = 0;
         ext->group_id = map["group_id"].toInt();
@@ -201,7 +201,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
         if(!list.count())
             break;
 
-        wmp_group_set_t *set = allocate_wmp_group_set(list.count());
+        wmp_group_set_t *set = create_wmp_group_set(list.count());
         group->param = set;
         set->attr = 0;
         set->group_id = map["group_id"].toInt();
@@ -218,7 +218,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     case WMP_GROUP_MSG_ID:
     {
         QString message = map["msg"].toString();
-        wmp_group_msg_t *msg = allocate_wmp_group_msg(message.length());
+        wmp_group_msg_t *msg = create_wmp_group_msg(message.length());
         group->param = msg;
         msg->attr = 0;
         msg->group_id = map["group_id"].toInt();
@@ -233,7 +233,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     case WMP_GROUP_NTC_ID:
     {
         QString notice = map["notice"].toString();
-        wmp_group_ntc_t *ntc = allocate_wmp_group_ntc(notice.length());
+        wmp_group_ntc_t *ntc = create_wmp_group_ntc(notice.length());
         group->param = ntc;
         ntc->attr = 0;
         ntc->group_id = map["group_id"].toInt();
@@ -242,7 +242,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     }
     case WMP_GROUP_IVT_ID:
     {
-        wmp_group_ivt_t *ivt = allocate_wmp_group_ivt();
+        wmp_group_ivt_t *ivt = create_wmp_group_ivt();
         group->param = ivt;
         ivt->attr = 0;
         ivt->group_id = map["group_id"].toInt();
@@ -251,7 +251,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     }
     case WMP_GROUP_LIST_ID:
     {
-        wmp_group_list_t *group_list = allocate_wmp_group_list(0);
+        wmp_group_list_t *group_list = create_wmp_group_list(0);
         group->param = group_list;
         group_list->attr = 0;
         group_list->user_id = p_service->userID();
@@ -260,7 +260,7 @@ bool CSGroupProcess::syncSend(const QVariant &data)
     }
     case WMP_GROUP_FETCH_ID:
     {
-        wmp_group_fetch_t *fetch = allocate_wmp_group_fetch(0);
+        wmp_group_fetch_t *fetch = create_wmp_group_fetch(0);
         group->param = fetch;
         fetch->attr = 0;
         fetch->group_id = p_service->userID();

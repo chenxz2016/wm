@@ -59,7 +59,7 @@ bool CSMsgProcess::syncSend(const QVariant &data)
         return false;
 
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
     proto->base.proto_type = p_service->protoType();
     proto->base.src = p_userID;
@@ -71,7 +71,7 @@ bool CSMsgProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_message_t *message = allocate_wmp_message();
+    wmp_message_t *message = create_wmp_message(0);
     set_wmp_message_len(message,msg.length());
 
     proto->body.param->main_id = uniqueID();

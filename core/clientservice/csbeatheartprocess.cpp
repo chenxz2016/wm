@@ -59,7 +59,7 @@ bool CSBeatHeartProcess::syncSend(const QVariant &data)
 	Q_UNUSED(data);
 
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
     proto->base.proto_type = p_service->protoType();
     proto->base.src = p_userID;
@@ -71,7 +71,7 @@ bool CSBeatHeartProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_beat_heart_t *bh = allocate_wmp_beat_heart();
+    wmp_beat_heart_t *bh = create_wmp_beat_heart();
 
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(bh);
@@ -94,7 +94,7 @@ void CSBeatHeartProcess::ayncSend(const QVariant &data)
 	Q_UNUSED(data);
 	
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
     proto->base.proto_type = p_service->protoType();
     proto->base.src = p_userID;
@@ -106,7 +106,7 @@ void CSBeatHeartProcess::ayncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_beat_heart_t *bh = allocate_wmp_beat_heart();
+    wmp_beat_heart_t *bh = create_wmp_beat_heart();
 
     proto->body.param->main_id = WMP_PROTO_BH_ID;
     proto->body.param->data = reinterpret_cast<char *>(bh);

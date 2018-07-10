@@ -114,7 +114,7 @@ bool CSLoginProcess::syncSend(const QVariant &data)
         return false;
 
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
     proto->base.proto_type = p_service->protoType();
     proto->base.src = p_userID;
@@ -126,7 +126,7 @@ bool CSLoginProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_login_t *login = allocate_wmp_login();
+    wmp_login_t *login = create_wmp_login();
 
     proto->head = WMP_HEAD_ID;
     proto->sequence = p_service->protoSequence();
@@ -292,7 +292,7 @@ bool CSLoginKeyProcess::syncSend(const QVariant &data)
         return false;
 
 	/* 1 parameters, user id and user pwd. */
-	wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
 	proto->head = WMP_HEAD_ID;
 	proto->sequence = p_service->protoSequence();
@@ -309,7 +309,7 @@ bool CSLoginKeyProcess::syncSend(const QVariant &data)
 
 	p_service->protoVersion(proto->base.version);
 
-	wmp_login_key_t *key = allocate_wmp_login_key();
+    wmp_login_key_t *key = create_wmp_login_key();
 
 	proto->body.param->main_id = WMP_PROTO_LOGIN_KEY_ID;
 	proto->body.param->data = reinterpret_cast<char *>(key);

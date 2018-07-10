@@ -21,7 +21,7 @@
 #include <wmp_user.h>
 #include <wmp_video.h>
 #include <wm_protocol.h>
-#include <protocol_package.h>
+#include <wm_package.h>
 #include <protocol_crypt.h>
 #include <crc32.h>
 #include <QDateTime>
@@ -220,7 +220,7 @@ bool ClientService::sendData(const char *data, quint32 data_len)
 bool ClientService::sendPackage(wm_protocol_t *proto)
 {
     WMEncryptKey key = encryptKey();
-    protocol_package *package = package_wmp(proto,key.key,key.key_len);
+    wm_package *package = package_wmp(proto,key.key,key.key_len);
 
     if(!package)
     {
@@ -304,7 +304,7 @@ void ClientService::tcpRead()
     char dispose_data[1024*256] = "";
     quint32 dispose_data_size = 0;
 
-    QList<protocol_package *> list;
+    QList<wm_package *> list;
 
     QByteArray recv_data = p_d->tcp->readAll();
 
@@ -340,7 +340,7 @@ void ClientService::tcpRead()
             quint32 crc_code = crc32_check_char_buffer(dispose_data+i+5,len-6);
 //            if(p_crc_code==crc_code)
             {
-                protocol_package *package = allocate_package(len);
+                wm_package *package = create_wm_package(len);
                 memcpy(package->data,dispose_data+i,len);
                 list.append(package);
                 i+=len;
@@ -364,7 +364,7 @@ void ClientService::tcpRead()
         left_flag = false;
     }
 
-    foreach(protocol_package *package,list)
+    foreach(wm_package *package,list)
     {
         wm_protocol_t *p_wm = parser_wmp(package,p_d->key.key,p_d->key.key_len);
         AbstractCSProcess *process = p_d->pm[p_wm->body.param->main_id];

@@ -62,7 +62,7 @@ bool CSSessionProcess::syncSend(const QVariant &data)
         return false;
 
     /* 2 parameters, user id and user pwd. */
-    wm_protocol_t *proto = allocate_wmp(1);
+    wm_protocol_t *proto = create_wmp(1);
 
     proto->base.proto_type = p_service->protoType();
     proto->base.src = p_userID;
@@ -74,7 +74,7 @@ bool CSSessionProcess::syncSend(const QVariant &data)
 
     p_service->protoVersion(proto->base.version);
 
-    wmp_session_t *session = allocate_wmp_session();
+    wmp_session_t *session = create_wmp_session();
 
     proto->body.param->main_id = uniqueID();
     proto->body.param->data = reinterpret_cast<char *>(session);
@@ -87,7 +87,7 @@ bool CSSessionProcess::syncSend(const QVariant &data)
     {
     case WMP_SESSION_CET_ID:
     {
-        wmp_session_cet_t *cet = allocate_wmp_session_cet();
+        wmp_session_cet_t *cet = create_wmp_session_cet();
         session->param = reinterpret_cast<uint8_t *>(cet);
         cet->attr = attr;
         cet->session_id = map["session_id"].toInt();
@@ -95,7 +95,7 @@ bool CSSessionProcess::syncSend(const QVariant &data)
     }
     case WMP_SESSION_DSV_ID:
     {
-        wmp_session_dsv_t *dsv = allocate_wmp_session_dsv();
+        wmp_session_dsv_t *dsv = create_wmp_session_dsv();
         session->param = reinterpret_cast<uint8_t *>(dsv);
         dsv->attr = attr;
         dsv->session_id = map["session_id"].toInt();
@@ -103,7 +103,7 @@ bool CSSessionProcess::syncSend(const QVariant &data)
     }
     case WMP_SESSION_EXT_ID:
     {
-        wmp_session_ext_t *ext = allocate_wmp_session_ext();
+        wmp_session_ext_t *ext = create_wmp_session_ext();
         session->param = reinterpret_cast<uint8_t *>(ext);
         ext->attr = attr;
         ext->session_id = map["session_id"].toInt();
@@ -111,7 +111,7 @@ bool CSSessionProcess::syncSend(const QVariant &data)
     }
     case WMP_SESSION_MSG_ID:
     {
-        wmp_session_msg_t *msg = allocate_wmp_session_msg(message.length());
+        wmp_session_msg_t *msg = create_wmp_session_msg(message.length());
         session->param = reinterpret_cast<uint8_t *>(msg);
         msg->attr = attr;
         msg->session_id = map["session_id"].toInt();
@@ -122,7 +122,7 @@ bool CSSessionProcess::syncSend(const QVariant &data)
         break;
     case WMP_SESSION_IVT_ID:
     {
-        wmp_session_ivt_t *ivt = allocate_wmp_session_ivt();
+        wmp_session_ivt_t *ivt = create_wmp_session_ivt();
         session->param = reinterpret_cast<uint8_t *>(ivt);
         ivt->attr = attr;
         ivt->session_id = map["session_id"].toInt();
